@@ -16,17 +16,19 @@
 
 ##### **_Deployed Site_**
 
+Coming soon!
+
 ##### **_Screenshots_**
 
 ##### **_Notion Board_**
 
-[Notion]()
+[Notion](https://www.notion.so/Project-3-5c627112fd7e4c049feb16c0d961707c?pvs=4)
 
 ##### **_Wireframes_**
 
 [DrawIO]()
 
-##### **_Data Models_**
+##### **_Entity Relationship Diagram (ERD)_**
 
 [DrawIO]()
 
@@ -34,5 +36,5 @@
 
 <hr>
 
-#### **_Credits_**
+#### **_CREDITS_**
 - Fonts: [Google Fonts](fonts.google.com)
