@@ -1,0 +1,89 @@
+:root {
+    --darkmode-background: #5B5B5B;
+    --lightmode-background: ;
+    --darkmode-nav: #404040;
+    --lightmode-nav: ;
+    --darkmode-menu: #404040;
+    --lightmode-menu: ;
+    --darkmode-darktext: #5B5B5B;
+    --lightmode-darktext: ;
+    --darkmode-lighttext: #D9D9D9;
+    --lightmode-lighttext: ;
+    --darkmode-card: #D9D9D9;
+    --lightmode-card: ;
+    --darkmode-button: ;
+    --lightmode-button: ;
+    --darkmode-button-active: ;
+    --lightmode-button-active: ;
+    --logo-font: 'Dosis', sans-serif;
+    --header-font: 'Dosis', sans-serif;
+    --base-font: 'Montserrat', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    width: auto;
+    font-family: var(--base-font);
+    color: var(--darkmode-lighttext);
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: var(--header-font);
+}
+
+button {
+    border: none;
+    border-radius: 10px;
+    background-color: var(--darkmode-button);
+    transition: all 0.25s ease;
+}
+
+button:active {
+    background-color: ;
+}
+
+.logo {
+    font-family: var(--logo-font);
+    font-weight: 200;
+    font-size: 28px;
+}
+
+.view-title {
+    font-family: var(--header-font);
+    font-weight: 600;
+    font-size: 36px;
+}
+
+.card {
+    background-color: var(--darkmode-card);
+    transition: all .25s ease;
+}
+
+.toggle-on {
+    background-color: ;
+}
+
+.toggle-off {
+    background-color: ;
+}
