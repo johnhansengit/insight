@@ -44,11 +44,11 @@ Coming soon!
 
 ##### **_Wireframes_**
 
-[Figma](https://www.figma.com/file/l6hITaaXb3zi5OUyQXiZal/Welcome-to-FigJam?type=whiteboard&t=L8tyJgavLlfNcmqY-1)
+[Figma](https://www.figma.com/file/EDx0qSNxwl7dKnKXBPoGeQ/Wireframe?type=design&node-id=0%3A1&mode=design&t=oCG4M36QSdpOUnZg-1)
 
 ##### **_Entity Relationship Diagram (ERD)_**
 
-[Figma]()
+[Figma](https://www.figma.com/file/l6hITaaXb3zi5OUyQXiZal/ERD?type=whiteboard&node-id=0%3A1&t=nP0dQ2OxCwOnZ0fo-1)
 
 #### **_PLANNED FUTURE UPDATES_**
 
