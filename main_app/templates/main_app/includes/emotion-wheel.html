@@ -1,0 +1,344 @@
+<canvas id="wedgeCanvas" width="600" height="600"></canvas>
+
+<script>
+const canvas = document.getElementById("wedgeCanvas");
+const ctx = canvas.getContext("2d");
+const smallestCircleRadius = 90; // Reference for the smallest circle radius
+
+// Define properties for three concentric circles
+const circles = [
+  {
+    radius: smallestCircleRadius * 3,
+    wedges: [
+      { text: "Helpless", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Frightened", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Overwhelmed", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Worried", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Inadequate", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Inferior", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Worthless", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Insignificant", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Excluded", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Persecuted", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Nervous", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Exposed", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f" },
+      { text: "Betrayed", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Resentful", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Disrespected", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Ridiculed", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Indignant", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Violated", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Furious", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Jealous", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Provoked", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Hostile", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Infuriated", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Annoyed", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Withdrawn", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Numb", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Sceptical", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Dismissive", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90" },
+      { text: "Judgmental", family: "Disgusted", color: "#908e91", familyColor: "#908e91" },
+      { text: "Embarrassed", family: "Disgusted", color: "#908e91", familyColor: "#908e91" },
+      { text: "Appalled", family: "Disgusted", color: "#908e91", familyColor: "#908e91" },
+      { text: "Revolted", family: "Disgusted", color: "#908e91", familyColor: "#908e91" },
+      { text: "Nauseated", family: "Disgusted", color: "#908e91", familyColor: "#908e91" },
+      { text: "Detestable", family: "Disgusted", color: "#908e91", familyColor: "#908e91" },
+      { text: "Horrified", family: "Disgusted", color: "#908e91", familyColor: "#908e91" },
+      { text: "Hesitant", family: "Disgusted", color: "#908e91", familyColor: "#908e91" },
+      { text: "Embarrassed", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Disappointed", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Inferior", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Empty", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Remorseful", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Ashamed", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Powerless", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Grief", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Fragile", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Victimized", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Abandoned", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Isolated", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6" },
+      { text: "Inspired", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Hopeful", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Intimate", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Sensitive", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Thankful", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Loving", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Creative", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Courageous", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Valued", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Respected", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Confident", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Successful", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Inquisitive", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Curious", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Joyful", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Free", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Cheeky", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Aroused", family: "Happy", color: "#feff8e", familyColor: "#feff8e" },
+      { text: "Energetic", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2" },
+      { text: "Eager", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2" },
+      { text: "Awe", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2" },
+      { text: "Astonished", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2" },
+      { text: "Perplexed", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2" },
+      { text: "Disillusioned", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2" },
+      { text: "Dismayed", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2" },
+      { text: "Shocked", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2" },
+      { text: "Unfocused", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae" },
+      { text: "Sleepy", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae" },
+      { text: "Out of control", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae" },
+      { text: "Overwhelmed", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae" },
+      { text: "Rushed", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae" },
+      { text: "Pressured", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae" },
+      { text: "Apathetic", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae" },
+      { text: "Indifferent", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae" }
+      // ... Additional wedges for the outer circle
+    ]
+  },
+  {
+    radius: smallestCircleRadius * 2,
+    wedges: [
+      { text: "Scared", family: "Fearful", color: "#ffeec0", familyColor: "#ffde8f" },
+      { text: "Anxious", family: "Fearful", color: "#ffeec0", familyColor: "#ffde8f" },
+      { text: "Insecure", family: "Fearful", color: "#ffeec0", familyColor: "#ffde8f" },
+      { text: "Weak", family: "Fearful", color: "#ffeec0", familyColor: "#ffde8f" },
+      { text: "Rejected", family: "Fearful", color: "#ffeec0", familyColor: "#ffde8f" },
+      { text: "Threatened", family: "Fearful", color: "#ffeec0", familyColor: "#ffde8f" },
+      { text: "Let down", family: "Angry", color: "#ffbfbf", familyColor: "#ff8e90" },
+      { text: "Humiliated", family: "Angry", color: "#ffbfbf", familyColor: "#ff8e90" },
+      { text: "Bitter", family: "Angry", color: "#ffbfbf", familyColor: "#ff8e90" },
+      { text: "Mad", family: "Angry", color: "#ffbfbf", familyColor: "#ff8e90" },
+      { text: "Aggressive", family: "Angry", color: "#ffbfbf", familyColor: "#ff8e90" },
+      { text: "Frustrated", family: "Angry", color: "#ffbfbf", familyColor: "#ff8e90" },
+      { text: "Distant", family: "Angry", color: "#ffbfbf", familyColor: "#ff8e90" },
+      { text: "Critical", family: "Angry", color: "#ffbfbf", familyColor: "#ff8e90" },
+      { text: "Disapproving", family: "Disgusted", color: "#c0bec1", familyColor: "#908e91" },
+      { text: "Disappointed", family: "Disgusted", color: "#c0bec1", familyColor: "#908e91" },
+      { text: "Awful", family: "Disgusted", color: "#c0bec1", familyColor: "#908e91" },
+      { text: "Repelled", family: "Disgusted", color: "#c0bec1", familyColor: "#908e91" },
+      { text: "Hurt", family: "Sad", color: "#bfdbf0", familyColor: "#8fbce6" },
+      { text: "Depressed", family: "Sad", color: "#bfdbf0", familyColor: "#8fbce6" },
+      { text: "Guilty", family: "Sad", color: "#bfdbf0", familyColor: "#8fbce6" },
+      { text: "Despair", family: "Sad", color: "#bfdbf0", familyColor: "#8fbce6" },
+      { text: "Vulnerable", family: "Sad", color: "#bfdbf0", familyColor: "#8fbce6" },
+      { text: "Lonely", family: "Sad", color: "#bfdbf0", familyColor: "#8fbce6" },
+      { text: "Optimistic", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Trusting", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Peaceful", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Powerful", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Accepted", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Proud", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Interested", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Content", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Playful", family: "Happy", color: "#feffc0", familyColor: "#feff8e" },
+      { text: "Excited", family: "Surprised", color: "#ddcae6", familyColor: "#bea1d2" },
+      { text: "Amazed", family: "Surprised", color: "#ddcae6", familyColor: "#bea1d2" },
+      { text: "Confused", family: "Surprised", color: "#ddcae6", familyColor: "#bea1d2" },
+      { text: "Startled", family: "Surprised", color: "#ddcae6", familyColor: "#bea1d2" },
+      { text: "Tired", family: "Bad", color: "#bfead6", familyColor: "#8ed9ae" },
+      { text: "Stressed", family: "Bad", color: "#bfead6", familyColor: "#8ed9ae" },
+      { text: "Busy", family: "Bad", color: "#bfead6", familyColor: "#8ed9ae" },
+      { text: "Bored", family: "Bad", color: "#bfead6", familyColor: "#8ed9ae" }
+      // ... Additional wedges for the middle circle
+    ]
+  },
+  {
+    radius: smallestCircleRadius,
+    wedges: [
+      { text: "Fearful", family: "Fearful", color: "#ffde8f", familyColor: "#ffde8f", size: 6 },
+      { text: "Angry", family: "Angry", color: "#ff8e90", familyColor: "#ff8e90", size: 8 },
+      { text: "Disgusted", family: "Disgusted", color: "#908e91", familyColor: "#908e91", size: 4 },
+      { text: "Sad", family: "Sad", color: "#8fbce6", familyColor: "#8fbce6", size: 6 },
+      { text: "Happy", family: "Happy", color: "#feff8e", familyColor: "#feff8e", size: 9 },
+      { text: "Surprised", family: "Surprised", color: "#bea1d2", familyColor: "#bea1d2", size: 4 },
+      { text: "Bad", family: "Bad", color: "#8ed9ae", familyColor: "#8ed9ae", size: 4 }
+      // ... Additional wedges with variable sizes for the smallest circle
+    ]
+  }
+];
+
+function getTextRadius(circleRadius, index, circles) {
+  if (index === circles.length - 1) {
+    // For the smallest circle
+    return circleRadius * 0.5; // Center text in the middle of its radius
+  } else {
+    const outerRadius = circleRadius;
+    const innerRadius = circles[index + 1].radius; // Get the next smaller circle's radius
+    return innerRadius + (outerRadius - innerRadius) * 0.5; // Center text in the visible area
+  }
+}
+
+function drawWedges(circle, index, circles) {
+  let startAngle = 0;
+  const center = { x: canvas.width / 2, y: canvas.height / 2 };
+  const totalSize = circle.wedges.reduce(
+    (total, wedge) => total + (wedge.size || 1),
+    0
+  );
+
+  const textRadius = getTextRadius(circle.radius, index, circles);
+
+  circle.wedges.forEach((wedge) => {
+    const wedgeSize = wedge.size || 1;
+    const wedgeAngle = (2 * Math.PI * wedgeSize) / totalSize;
+
+    ctx.beginPath();
+    ctx.moveTo(center.x, center.y);
+    ctx.arc(
+      center.x,
+      center.y,
+      circle.radius,
+      startAngle,
+      startAngle + wedgeAngle,
+      false
+    );
+    ctx.closePath();
+
+    // Fill the wedge
+    ctx.fillStyle = wedge.color;
+    ctx.fill();
+
+    // Stroke the wedge border
+    ctx.strokeStyle = "black"; // You can change this to any color you want
+    ctx.lineWidth = 1; // You can change the border thickness here
+    ctx.stroke(); // This adds the border to the wedge
+
+    // Text setup
+    const textAngle = startAngle + wedgeAngle / 2;
+
+    ctx.save();
+    ctx.translate(center.x, center.y);
+    ctx.rotate(textAngle);
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    const fillTextX = textRadius;
+
+    ctx.font = "11px";
+    ctx.fillStyle = "#000";
+    ctx.fillText(wedge.text, fillTextX, 0);
+
+    ctx.restore();
+
+    startAngle += wedgeAngle;
+  });
+}
+
+// Draw each circle with its wedges
+circles.forEach((circle, index) => {
+  drawWedges(circle, index, circles);
+});
+
+var n = 82;
+var offset = 0;
+
+// Helper function to convert coordinates to polar
+function getMousePos(canvas, event) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: event.clientX - rect.left,
+    y: event.clientY - rect.top
+  };
+}
+
+function getAngleAndRadius(x, y, center) {
+  const angle = Math.atan2(y - center.y, x - center.x);
+  const radius = Math.sqrt((x - center.x) ** 2 + (y - center.y) ** 2);
+  return { angle, radius };
+}
+
+function findClickedWedge(x, y, currentRotation) {
+  const center = { x: canvas.width / 2, y: canvas.height / 2 };
+  const { angle, radius } = getAngleAndRadius(x, y, center);
+
+  for (let i = circles.length - 1; i >= 0; i--) {
+    const circle = circles[i];
+    let startAngle = 0;
+    const totalSize = circle.wedges.reduce((total, wedge) => total + (wedge.size || 1), 0);
+
+    for (const wedge of circle.wedges) {
+      const wedgeSize = wedge.size || 1;
+      const wedgeAngle = (2 * Math.PI * wedgeSize) / totalSize;
+      const adjustedStartAngle = (startAngle + currentRotation) % (2 * Math.PI);
+      const endAngle = (adjustedStartAngle + wedgeAngle) % (2 * Math.PI);
+
+      // Normalize angles to a 0-2*PI range
+      const normStart = (adjustedStartAngle + 2 * Math.PI) % (2 * Math.PI);
+      const normEnd = (endAngle + 2 * Math.PI) % (2 * Math.PI);
+      const normMouseAngle = (angle + 2 * Math.PI) % (2 * Math.PI);
+
+      if (
+        radius <= circle.radius &&
+        radius > (circles[i + 1] ? circles[i + 1].radius : 0) &&
+        ((normStart < normEnd && normMouseAngle >= normStart && normMouseAngle <= normEnd) ||
+         (normStart > normEnd && (normMouseAngle >= normStart || normMouseAngle <= normEnd)))
+      ) {
+        return {
+          text: wedge.text,
+          family: wedge.family,
+          familyColor: wedge.familyColor
+        };
+      }
+
+      startAngle += wedgeAngle;
+    }
+  }
+
+  return null;
+}
+
+
+let isDragging = false;
+let startAngle = 0;
+let currentRotation = 0;
+const dragThreshold = 5; // pixels
+let dragStartPos = null;
+
+
+canvas.addEventListener('mousedown', (event) => {
+  isDragging = false;
+  dragStartPos = getMousePos(canvas, event);
+  const mousePos = getMousePos(canvas, event);
+  const { angle } = getAngleAndRadius(mousePos.x, mousePos.y, { x: canvas.width / 2, y: canvas.height / 2 });
+  startAngle = angle - currentRotation;
+});
+
+canvas.addEventListener('mousemove', (event) => {
+  const currentPos = getMousePos(canvas, event);
+  if (dragStartPos && Math.abs(currentPos.x - dragStartPos.x) + Math.abs(currentPos.y - dragStartPos.y) > dragThreshold) {
+    isDragging = true;
+    const mousePos = getMousePos(canvas, event);
+    const { angle } = getAngleAndRadius(mousePos.x, mousePos.y, { x: canvas.width / 2, y: canvas.height / 2 });
+    currentRotation = angle - startAngle;
+    redrawWheel();
+  }
+});
+
+canvas.addEventListener('mouseup', (event) => {
+  if (!isDragging) {
+    const mousePos = getMousePos(canvas, event);
+    const clickedWedge = findClickedWedge(mousePos.x, mousePos.y, currentRotation);
+    if (clickedWedge) {
+      console.log(clickedWedge.text);
+    }
+  }
+  isDragging = false;
+  dragStartPos = null;
+});
+
+function redrawWheel() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+
+  ctx.save();
+  ctx.translate(canvas.width / 2, canvas.height / 2);
+  ctx.rotate(currentRotation);
+  ctx.translate(-canvas.width / 2, -canvas.height / 2);
+
+  circles.forEach((circle, index) => {
+    drawWedges(circle, index, circles);
+  });
+
+  ctx.restore();
+}
+
+</script>
