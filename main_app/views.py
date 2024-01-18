@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .forms import SignUpForm
 from .models import UserSettings, DailyEntry
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -55,6 +56,12 @@ class DailyEntryCreate(CreateView):
 
 class DailyEntryRead(DetailView):
     model = DailyEntry
+    template_name = 'daily_entries/detail.html'
+    success_url = reverse_lazy('daily_entry_detail')
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_settings'] = UserSettings.objects.filter(user_id=self.request.user.id).first()
+        return context
 
 
 class DailyEntryUpdate(UpdateView):
