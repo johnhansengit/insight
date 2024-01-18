@@ -4,9 +4,9 @@ from django.contrib.auth.models import User
 
 
 class SignUpForm(UserCreationForm):
-    first_name = forms.CharField(max_length=100, help_text="First Name")
-    last_name = forms.CharField(max_length=100, help_text="Last Name")
-    email = forms.EmailField(max_length=254, help_text="Email")
+    first_name = forms.CharField(max_length=100)
+    last_name = forms.CharField(max_length=100)
+    email = forms.EmailField(max_length=254)
 
     class Meta:
         model = User
