@@ -25,6 +25,9 @@ class Emotion(models.Model):
     name = models.CharField(max_length=20)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
     color = models.CharField(max_length = 20)
+    
+    def __str__(self):
+        return self.name
 
 
 class DailyEntry(models.Model):
@@ -47,6 +50,9 @@ class DailyEntry(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='entries')
     emotion = models.ManyToManyField(Emotion)
     
+    def __str__(self):
+        return f"Entry for {self.date}"
+    
     
 class UserSettings(models.Model):
     track_counseling = models.BooleanField(default=False)
@@ -64,4 +70,7 @@ class UserSettings(models.Model):
     track_menstruation = models.BooleanField(default=False)
     
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='user_settings')
+    
+    def __str__(self):
+        return f"{self.user.first_name}'s settings | ID: {self.id}"
     
