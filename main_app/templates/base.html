@@ -22,7 +22,15 @@
     </a>
     <div class="view-title">View Title</div>
     <nav>
-      <button class="hamburger">☰</button>
+      <div id="hamburger-menu">☰</div>
+      <div id="nav-grid">
+        <a href="">Home</a>
+        <a href="">Logger</a>
+        <a href=""><i class="bi bi-calendar2-range"></i>Timeline</a>
+        <a href=""><i class="bi bi-journal-bookmark"></i> Journals</a>
+        <a href=""><i class="bi bi-gear"></i> Settings</a>
+        <a href="">Logout</a>
+      </div>
     </nav>
   </header>
   <main>
@@ -44,5 +52,22 @@
   {% endif %}
   </footer>
 </body>
+
+<script>
+  const hamburgerMenu = document.getElementById("hamburger-menu");
+  
+  hamburgerMenu.addEventListener("click", toggleNav);
+  hamburgerMenu.addEventListener("touch", toggleNav);
+
+  function toggleNav() {
+    const navGrid = document.getElementById("nav-grid");
+    if (navGrid.style.opacity == '0' || navGrid.style.opacity == '') {
+      navGrid.style.opacity = '1';
+    } else {
+      navGrid.style.opacity = '0';
+    }
+  }
+  
+</script>
 
 </html>
