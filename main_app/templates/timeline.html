@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block content %}
+
+{% if daily_entries.exists() %}
+
+    <section class="timeline">
+        <div id="lifestyle-selector">
+
+        </div>
+        <div id="emotions-timeline">
+            <table id="emotions-table">
+                <thead>
+                    <th>
+                        <td></td>
+                        {% for category in emotion_categories %}
+                            <td style="background-color: {{ category.timeline_color }};"></td>
+                        {% endfor %}
+                    </th>
+                </thead>
+                <tbody>
+                    {% for date in date_list %}
+                        <tr>
+                            <td>{{ date }}</td>
+                            {% for category in emotion_categories %}
+                            {% if category in emotions_by_date.get(date, set()) %}
+                                    <td style="background-color: {{ category.timeline_color }};"></td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            {% endfor %}    
+                        </tr>
+                    {% endfor %}    
+                </tbody>
+            </table>
+        </div>
+        <div id="lifestyle-timeline">
+            <table id="lifestyle-table">
+
+            </table>
+        </div>
+    </section>
+
+{% endif %}
+
+<section class="cta">
+
+</section>
+
+{% endblock %}

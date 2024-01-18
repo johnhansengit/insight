@@ -25,9 +25,10 @@ class Emotion(models.Model):
     name = models.CharField(max_length=20)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
     color = models.CharField(max_length = 20)
+    timeline_color = models.CharField(max_length = 20)
     
     def __str__(self):
-        return self.name
+        return f"{self.name} | ID: {self.id}"
 
 
 class DailyEntry(models.Model):

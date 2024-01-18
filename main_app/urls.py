@@ -20,4 +20,7 @@ urlpatterns = [
   path('daily-entries/<int:pk>/', views.DailyEntryRead.as_view(), name='daily-entry-read'),
   path('daily-entries/<int:pk>/update', views.DailyEntryUpdate.as_view(), name='daily-entry-update'),
   path('daily-entries/<int:pk>/delete', views.DailyEntryDelete.as_view(), name='daily-entry-delete'),
+
+  #Timeline URLs
+  path('timeline/', views.timeline, name='timeline'),
 ]
