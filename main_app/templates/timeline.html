@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% if daily_entries.exists() %}
+{% comment %} {% if daily_entries.exists() %} {% endcomment %}
 
     <section class="timeline">
         <div id="lifestyle-selector">
@@ -22,7 +22,7 @@
                         <tr>
                             <td>{{ date }}</td>
                             {% for category in emotion_categories %}
-                            {% if category in emotions_by_date.get(date, set()) %}
+                                {% if entry.emotions.category %}
                                     <td style="background-color: {{ category.timeline_color }};"></td>
                                 {% else %}
                                     <td></td>
@@ -40,7 +40,7 @@
         </div>
     </section>
 
-{% endif %}
+{% comment %} {% endif %} {% endcomment %}
 
 <section class="cta">
 
