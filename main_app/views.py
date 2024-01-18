@@ -4,6 +4,10 @@ from .forms import SignUpForm
 
 
 # Create your views here.
+def home(request):
+    return render(request, "home.html")
+
+
 def sandbox(request):
     return render(request, "sandbox.html")
 

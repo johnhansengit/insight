@@ -13,7 +13,7 @@
     --lightmode-card: ;
     --darkmode-button: ;
     --lightmode-button: ;
-    --darkmode-button-active: ;
+    --darkmode-button-active: #3B3B3B;
     --lightmode-button-active: ;
     --logo-font: 'Dosis', sans-serif;
     --header-font: 'Dosis', sans-serif;
@@ -98,6 +98,8 @@ canvas:hover {
     font-family: var(--logo-font);
     font-weight: 200;
     font-size: 28px;
+    color: var(--darkmode-lighttext);
+    text-decoration: none;
 }
 
 .view-title {
@@ -114,6 +116,15 @@ canvas:hover {
 .card {
     background-color: var(--darkmode-card);
     transition: all .25s ease;
+    width: 8em;
+    height: 8em;
+    margin: 1em;
+    border-radius: .4em;
+}
+
+.card:hover {
+    cursor: pointer;
+    background-color: var(--darkmode-button-active);
 }
 
 .toggle-on {
@@ -122,4 +133,59 @@ canvas:hover {
 
 .toggle-off {
     background-color: ;
+}
+
+h1.home{
+    text-align: center;
+}
+
+#home-cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.card.home {
+    background-color: var(--darkmode-card);
+    color: var(--darkmode-darktext);
+    text-align: center;
+    text-decoration: none;
+}
+
+.card.home i {
+    position: relative;
+    display: block;
+    font-size: 4em;
+    margin-bottom: 0;
+}
+
+.card.home p{
+    position: relative;
+    margin: .3em;
+}
+
+.card.home:hover {
+    border: .2em solid var(--darkmode-button-active);
+}
+
+.card.home:hover span {
+    display: none;
+}
+
+#home-daily:hover::before {
+    content: "Log a daily entry";
+}
+
+#home-journal:hover::before {
+    content: "Start a journal entry";
+}
+
+#home-timeline:hover::before {
+    content: "See your timeline";
+}
+
+#home-settings:hover::before {
+    content: "Adjust user settings";
 }
