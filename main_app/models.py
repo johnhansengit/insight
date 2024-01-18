@@ -13,16 +13,19 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
 
+
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
 
+
 class Emotion(models.Model):
     name = models.CharField(max_length=20)
     parent = models.ForeignKey('self', null=True, on_delete=models.SET_NULL)
     color = models.CharField(max_length = 20)
+
 
 class DailyEntry(models.Model):
     sleep_quality_rating = models.IntegerField(null=True, blank=True)
@@ -44,6 +47,7 @@ class DailyEntry(models.Model):
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='entries')
     emotion = models.ManyToManyField(Emotion)
     
+    
 class UserSettings(models.Model):
     track_counseling = models.BooleanField(default=False)
     track_spirituality = models.BooleanField(default=False)
@@ -60,3 +64,4 @@ class UserSettings(models.Model):
     track_menstruation = models.BooleanField(default=False)
     
     user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='user_settings')
+    

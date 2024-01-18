@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 from .forms import SignUpForm
+from .models import UserSettings, DailyEntry
 
 
 # Create your views here.
@@ -27,3 +30,38 @@ def signup(request):
     form = SignUpForm()
     context = {"form": form}
     return render(request, "registration/signup.html", context)
+
+
+# User Settings Views
+class UserSettingsCreate(CreateView):
+    model = UserSettings
+    
+    
+class UserSettingsRead():
+    model = UserSettings
+    
+    
+class UserSettingsUpdate(UpdateView):
+    model = UserSettings
+
+# Daily Entry Views
+class DailyEntryList:
+    model = DailyEntry
+
+
+class DailyEntryCreate:
+    model = DailyEntry
+
+
+class DailyEntryRead:
+    model = DailyEntry
+
+
+class DailyEntryUpdate:
+    model = DailyEntry
+
+
+class DailyEntryDelete:
+    model = DailyEntry
+    success_url = '/daily-entries'
+
