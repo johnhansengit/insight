@@ -1,4 +1,4 @@
-<canvas id="wedgeCanvas" width="600" height="600"></canvas>
+<canvas id="wedgeCanvas" width="550" height="550"></canvas>
 
 <script>
 const canvas = document.getElementById("wedgeCanvas");
@@ -233,11 +233,19 @@ var n = 82;
 var offset = 0;
 
 // Helper function to convert coordinates to polar
-function getMousePos(canvas, event) {
+function getPointerPos(canvas, event) {
   const rect = canvas.getBoundingClientRect();
+  let clientX = event.clientX;
+  let clientY = event.clientY;
+
+  if (event.touches) {
+    clientX = event.touches[0].clientX;
+    clientY = event.touches[0].clientY;
+  }
+
   return {
-    x: event.clientX - rect.left,
-    y: event.clientY - rect.top
+    x: clientX - rect.left,
+    y: clientY - rect.top
   };
 }
 
@@ -295,28 +303,29 @@ const dragThreshold = 5; // pixels
 let dragStartPos = null;
 
 
-canvas.addEventListener('mousedown', (event) => {
+function handleStart(event) {
+  event.preventDefault();
   isDragging = false;
-  dragStartPos = getMousePos(canvas, event);
-  const mousePos = getMousePos(canvas, event);
-  const { angle } = getAngleAndRadius(mousePos.x, mousePos.y, { x: canvas.width / 2, y: canvas.height / 2 });
+  dragStartPos = getPointerPos(canvas, event);
+  const { angle } = getAngleAndRadius(dragStartPos.x, dragStartPos.y, { x: canvas.width / 2, y: canvas.height / 2 });
   startAngle = angle - currentRotation;
-});
+}
 
-canvas.addEventListener('mousemove', (event) => {
-  const currentPos = getMousePos(canvas, event);
-  if (dragStartPos && Math.abs(currentPos.x - dragStartPos.x) + Math.abs(currentPos.y - dragStartPos.y) > dragThreshold) {
+function handleMove(event) {
+  event.preventDefault();
+  const currentPos = getPointerPos(canvas, event);
+  if (dragStartPos) {
     isDragging = true;
-    const mousePos = getMousePos(canvas, event);
-    const { angle } = getAngleAndRadius(mousePos.x, mousePos.y, { x: canvas.width / 2, y: canvas.height / 2 });
+    const { angle } = getAngleAndRadius(currentPos.x, currentPos.y, { x: canvas.width / 2, y: canvas.height / 2 });
     currentRotation = angle - startAngle;
     redrawWheel();
   }
-});
+}
 
-canvas.addEventListener('mouseup', (event) => {
+function handleEnd(event) {
+  event.preventDefault();
   if (!isDragging) {
-    const mousePos = getMousePos(canvas, event);
+    const mousePos = getPointerPos(canvas, event.changedTouches ? event.changedTouches[0] : event);
     const clickedWedge = findClickedWedge(mousePos.x, mousePos.y, currentRotation);
     if (clickedWedge) {
       console.log(clickedWedge.text);
@@ -324,7 +333,16 @@ canvas.addEventListener('mouseup', (event) => {
   }
   isDragging = false;
   dragStartPos = null;
-});
+}
+
+canvas.addEventListener('mousedown', handleStart);
+canvas.addEventListener('mousemove', handleMove);
+canvas.addEventListener('mouseup', handleEnd);
+
+canvas.addEventListener('touchstart', handleStart, { passive: false });
+canvas.addEventListener('touchmove', handleMove, { passive: false });
+canvas.addEventListener('touchend', handleEnd, { passive: false });
+
 
 function redrawWheel() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas

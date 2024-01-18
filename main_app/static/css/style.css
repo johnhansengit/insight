@@ -48,6 +48,7 @@ header {
 
 main {
     width: 100%;
+    margin-top: 70px;
     display: flex;
     flex-direction: column;
 }
@@ -83,9 +84,14 @@ button:active {
 
 canvas {
     position: absolute;
-    left: -300px;
+    left: -275px;
     top: 50%;
-    margin-top: -300px;
+    margin-top: -275px;
+    border-radius: 50%;
+}
+
+canvas:hover {
+    cursor: pointer;
 }
 
 .logo {
