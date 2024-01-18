@@ -2,6 +2,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
+  path('', views.home, name='home'),
   path('sandbox/', views.sandbox, name='sandbox'),
   
   # Auth paths
