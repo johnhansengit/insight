@@ -37,7 +37,7 @@ class UserSettingsCreate(CreateView):
     model = UserSettings
     
     
-class UserSettingsRead():
+class UserSettingsRead(DetailView):
     model = UserSettings
     
     
@@ -45,23 +45,23 @@ class UserSettingsUpdate(UpdateView):
     model = UserSettings
 
 # Daily Entry Views
-class DailyEntryList:
+class DailyEntryList(ListView):
     model = DailyEntry
 
 
-class DailyEntryCreate:
+class DailyEntryCreate(CreateView):
     model = DailyEntry
 
 
-class DailyEntryRead:
+class DailyEntryRead(DetailView):
     model = DailyEntry
 
 
-class DailyEntryUpdate:
+class DailyEntryUpdate(UpdateView):
     model = DailyEntry
 
 
-class DailyEntryDelete:
+class DailyEntryDelete(DeleteView):
     model = DailyEntry
     success_url = '/daily-entries'
 
