@@ -20,6 +20,9 @@ urlpatterns = [
   path('daily-entries/<int:pk>/', views.DailyEntryRead.as_view(), name='daily-entry-read'),
   path('daily-entries/<int:pk>/update', views.DailyEntryUpdate.as_view(), name='daily-entry-update'),
   path('daily-entries/<int:pk>/delete', views.DailyEntryDelete.as_view(), name='daily-entry-delete'),
+  
+  # Emotion URLs
+  path('api/emotions/', views.EmotionsDataView.as_view(), name='emotions-data'),
 
   #Timeline URLs
   path('timeline/', views.timeline, name='timeline'),
