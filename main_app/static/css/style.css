@@ -209,7 +209,7 @@ h1.home{
 #nav-grid {
     position: absolute;
     right: 0;
-    width: 25vw;
+    width: 94px;
     display: flex;
     opacity: 0;
     flex-wrap: wrap;
@@ -222,6 +222,8 @@ h1.home{
 }
 
 #nav-grid a {
+    display: flex;
+    flex-direction: column;
     margin: 5px;
     border-radius: 5px;
     background-color: #D9D9D9;
