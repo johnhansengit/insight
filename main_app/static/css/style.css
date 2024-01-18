@@ -108,11 +108,6 @@ canvas:hover {
     font-size: 36px;
 }
 
-.hamburger {
-    font-size: 36px;
-    color: var(--darkmode-lighttext);
-}
-
 .card {
     background-color: var(--darkmode-card);
     transition: all .25s ease;
