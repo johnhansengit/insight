@@ -26,7 +26,7 @@ def signup(request):
             user.profile.last_name = form.cleaned_data.get("last_name")
             user.save()
             login(request, user)
-            return redirect("sandbox")
+            return redirect("home")
     form = SignUpForm()
     context = {"form": form}
     return render(request, "registration/signup.html", context)

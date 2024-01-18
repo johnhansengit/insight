@@ -37,13 +37,28 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 5px;
+    padding: 5px 8px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     background-color: var(--darkmode-header);
     z-index: 100;
+}
+
+.header-left {
+    flex: 1;
+    text-align: left;
+}
+
+.header-center {
+    flex: 2;
+    text-align: center;
+}
+
+.header-right {
+    flex: 1;
+    text-align: right;
 }
 
 main {
@@ -156,7 +171,7 @@ h1.home{
     margin-bottom: 0;
 }
 
-.card.home p{
+.card.home p {
     position: relative;
     margin: .3em;
 }
@@ -198,10 +213,11 @@ h1.home{
     display: flex;
     opacity: 0;
     flex-wrap: wrap;
-    gap: 10px;
-    background-color: var(--darkmode-header);
+    gap: 5px;
+    background-color: rgba(64,64,64,0.8);
     border-radius: 10px;
-    margin: 10px;
+    margin: 10px 5px;
+    padding: 5px;
     transition: all 0.25s ease;
 }
 
@@ -211,4 +227,12 @@ h1.home{
     background-color: #D9D9D9;
     text-decoration: none;
     color: var(--darkmode-darktext);
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+}
+
+.nav-icon {
+    font-size: 48px;
 }

@@ -131,7 +131,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # TODO: Change to necessary path
-LOGIN_REDIRECT_URL = '/sandbox/'
+LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/accounts/login/'
 
 # Default primary key field type
