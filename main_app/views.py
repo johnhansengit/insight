@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+from django.http import JsonResponse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, View
 from .forms import SignUpForm
-from .models import UserSettings, DailyEntry
+from .models import UserSettings, DailyEntry, Emotion
 
 
 # Create your views here.
@@ -65,3 +66,23 @@ class DailyEntryDelete(DeleteView):
     model = DailyEntry
     success_url = '/daily-entries'
 
+# Emotions Views
+class EmotionsDataView(View):
+    def get(self, request):
+        # Step 1: Query all Emotion objects with no parent (top-level emotions)
+        top_level_emotions = Emotion.objects.filter(parent__isnull=True)
+
+        # Step 2 & 3: For each top-level emotion, get its children and their children
+        emotions_data = [self.get_emotion_data(emotion) for emotion in top_level_emotions]
+
+        return JsonResponse(emotions_data, safe=False)
+
+    def get_emotion_data(self, emotion):
+        data = {
+            'name': emotion.name,
+            'color': emotion.color,
+            'timeline_color': emotion.timeline_color,
+            'children': [self.get_emotion_data(child) for child in Emotion.objects.filter(parent=emotion.id)]
+        }
+        return data
+    
