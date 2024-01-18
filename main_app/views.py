@@ -1,9 +1,10 @@
+from datetime import date, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView
 from .forms import SignUpForm
-from .models import UserSettings, DailyEntry
+from .models import UserSettings, DailyEntry, Emotion
 
 
 # Create your views here.
@@ -13,6 +14,38 @@ def home(request):
 
 def sandbox(request):
     return render(request, "sandbox.html")
+
+
+def timeline(request):
+    daily_entries = DailyEntry.objects.filter(user=request.user.profile).prefetch_related('emotion')
+
+    if not daily_entries.exists():
+        return render(request, "timeline.html", {})
+
+    oldest_entry = daily_entries.earliest('date').date
+    today = date.today()
+    delta = today - oldest_entry
+    date_list = [today - timedelta(days=i) for i in range(delta.days + 1)]
+
+    emotion_categories = Emotion.objects.filter(
+        parent__isnull=False, 
+        parent__parent__isnull=True
+    ).values_list('name', flat=True).distinct()
+
+    emotions_by_date = {}
+    for entry in daily_entries:
+        emotion_set = set()
+        for emotion in entry.emotion.all():
+            emotion_set.add(emotion.name)
+            if emotion.parent:
+                emotion_set.add(emotion.parent.name)
+        emotions_by_date[entry.date] = emotion_set
+
+    return render(request, "timeline.html", {
+        'date_list': date_list,
+        'emotion_categories': emotion_categories,
+        'emotions_by_date': emotions_by_date,
+    })
 
 
 def signup(request):
