@@ -23,4 +23,7 @@ urlpatterns = [
   
   # Emotion URLs
   path('api/emotions/', views.EmotionsDataView.as_view(), name='emotions-data'),
+
+  #Timeline URLs
+  path('timeline/', views.timeline, name='timeline'),
 ]
