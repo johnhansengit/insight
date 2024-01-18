@@ -23,7 +23,7 @@ def create_user_profile(sender, instance, created, **kwargs):
 
 class Emotion(models.Model):
     name = models.CharField(max_length=20)
-    parent = models.ForeignKey('self', null=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True)
     color = models.CharField(max_length = 20)
 
 
