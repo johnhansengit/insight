@@ -106,11 +106,6 @@ canvas:hover {
     font-size: 36px;
 }
 
-.hamburger {
-    font-size: 36px;
-    color: var(--darkmode-lighttext);
-}
-
 .card {
     background-color: var(--darkmode-card);
     transition: all .25s ease;
@@ -122,4 +117,31 @@ canvas:hover {
 
 .toggle-off {
     background-color: ;
+}
+
+#hamburger-menu {
+    font-size: 36px;
+    color: var(--darkmode-lighttext);
+    cursor: pointer;
+}
+
+#nav-grid {
+    position: absolute;
+    right: 0;
+    width: 25vw;
+    display: flex;
+    opacity: 0;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: var(--darkmode-header);
+    border-radius: 10px;
+    margin: 10px;
+    transition: all 0.25s ease;
+}
+
+#nav-grid a {
+    margin: 5px;
+    border-radius: 5px;
+    background-color: #D9D9D9;
+    text-decoration: none;
 }
