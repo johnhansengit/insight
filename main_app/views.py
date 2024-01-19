@@ -52,7 +52,7 @@ def timeline(request):
             for field_name in field_names:
                 if getattr(user_settings, field_name, False):
                     tracked_lifestyles.append(friendly_term)
-                    break  # Break out of the inner loop if any field is true
+                    break
     
     # Get selected lifestyle from form
     selected_lifestyle = request.POST.get('lifestyle-selector', None)
@@ -72,7 +72,6 @@ def timeline(request):
 
     for entry_date in date_list:
         emotion_set = set()
-        lifestyle_tracked = False
 
         for entry in daily_entries.filter(date=entry_date):
             for emotion in entry.emotion.all():
@@ -83,16 +82,10 @@ def timeline(request):
 
             for friendly_term, field_names in settings_mapping.items():
                 if selected_lifestyle == friendly_term:
-                    for field_name in field_names:
-                        if getattr(user_settings, field_name, False):
-                            lifestyle_tracked = True
-                            break
-                    if lifestyle_tracked:
-                        break 
+                    lifestyle_by_date.append({'date': entry_date, 'lifestyle': friendly_term, 'value': getattr(entry, field_names[1], None)})
+                    break
 
         emotions_by_date.append({'date': entry_date, 'emotions': list(emotion_set)})
-        if lifestyle_tracked:
-            lifestyle_by_date.append({'date': entry_date, 'lifestyle': selected_lifestyle})
 
     print(lifestyle_by_date)    
     return render(request, "timeline.html", {
@@ -101,6 +94,7 @@ def timeline(request):
         'emotions_by_date': emotions_by_date,
         'render_timeline': render_timeline,
         'tracked_lifestyles': tracked_lifestyles,
+        'selected_lifestyle': selected_lifestyle,
         'lifestyle_by_date': lifestyle_by_date,
         'title': 'Timeline'
     })

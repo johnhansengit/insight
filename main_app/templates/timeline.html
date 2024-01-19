@@ -45,7 +45,24 @@
         </div>
         <div id="lifestyle-timeline">
             <table id="lifestyle-table">
-
+                <thead>
+                    <tr>
+                        <td>{{ selected_lifestyle }}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for date in date_list %}
+                        <tr>
+                            {% with lifestyle_value=lifestyle_by_date|get_lifestyle:date %}
+                                {% if lifestyle_value %}
+                                    <td>{{ lifestyle_value }}</td>
+                                {% else %}
+                                    <td></td>
+                                {% endif %}
+                            {% endwith %}
+                        </tr>
+                    {% endfor %}
+                </tbody>                
             </table>
         </div>
     </section>
