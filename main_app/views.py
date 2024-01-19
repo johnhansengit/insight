@@ -20,17 +20,47 @@ def sandbox(request):
 
 
 def timeline(request):
+    # Get emotion categories for table header
     emotion_categories = Emotion.objects.filter(
         parent__isnull=False, 
         parent__parent__isnull=True
     )
     
+    # Get user settings for dropdown
+    user_settings = UserSettings.objects.filter(user=request.user.id).first()
+    
+    settings_mapping = {
+    'Counseling': ['track_counseling', 'has_had_counseling'],
+    'Spirituality': ['track_spirituality', 'has_engaged_spiritually'],
+    'Sleep': ['track_sleep', 'sleep_quality_rating'],
+    'Stress': ['track_stress', 'stress_rating'],
+    'Physical Health': ['track_physical_health', 'physical_health_rating'],
+    'Medication': ['track_meds', 'has_taken_meds'],
+    'Sunshine': ['track_sunshine', 'has_gotten_sunshine'],
+    'Ate Healthy': ['track_eating_healthily', 'has_eaten_healthily'],
+    'Connected': ['track_connecting_socially', 'has_connected_socially'],
+    'Exercise': ['track_exercise', 'has_exercised'],
+    'Substances': ['track_substances', 'has_used_substances'],
+    'Hydrated': ['track_hydrated', 'has_properly_hydrated'],
+    'Menstruation': ['track_menstruation', 'has_menstruated']
+    }
+
+    tracked_lifestyles = []
+
+    if user_settings:
+        for friendly_term, field_names in settings_mapping.items():
+            for field_name in field_names:
+                if getattr(user_settings, field_name, False):
+                    tracked_lifestyles.append(friendly_term)
+                    break  # Break out of the inner loop if any field is true
+    
+    # Get selected lifestyle from form
+    selected_lifestyle = request.POST.get('lifestyle-selector', None)
+    
+    # Get user data for tables
     daily_entries = DailyEntry.objects.filter(user=request.user.id)
     
-    if daily_entries.exists():
-        render_timeline = True;
-    else:
-        render_timeline = False;
+    render_timeline = daily_entries.exists()
 
     oldest_entry = daily_entries.order_by('date').first()
     today = date.today()
@@ -38,24 +68,50 @@ def timeline(request):
     date_list = [today - timedelta(days=i) for i in range(delta.days + 1)]
 
     emotions_by_date = []
+    lifestyle_by_date = []
+
     for entry_date in date_list:
         emotion_set = set()
+        lifestyle_tracked = False
+
         for entry in daily_entries.filter(date=entry_date):
             for emotion in entry.emotion.all():
                 if emotion.parent.parent is None:
                     emotion_set.add(emotion.name)
                 else:
                     emotion_set.add(emotion.parent.name)
-        emotions_by_date.append({'date': entry_date, 'emotions': list(emotion_set)})
 
+            for friendly_term, field_names in settings_mapping.items():
+                if selected_lifestyle == friendly_term:
+                    for field_name in field_names:
+                        if getattr(user_settings, field_name, False):
+                            lifestyle_tracked = True
+                            break
+                    if lifestyle_tracked:
+                        break 
+
+        emotions_by_date.append({'date': entry_date, 'emotions': list(emotion_set)})
+        if lifestyle_tracked:
+            lifestyle_by_date.append({'date': entry_date, 'lifestyle': selected_lifestyle})
+
+    print(lifestyle_by_date)    
     return render(request, "timeline.html", {
         'date_list': date_list,
         'emotion_categories': emotion_categories,
         'emotions_by_date': emotions_by_date,
         'render_timeline': render_timeline,
+        'tracked_lifestyles': tracked_lifestyles,
+        'lifestyle_by_date': lifestyle_by_date,
         'title': 'Timeline'
     })
 
+
+def process_lifestyle_selector(request):
+    if request.method == 'POST':
+        return timeline(request)
+    else:
+        return redirect('timeline')
+    
 
 def signup(request):
     if request.method == "POST":
@@ -72,6 +128,7 @@ def signup(request):
     form = SignUpForm()
     context = {"form": form}
     return render(request, "registration/signup.html", context)
+
 
 # Mixins
 class TitleMixin:

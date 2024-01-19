@@ -293,6 +293,16 @@ h1.home {
     border: 1px solid grey;
 }
 
+.cta {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin: 10px;
+}
+
+.cta .card {
+    margin: 0;
+}
 .journal-entries-container {
     display: flex;
     flex-direction: column;
