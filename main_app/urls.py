@@ -10,8 +10,7 @@ urlpatterns = [
   path('accounts/signup/', views.signup, name='signup'),
   
   # User Settings URLs
-  path('user-settings/', views.UserSettingsRead.as_view(), name='user-settings-read'),
-  path('user-settings/update', views.UserSettingsUpdate.as_view(), name='user-settings-update'),
+  path('user-settings/', views.UserSettingsUpdate.as_view(), name='user-settings-update'),
 
   # Daily Entry URLs
   path('daily-entries/', views.DailyEntryList.as_view(), name='daily-entry-list'),

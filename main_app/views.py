@@ -76,6 +76,8 @@ def signup(request):
 class TitleMixin:
     title = None
 
+# User Settings Views
+class UserSettingsUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.title is not None:
@@ -99,7 +101,7 @@ class UserSettingsUpdate(TitleMixin, UpdateView):
     title = 'Settings'
     form_class = UserSettingsForm
     template_name = 'main_app/user-settings-form.html'
-    success_url = '/user-settings/'
+    success_url = '/'
 
     def get_object(self):
         """ Override to get the settings object for the current user. """
