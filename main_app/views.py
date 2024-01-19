@@ -70,21 +70,11 @@ def signup(request):
 
 
 # User Settings Views
-class UserSettingsRead(DetailView):
-    model = UserSettings
-    template_name = 'main_app/user-settings.html'
-
-    def get_object(self):
-        """ Override to get the settings object for the current user. """
-        profile = get_object_or_404(Profile, user=self.request.user)
-        return get_object_or_404(UserSettings, user=profile)
-    
-
 class UserSettingsUpdate(UpdateView):
     model = UserSettings
     form_class = UserSettingsForm
     template_name = 'main_app/user-settings-form.html'
-    success_url = '/user-settings/'
+    success_url = '/'
 
     def get_object(self):
         """ Override to get the settings object for the current user. """
