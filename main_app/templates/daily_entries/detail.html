@@ -93,14 +93,37 @@
             </div>
         {% endif %}
     </div>
-    <p>
-        {{ dailyentry.journal_entry }}
-    </p>
+    
+    <div id="journal-entry">
+        <p>Journal entry:
+            <button id="journal-entry-show-more-btn" onclick="showJournalEntry()">Show</button>
+        </p>
+        <div class="" id="journal-entry-text">
+            {{ dailyentry.journal_entry|linebreaks }}
+        </div>
+    </div>
 </div>
 
 <div id="log-footer">
     <a class="log-foot link" id="edit" href="{% url 'daily-entry-update' dailyentry.id %}">EDIT</a>
     <a class="log-foot link" id="delete" href="{% url 'daily-entry-delete' dailyentry.id %}">DELETE</a>
 </div>
+
+<script>
+    var jrnlText = document.getElementById("journal-entry-text");
+    jrnlText.style.display = "none";
+    function showJournalEntry() {
+        var btnText = document.getElementById("journal-entry-show-more-btn");
+        console.log(jrnlText.style.display);
+        console.log("here");
+        if (jrnlText.style.display === "none") {
+            btnText.innerHTML = "Hide";
+            jrnlText.style.display = "block";
+        } else {
+            btnText.innerHTML = "Show";
+            jrnlText.style.display = "none";
+        }
+    }
+</script>
 
 {% endblock %}
