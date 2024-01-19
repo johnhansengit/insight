@@ -26,8 +26,10 @@ def timeline(request):
     
     daily_entries = DailyEntry.objects.filter(user=request.user.id)
     
-    if not daily_entries.exists():
-        return render(request, "timeline.html", {})
+    if daily_entries.exists():
+        render_timeline = True;
+    else:
+        render_timeline = False;
 
     oldest_entry = daily_entries.order_by('date').first()
     today = date.today()
@@ -49,6 +51,7 @@ def timeline(request):
         'date_list': date_list,
         'emotion_categories': emotion_categories,
         'emotions_by_date': emotions_by_date,
+        'render_timeline': render_timeline,
         'title': 'Timeline'
     })
 

@@ -3,6 +3,8 @@
 
 {% load custom_filters %}
 
+{% if render_timeline %}
+
     <section id="timeline">
         <div id="lifestyle-selector">
 
@@ -40,9 +42,12 @@
         </div>
     </section>
 
-<section class="cta">
-    
+{% endif %}
 
+<section class="cta">
+    <div class="card"></div>
+    <div class="card"></div>
+    <div class="card"></div>
 </section>
 
 {% endblock %}
