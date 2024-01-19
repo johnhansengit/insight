@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
 
+<div id="log-header">
+    <div class="log-head" id="day-of-week">{{ dailyentry.date|date:"D" }}</div>
+    <div class="log-head" id="date">
+        {{ dailyentry.date|date:"M" }}
+        {{ dailyentry.date|date:"j" }},
+        {{ dailyentry.date|date:"Y" }}
+    </div>
+    <div class="log-head" id="date-picker">
+        {% comment %} TODO: integrate calendar date picker {% endcomment %}
+    </div>
+</div>
+
 <div id="log-cards">
     {% if user_settings.track_sleep and dailyentry.sleep_quality_rating != null %}
         <div class="logger card" id="sleep-quality">Sleep quality:
