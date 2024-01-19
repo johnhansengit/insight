@@ -22,13 +22,13 @@
     
     {% if user_settings.track_stress and dailyentry.stress_rating != null %}
         <div class="logger card" id="stress-rating">Stress:
-            <input type="range" min="1" max="10" value="{% if dailyentry.stress_rating != null %}{{ dailyentry.stress_rating }}{% else %}1{% endif %}" disabled>
+            <input type="range" min="1" max="5" value="{% if dailyentry.stress_rating != null %}{{ dailyentry.stress_rating }}{% else %}1{% endif %}" disabled>
         </div>
     {% endif %}
     
     {% if user_settings.track_physical_health and dailyentry.physical_health_rating != null %}
         <div class="logger card" id="physical-health-rating">Physical health:
-            <input type="range" min="1" max="10" value="{% if dailyentry.physical_health_rating != null %}{{ dailyentry.physical_health_rating }}{% else %}1{% endif %}" disabled>
+            <input type="range" min="1" max="5" value="{% if dailyentry.physical_health_rating != null %}{{ dailyentry.physical_health_rating }}{% else %}1{% endif %}" disabled>
         </div>
     {% endif %}
     
@@ -91,6 +91,15 @@
             <input type="checkbox" {% if dailyentry.has_menstruated == True %}checked{% endif %} disabled>
         </div>
     {% endif %}
+</div>
+
+<p>
+    {{ dailyentry.journal_entry }}
+</p>
+
+<div id="log-footer">
+    <a class="log-foot link" id="edit" href="{% url 'daily-entry-update' dailyentry.id %}">EDIT</a>
+    <a class="log-foot link" id="delete" href="{% url 'daily-entry-delete' dailyentry.id %}">DELETE</a>
 </div>
 
 {% endblock %}
