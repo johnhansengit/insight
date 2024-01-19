@@ -130,6 +130,7 @@ canvas:hover {
     height: 8em;
     margin: 1em;
     border-radius: .4em;
+    color: var(--darkmode-darktext);
 }
 
 .card:hover {
@@ -302,4 +303,60 @@ h1.home{
 
 .cta .card {
     margin: 0;
+}
+
+#log-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: var(--darkmode-header);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.log-foot {
+    background-color: var(--darkmode-background);
+    color: var(--darkmode-lighttext);
+    text-decoration: none;
+    font-size: 14px;
+    padding: .5em 1em .5em 1em;
+    margin-bottom: 1em;
+    border-radius: .4em;
+    text-decoration: none;
+    height: 2em;
+}
+
+#log-main {
+    margin-bottom: 3em;
+}
+
+#journal-entry {
+    margin: 1em;
+    margin-bottom: 2em;
+    padding: .5em 1em .5em 1em;
+    background-color: var(--darkmode-card);
+    color: var(--darkmode-darktext);
+    border-radius: 8px;
+}
+
+#journal-entry-show-more-btn {
+    display: inline;
+    border: .12em solid var(--darkmode-darktext);
+    background-color: var(--darkmode-card);
+    color: var(--darkmode-background);
+    border-radius: .4em;
+    cursor: pointer;
+    margin-left: 1em;
+    font-size: large;
+}
+
+#journal-entry-text {
+    background-color: var(--darkmode-darktext);
+    color: var(--darkmode-lighttext);
+    border-radius: 0 0 .4em .4em;
+    padding: .2em 1em .3em 1em;
 }
