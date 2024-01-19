@@ -13,89 +13,90 @@
     </div>
 </div>
 
-<div id="log-cards">
-    {% if user_settings.track_sleep and dailyentry.sleep_quality_rating != null %}
-        <div class="logger card" id="sleep-quality">Sleep quality:
-            <input type="range" min="1" max="5" value="{% if dailyentry.sleep_quality_rating != null %}{{ dailyentry.sleep_quality_rating }}{% else %}1{% endif %}" disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_stress and dailyentry.stress_rating != null %}
-        <div class="logger card" id="stress-rating">Stress:
-            <input type="range" min="1" max="5" value="{% if dailyentry.stress_rating != null %}{{ dailyentry.stress_rating }}{% else %}1{% endif %}" disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_physical_health and dailyentry.physical_health_rating != null %}
-        <div class="logger card" id="physical-health-rating">Physical health:
-            <input type="range" min="1" max="5" value="{% if dailyentry.physical_health_rating != null %}{{ dailyentry.physical_health_rating }}{% else %}1{% endif %}" disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_meds and dailyentry.has_taken_meds != null %}
-        <div class="logger card" id="has-taken-meds">Took meds:
-            <input type="checkbox" {% if dailyentry.has_taken_meds == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_sunshine and dailyentry.has_gotten_sunshine != null %}
-        <div class="logger card" id="has-gotten-sunshine">Got sunshine:
-            <input type="checkbox" {% if dailyentry.has_gotten_sunshine == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_eating_healthily and dailyentry.has_eaten_healthily != null %}
-        <div class="logger card" id="has-eaten-healthily">Ate healthily:
-            <input type="checkbox" {% if dailyentry.has_eaten_healthily == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_connecting_socially and dailyentry.has_connected_socially != null %}
-        <div class="logger card" id="has-connected-socially">Connected socially:
-            <input type="checkbox" {% if dailyentry.has_connected_socially == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_exercise and dailyentry.has_exercised != null %}
-        <div class="logger card" id="has-exercised">Exercised:
-            <input type="checkbox" {% if dailyentry.has_exercised == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_substances and dailyentry.has_used_substances != null %}
-        <div class="logger card" id="has-used-substances">Used substances:
-            <input type="checkbox" {% if dailyentry.has_used_substances == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_counseling and dailyentry.has_had_counseling != null %}
-        <div class="logger card" id="has-had-counseling">Had counseling:
-            <input type="checkbox" {% if dailyentry.has_had_counseling == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_hydrated and dailyentry.has_properly_hydrated != null %}
-        <div class="logger card" id="has-properly-hydrated">Properly hydrated:
-            <input type="checkbox" {% if dailyentry.has_properly_hydrated == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_spirituality and dailyentry.has_engaged_spiritually != null %}
-        <div class="logger card" id="has-engaged-spiritually">Engaged spiritually:
-            <input type="checkbox" {% if dailyentry.has_engaged_spiritually == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
-    
-    {% if user_settings.track_menstruation and dailyentry.has_menstruated != null %}
-        <div class="logger card" id="has-menstruated">Menstruated:
-            <input type="checkbox" {% if dailyentry.has_menstruated == True %}checked{% endif %} disabled>
-        </div>
-    {% endif %}
+<div id="log-main">
+    <div id="log-cards">
+        {% if user_settings.track_sleep and dailyentry.sleep_quality_rating != null %}
+            <div class="logger card" id="sleep-quality">Sleep quality:
+                <input type="range" min="1" max="5" value="{% if dailyentry.sleep_quality_rating != null %}{{ dailyentry.sleep_quality_rating }}{% else %}1{% endif %}" disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_stress and dailyentry.stress_rating != null %}
+            <div class="logger card" id="stress-rating">Stress:
+                <input type="range" min="1" max="5" value="{% if dailyentry.stress_rating != null %}{{ dailyentry.stress_rating }}{% else %}1{% endif %}" disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_physical_health and dailyentry.physical_health_rating != null %}
+            <div class="logger card" id="physical-health-rating">Physical health:
+                <input type="range" min="1" max="5" value="{% if dailyentry.physical_health_rating != null %}{{ dailyentry.physical_health_rating }}{% else %}1{% endif %}" disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_meds and dailyentry.has_taken_meds != null %}
+            <div class="logger card" id="has-taken-meds">Took meds:
+                <input type="checkbox" {% if dailyentry.has_taken_meds == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_sunshine and dailyentry.has_gotten_sunshine != null %}
+            <div class="logger card" id="has-gotten-sunshine">Got sunshine:
+                <input type="checkbox" {% if dailyentry.has_gotten_sunshine == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_eating_healthily and dailyentry.has_eaten_healthily != null %}
+            <div class="logger card" id="has-eaten-healthily">Ate healthily:
+                <input type="checkbox" {% if dailyentry.has_eaten_healthily == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_connecting_socially and dailyentry.has_connected_socially != null %}
+            <div class="logger card" id="has-connected-socially">Connected socially:
+                <input type="checkbox" {% if dailyentry.has_connected_socially == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_exercise and dailyentry.has_exercised != null %}
+            <div class="logger card" id="has-exercised">Exercised:
+                <input type="checkbox" {% if dailyentry.has_exercised == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_substances and dailyentry.has_used_substances != null %}
+            <div class="logger card" id="has-used-substances">Used substances:
+                <input type="checkbox" {% if dailyentry.has_used_substances == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_counseling and dailyentry.has_had_counseling != null %}
+            <div class="logger card" id="has-had-counseling">Had counseling:
+                <input type="checkbox" {% if dailyentry.has_had_counseling == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_hydrated and dailyentry.has_properly_hydrated != null %}
+            <div class="logger card" id="has-properly-hydrated">Properly hydrated:
+                <input type="checkbox" {% if dailyentry.has_properly_hydrated == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_spirituality and dailyentry.has_engaged_spiritually != null %}
+            <div class="logger card" id="has-engaged-spiritually">Engaged spiritually:
+                <input type="checkbox" {% if dailyentry.has_engaged_spiritually == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+        
+        {% if user_settings.track_menstruation and dailyentry.has_menstruated != null %}
+            <div class="logger card" id="has-menstruated">Menstruated:
+                <input type="checkbox" {% if dailyentry.has_menstruated == True %}checked{% endif %} disabled>
+            </div>
+        {% endif %}
+    </div>
+    <p>
+        {{ dailyentry.journal_entry }}
+    </p>
 </div>
-
-<p>
-    {{ dailyentry.journal_entry }}
-</p>
 
 <div id="log-footer">
     <a class="log-foot link" id="edit" href="{% url 'daily-entry-update' dailyentry.id %}">EDIT</a>
