@@ -18,32 +18,33 @@ def sandbox(request):
 
 
 def timeline(request):
-    daily_entries = DailyEntry.objects.filter(user_id=request.user.id).prefetch_related('emotion')
-
-    if not daily_entries.exists():
-        return render(request, "timeline.html", {})
-
-    oldest_entry = daily_entries.earliest('date').date
-    today = date.today()
-    delta = today - oldest_entry
-    date_list = [today - timedelta(days=i) for i in range(delta.days + 1)]
-
     emotion_categories = Emotion.objects.filter(
         parent__isnull=False, 
         parent__parent__isnull=True
-    ).values_list('name', flat=True).distinct()
+    )
+    
+    daily_entries = DailyEntry.objects.filter(user=request.user.id)
+    
+    # if not daily_entries.exists():
+    #     return render(request, "timeline.html", {})
+
+    oldest_entry = daily_entries.order_by('date').first()
+    today = date.today()
+    delta = today - oldest_entry.date  # Make sure to use the date field
+    date_list = [today - timedelta(days=i) for i in range(delta.days + 1)]
 
     emotions_by_date = []
     for entry_date in date_list:
-        emotion_dict = {emotion: False for emotion in emotion_categories}
+        emotion_set = set()
         for entry in daily_entries.filter(date=entry_date):
             for emotion in entry.emotion.all():
-                if emotion.name in emotion_dict:
-                    emotion_dict[emotion.name] = True
-                if emotion.parent and emotion.parent.name in emotion_dict:
-                    emotion_dict[emotion.parent.name] = True
-        emotions_by_date.append({'date': entry_date, 'emotions': emotion_dict})
+                if emotion.parent.parent is None:
+                    emotion_set.add(emotion.name)
+                else:
+                    emotion_set.add(emotion.parent.name)
+        emotions_by_date.append({'date': entry_date, 'emotions': list(emotion_set)})
 
+    print(emotions_by_date)
 
     return render(request, "timeline.html", {
         'date_list': date_list,

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-{% comment %} {% if daily_entries.exists() %} {% endcomment %}
+{% load custom_filters %}
 
     <section class="timeline">
         <div id="lifestyle-selector">
@@ -10,20 +10,20 @@
         <div id="emotions-timeline">
             <table id="emotions-table">
                 <thead>
-                    <th>
+                    <tr>
                         <td></td>
-                        {% for category in emotion_categories %}
-                            <td style="background-color: {{ category.timeline_color }};"></td>
+                        {% for emotion in emotion_categories %}
+                            <td style="background-color: {{ emotion.timeline_color }};"></td>
                         {% endfor %}
-                    </th>
+                    </tr>
                 </thead>
                 <tbody>
                     {% for date in date_list %}
                         <tr>
                             <td>{{ date }}</td>
-                            {% for category in emotion_categories %}
-                                {% if entry.emotions.category %}
-                                    <td style="background-color: {{ category.timeline_color }};"></td>
+                            {% for emotion in emotion_categories %}
+                                {% if emotion.name in emotions_by_date|get_emotions:date %}
+                                    <td style="background-color: {{ emotion.timeline_color }};"></td>
                                 {% else %}
                                     <td></td>
                                 {% endif %}
@@ -39,8 +39,6 @@
             </table>
         </div>
     </section>
-
-{% comment %} {% endif %} {% endcomment %}
 
 <section class="cta">
 
