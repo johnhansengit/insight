@@ -8,6 +8,7 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import get_object_or_404
 from .forms import SignUpForm, UserSettingsForm
 from .models import UserSettings, DailyEntry, Emotion, Profile
+from django.urls import reverse_lazy
 
 
 # Create your views here.
@@ -188,8 +189,15 @@ class DailyEntryCreate(TitleMixin, CreateView):
 
 
 class DailyEntryRead(TitleMixin, DetailView):
-    model = DailyEntry
     title = 'Log'
+    model = DailyEntry
+    template_name = 'daily_entries/detail.html'
+    success_url = reverse_lazy('daily_entry_detail')
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user_settings'] = UserSettings.objects.filter(user_id=self.request.user.id).first()
+        return context
 
 
 class DailyEntryUpdate(TitleMixin, UpdateView):

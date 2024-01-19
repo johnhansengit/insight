@@ -66,3 +66,4 @@ Coming soon!
 - Code Snippets:
   - Advanced User Sign Up View: [Reverse Python](https://dev.to/thedevtimeline/create-advanced-user-sign-up-view-in-django-step-by-step-k9m)
   - Form submit using `<a>` tag: [krystan honour - Stack Overflow](https://stackoverflow.com/questions/10039968/submit-form-using-a-tag)
+  - More/Less button: [W3 Schools](https://www.w3schools.com/howto/howto_js_read_more.asp)
