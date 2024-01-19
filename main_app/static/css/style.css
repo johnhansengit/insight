@@ -292,3 +292,14 @@ h1.home{
 #emotions-table td:not(:first-child) {
     border: 1px solid grey;
 }
+
+.cta {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin: 10px;
+}
+
+.cta .card {
+    margin: 0;
+}
