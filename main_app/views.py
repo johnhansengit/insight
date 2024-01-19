@@ -4,8 +4,9 @@ from django.contrib.auth import login
 from django.http import JsonResponse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView, View
-from .forms import SignUpForm
-from .models import UserSettings, DailyEntry, Emotion
+from django.shortcuts import get_object_or_404
+from .forms import SignUpForm, UserSettingsForm
+from .models import UserSettings, DailyEntry, Emotion, Profile
 
 
 # Create your views here.
@@ -70,16 +71,27 @@ def signup(request):
 
 
 # User Settings Views
-class UserSettingsCreate(CreateView):
-    model = UserSettings
-    
-    
 class UserSettingsRead(DetailView):
     model = UserSettings
+    template_name = 'main_app/user-settings.html'
+
+    def get_object(self):
+        """ Override to get the settings object for the current user. """
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return get_object_or_404(UserSettings, user=profile)
     
-    
+
 class UserSettingsUpdate(UpdateView):
     model = UserSettings
+    form_class = UserSettingsForm
+    template_name = 'main_app/user-settings-form.html'
+    success_url = '/user-settings/'
+
+    def get_object(self):
+        """ Override to get the settings object for the current user. """
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return get_object_or_404(UserSettings, user=profile)
+
 
 # Daily Entry Views
 class DailyEntryList(ListView):

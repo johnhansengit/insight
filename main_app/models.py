@@ -12,6 +12,9 @@ class Profile(models.Model):
     email = models.EmailField(max_length=254)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} | ID: {self.user.id}"
 
 
 @receiver(post_save, sender=User)
@@ -75,3 +78,8 @@ class UserSettings(models.Model):
     def __str__(self):
         return f"{self.user.first_name}'s settings | ID: {self.id}"
     
+# Signal to create UserSettings when a new Profile is created
+@receiver(post_save, sender=Profile)
+def create_user_settings(sender, instance, created, **kwargs):
+    if created:
+        UserSettings.objects.create(user=instance)
