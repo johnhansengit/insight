@@ -4,14 +4,15 @@ from django.contrib.auth import login
 from django.http import JsonResponse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView, View
-from .forms import SignUpForm
-from .models import UserSettings, DailyEntry, Emotion
+from django.shortcuts import get_object_or_404
+from .forms import SignUpForm, UserSettingsForm
+from .models import UserSettings, DailyEntry, Emotion, Profile
 from django.urls import reverse_lazy
 
 
 # Create your views here.
 def home(request):
-    return render(request, "home.html")
+    return render(request, "home.html", {'title': 'Welcome'})
 
 
 def sandbox(request):
@@ -49,6 +50,7 @@ def timeline(request):
         'date_list': date_list,
         'emotion_categories': emotion_categories,
         'emotions_by_date': emotions_by_date,
+        'title': 'Timeline'
     })
 
 
@@ -68,29 +70,52 @@ def signup(request):
     context = {"form": form}
     return render(request, "registration/signup.html", context)
 
+# Mixins
+class TitleMixin:
+    title = None
 
-# User Settings Views
-class UserSettingsCreate(CreateView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.title is not None:
+            context['title'] = self.title
+        return context
+
+# User Settings Views   
+class UserSettingsRead(TitleMixin, DetailView):
     model = UserSettings
+    title = 'Settings'
+    template_name = 'main_app/user-settings.html'
+
+    def get_object(self):
+        """ Override to get the settings object for the current user. """
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return get_object_or_404(UserSettings, user=profile)
     
     
-class UserSettingsRead(DetailView):
+class UserSettingsUpdate(TitleMixin, UpdateView):
     model = UserSettings
-    
-    
-class UserSettingsUpdate(UpdateView):
-    model = UserSettings
+    title = 'Settings'
+    form_class = UserSettingsForm
+    template_name = 'main_app/user-settings-form.html'
+    success_url = '/user-settings/'
+
+    def get_object(self):
+        """ Override to get the settings object for the current user. """
+        profile = get_object_or_404(Profile, user=self.request.user)
+        return get_object_or_404(UserSettings, user=profile)
 
 # Daily Entry Views
-class DailyEntryList(ListView):
+class DailyEntryList(TitleMixin, ListView):
     model = DailyEntry
+    title = 'Log'
 
 
-class DailyEntryCreate(CreateView):
+class DailyEntryCreate(TitleMixin, CreateView):
     model = DailyEntry
+    title = 'Log'
 
 
-class DailyEntryRead(DetailView):
+class DailyEntryRead(TitleMixin, DetailView):
     model = DailyEntry
     template_name = 'daily_entries/detail.html'
     success_url = reverse_lazy('daily_entry_detail')
@@ -98,10 +123,12 @@ class DailyEntryRead(DetailView):
         context = super().get_context_data(**kwargs)
         context['user_settings'] = UserSettings.objects.filter(user_id=self.request.user.id).first()
         return context
+    title = 'Log'
 
 
-class DailyEntryUpdate(UpdateView):
+class DailyEntryUpdate(TitleMixin, UpdateView):
     model = DailyEntry
+    title = 'Log'
 
 
 class DailyEntryDelete(DeleteView):
@@ -127,4 +154,3 @@ class EmotionsDataView(View):
             'children': [self.get_emotion_data(child) for child in Emotion.objects.filter(parent=emotion.id)]
         }
         return data
-    

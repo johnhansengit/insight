@@ -282,6 +282,7 @@ h1.home{
 
 #emotions-table td:first-child {
     width: 100px;
+    padding-right: 5px;
 }
 
 #emotions-table td:not(:first-child) {
