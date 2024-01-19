@@ -1,15 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>{{ title }}</h2>
-  <ul>
-    {% for entry in entries %}
-        <div class="journal-card">
-            <h3>{{ entry.date }}</h3>
-            <p>{{ entry.journal_entry|truncatechars:50 }}</p>
-        </div>
-    {% empty %}
-      <li>No journal entries found.</li>
-    {% endfor %}
-  </ul>
+<div class="journal-entries-container">
+  {% for entry in entries %}
+    <div class="journal-entry-card">
+      <div class="journal-entry-date">{{ entry.date|date:"M d, Y" }}</div>
+      <div class="journal-entry-text">{{ entry.journal_entry|truncatechars:50 }}</div>
+    </div>
+  {% empty %}
+    <p>No journal entries found.</p>
+  {% endfor %}
+</div>
 {% endblock %}

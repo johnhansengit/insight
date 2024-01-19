@@ -76,6 +76,16 @@ def signup(request):
 # Mixins
 class TitleMixin:
     title = None
+    
+    def get_context_data(self, **kwargs):
+        # First, get the existing context from the superclass
+        context = super().get_context_data(**kwargs)
+        
+        # Add the title to the context
+        context['title'] = self.title
+        
+        # Return the updated context
+        return context
 
 # User Settings Views
 class UserSettingsUpdate(UpdateView):
