@@ -27,6 +27,9 @@ Insight is tailored for individuals who struggle to identify or articulate their
 
 - Django (Python)
 - Postgres (SQL)
+- Javascript
+- HTML5
+- CSS3
 
 #### **_GETTING STARTED_**
 
