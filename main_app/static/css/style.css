@@ -322,3 +322,30 @@ h1.home{
 #log-main {
     margin-bottom: 3em;
 }
+
+#journal-entry {
+    margin: 1em;
+    margin-bottom: 2em;
+    padding: .5em 1em .5em 1em;
+    background-color: var(--darkmode-card);
+    color: var(--darkmode-darktext);
+    border-radius: 8px;
+}
+
+#journal-entry-show-more-btn {
+    display: inline;
+    border: .12em solid var(--darkmode-darktext);
+    background-color: var(--darkmode-card);
+    color: var(--darkmode-background);
+    border-radius: .4em;
+    cursor: pointer;
+    margin-left: 1em;
+    font-size: large;
+}
+
+#journal-entry-text {
+    background-color: var(--darkmode-darktext);
+    color: var(--darkmode-lighttext);
+    border-radius: 0 0 .4em .4em;
+    padding: .2em 1em .3em 1em;
+}
