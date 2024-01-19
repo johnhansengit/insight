@@ -27,8 +27,10 @@ def timeline(request):
     
     daily_entries = DailyEntry.objects.filter(user=request.user.id)
     
-    if not daily_entries.exists():
-        return render(request, "timeline.html", {})
+    if daily_entries.exists():
+        render_timeline = True;
+    else:
+        render_timeline = False;
 
     oldest_entry = daily_entries.order_by('date').first()
     today = date.today()
@@ -50,6 +52,7 @@ def timeline(request):
         'date_list': date_list,
         'emotion_categories': emotion_categories,
         'emotions_by_date': emotions_by_date,
+        'render_timeline': render_timeline,
         'title': 'Timeline'
     })
 
@@ -74,6 +77,8 @@ def signup(request):
 class TitleMixin:
     title = None
 
+# User Settings Views
+class UserSettingsUpdate(UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.title is not None:
@@ -97,7 +102,7 @@ class UserSettingsUpdate(TitleMixin, UpdateView):
     title = 'Settings'
     form_class = UserSettingsForm
     template_name = 'main_app/user-settings-form.html'
-    success_url = '/user-settings/'
+    success_url = '/'
 
     def get_object(self):
         """ Override to get the settings object for the current user. """
