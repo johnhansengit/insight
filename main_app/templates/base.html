@@ -12,7 +12,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/pikaday.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script defer src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
 </head>
 
 <body>
@@ -24,13 +26,15 @@
       <div class="view-title header-center">View Title</div>
       <nav class="header-right" id="hamburger-menu">☰</div>
         <div id="nav-grid">
-          <a href="">Home</a>
+          <a href="/">Home</a>
           <a href=""><i class="bi bi-card-checklist nav-icon"></i>Logger</a>
-          <a href=""><i class="bi bi-calendar2-range nav-icon"></i>Timeline</a>
+          <a href="#" id="goToDateLink"><i class="bi bi-calendar2-date nav-icon"></i>Go to Date</a>
+          <a href="/timeline"><i class="bi bi-calendar2-range nav-icon"></i>Timeline</a>
           <a href=""><i class="bi bi-journal-bookmark nav-icon"></i> Journals</a>
           <a href=""><i class="bi bi-gear nav-icon"></i> Settings</a>
           <a href="javascript:{}" onclick="document.getElementById('logout-form').submit();">Logout</a>
         </div>
+        <div id="calendar" style="position: absolute; display: none;"></div>
       </nav>
     {% else %}
       <div class="logo header-center">Insight</div>
@@ -53,20 +57,69 @@
 </body>
 
 <script>
-  const hamburgerMenu = document.getElementById("hamburger-menu");
-  
-  hamburgerMenu.addEventListener("click", toggleNav);
-  hamburgerMenu.addEventListener("touch", toggleNav);
-
-  function toggleNav() {
+  document.addEventListener('DOMContentLoaded', function() {
+    const hamburgerMenu = document.getElementById("hamburger-menu");
     const navGrid = document.getElementById("nav-grid");
-    if (navGrid.style.opacity == '0' || navGrid.style.opacity == '') {
-      navGrid.style.opacity = '1';
-    } else {
-      navGrid.style.opacity = '0';
-    }
-  }
+    const goToDateLink = document.getElementById('goToDateLink');
+    const calendarPlaceholder = document.getElementById('calendar');
   
+    function toggleNav() {
+      if (navGrid.style.opacity == '0' || navGrid.style.opacity == '') {
+        navGrid.style.display = 'flex';
+        setTimeout(() => {
+          navGrid.style.opacity = '1';
+        }, 10);
+      } else {
+        navGrid.style.opacity = '0';
+        setTimeout(() => {
+          navGrid.style.display = 'none';
+        }, 250);
+      }
+    }
+  
+    hamburgerMenu.addEventListener("click", toggleNav);
+    hamburgerMenu.addEventListener("touch", toggleNav);
+  
+    document.addEventListener('click', function(event) {
+      const isClickInsideNav = navGrid.contains(event.target) || hamburgerMenu.contains(event.target);
+  
+      if (!isClickInsideNav) {
+        navGrid.style.opacity = '0';
+        setTimeout(() => {
+          navGrid.style.display = 'none';
+        }, 250);
+      }
+    });
+  
+    var picker;
+
+    goToDateLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (!picker) {
+            picker = new Pikaday({ 
+                field: calendarPlaceholder,
+                onSelect: function(date) {
+                    window.location.href = '/logger/' + date.toISOString().split('T')[0];
+                }
+            });
+        }
+
+        setTimeout(function() {
+            picker.show();
+            var pikaElement = document.getElementsByClassName('pika-single')[0];
+            pikaElement.style.visibility = 'hidden'; // Initially hide the calendar
+            setTimeout(function() {
+                pikaElement.style.left = 'auto';
+                pikaElement.style.right = '0px';
+                pikaElement.style.visibility = 'visible'; // Make the calendar visible after repositioning
+            }, 10);
+        }, 0);
+    });
+});
+  
+
 </script>
 
 </html>

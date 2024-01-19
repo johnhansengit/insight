@@ -209,8 +209,8 @@ h1.home{
 #nav-grid {
     position: absolute;
     right: 0;
-    width: 94px;
-    display: flex;
+    width: 110px;
+    display: none;
     opacity: 0;
     flex-wrap: wrap;
     gap: 5px;

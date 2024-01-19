@@ -19,7 +19,7 @@ def sandbox(request):
 
 
 def timeline(request):
-    daily_entries = DailyEntry.objects.filter(user=request.user.profile).prefetch_related('emotion')
+    daily_entries = DailyEntry.objects.filter(user_id=request.user.id).prefetch_related('emotion')
 
     if not daily_entries.exists():
         return render(request, "timeline.html", {})
@@ -34,14 +34,17 @@ def timeline(request):
         parent__parent__isnull=True
     ).values_list('name', flat=True).distinct()
 
-    emotions_by_date = {}
-    for entry in daily_entries:
-        emotion_set = set()
-        for emotion in entry.emotion.all():
-            emotion_set.add(emotion.name)
-            if emotion.parent:
-                emotion_set.add(emotion.parent.name)
-        emotions_by_date[entry.date] = emotion_set
+    emotions_by_date = []
+    for entry_date in date_list:
+        emotion_dict = {emotion: False for emotion in emotion_categories}
+        for entry in daily_entries.filter(date=entry_date):
+            for emotion in entry.emotion.all():
+                if emotion.name in emotion_dict:
+                    emotion_dict[emotion.name] = True
+                if emotion.parent and emotion.parent.name in emotion_dict:
+                    emotion_dict[emotion.parent.name] = True
+        emotions_by_date.append({'date': entry_date, 'emotions': emotion_dict})
+
 
     return render(request, "timeline.html", {
         'date_list': date_list,
