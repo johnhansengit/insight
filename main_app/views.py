@@ -10,7 +10,7 @@ from .models import UserSettings, DailyEntry, Emotion
 
 # Create your views here.
 def home(request):
-    return render(request, "home.html")
+    return render(request, "home.html", {'title': 'Welcome'})
 
 
 def sandbox(request):
@@ -48,6 +48,7 @@ def timeline(request):
         'date_list': date_list,
         'emotion_categories': emotion_categories,
         'emotions_by_date': emotions_by_date,
+        'title': 'Timeline'
     })
 
 
@@ -67,34 +68,50 @@ def signup(request):
     context = {"form": form}
     return render(request, "registration/signup.html", context)
 
+# Mixins
+class TitleMixin:
+    title = None
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.title is not None:
+            context['title'] = self.title
+        return context
 
 # User Settings Views
-class UserSettingsCreate(CreateView):
+class UserSettingsCreate(TitleMixin, CreateView):
     model = UserSettings
+    title = 'Settings'
     
     
-class UserSettingsRead(DetailView):
+class UserSettingsRead(TitleMixin, DetailView):
     model = UserSettings
+    title = 'Settings'
     
     
-class UserSettingsUpdate(UpdateView):
+class UserSettingsUpdate(TitleMixin, UpdateView):
     model = UserSettings
+    title = 'Settings'
 
 # Daily Entry Views
-class DailyEntryList(ListView):
+class DailyEntryList(TitleMixin, ListView):
     model = DailyEntry
+    title = 'Log'
 
 
-class DailyEntryCreate(CreateView):
+class DailyEntryCreate(TitleMixin, CreateView):
     model = DailyEntry
+    title = 'Log'
 
 
-class DailyEntryRead(DetailView):
+class DailyEntryRead(TitleMixin, DetailView):
     model = DailyEntry
+    title = 'Log'
 
 
-class DailyEntryUpdate(UpdateView):
+class DailyEntryUpdate(TitleMixin, UpdateView):
     model = DailyEntry
+    title = 'Log'
 
 
 class DailyEntryDelete(DeleteView):
@@ -120,4 +137,3 @@ class EmotionsDataView(View):
             'children': [self.get_emotion_data(child) for child in Emotion.objects.filter(parent=emotion.id)]
         }
         return data
-    
