@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="journal-entries-list-container">
+  {% for entry in entries %}
+    <div class="journal-entry-list-card">
+      <div class="journal-entry-list-date">{{ entry.date|date:"n/j/Y" }}</div>
+      <div class="journal-entry-list-text truncate-text">{{ entry.journal_entry }}</div>
+    </div>
+  {% empty %}
+    <p>No journal entries found.</p>
+  {% endfor %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const journalEntryCards = document.querySelectorAll('.journal-entry-list-card');
+  
+    journalEntryCards.forEach(function(card) {
+      card.addEventListener('click', function() {
+        const textDiv = card.querySelector('.journal-entry-list-text');
+        textDiv.classList.toggle('truncate-text');
+      });
+    });
+  });
+  
+</script>
+{% endblock %}
