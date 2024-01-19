@@ -1,6 +1,7 @@
 from datetime import date, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import JsonResponse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView, View
@@ -132,6 +133,17 @@ class DailyEntryUpdate(TitleMixin, UpdateView):
 class DailyEntryDelete(DeleteView):
     model = DailyEntry
     success_url = '/daily-entries'
+
+# Journal Views
+class JournalEntryList(LoginRequiredMixin, TitleMixin, ListView):
+    model = DailyEntry
+    template_name = 'main_app/journal-entries-list.html' 
+    title = 'Journal Entries'
+    context_object_name = 'entries'  # Name of the context variable in the template
+
+    def get_queryset(self):
+        """ Override to get journal entries for the current user. """
+        return DailyEntry.objects.filter(user__user=self.request.user).order_by('-date')
 
 # Emotions Views
 class EmotionsDataView(View):

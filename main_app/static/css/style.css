@@ -145,7 +145,7 @@ canvas:hover {
     background-color: ;
 }
 
-h1.home{
+h1.home {
     text-align: center;
 }
 
@@ -189,7 +189,7 @@ h1.home{
 }
 
 #home-journal:hover::before {
-    content: "Start a journal entry";
+    content: "View your journal entries";
 }
 
 #home-timeline:hover::before {
@@ -214,7 +214,7 @@ h1.home{
     opacity: 0;
     flex-wrap: wrap;
     gap: 5px;
-    background-color: rgba(64,64,64,0.8);
+    background-color: rgba(64, 64, 64, 0.8);
     border-radius: 10px;
     margin: 10px 5px;
     padding: 5px;
@@ -241,11 +241,11 @@ h1.home{
 
 #timeline {
     width: 100%;
-    padding: 10px; 
+    padding: 10px;
     display: grid;
     grid-template-columns: 75% 25%;
     grid-template-rows: auto auto;
-    grid-template-areas: 
+    grid-template-areas:
         ". lifestyle-selector"
         "emotions-timeline lifestyle-timeline";
     row-gap: 10px;
@@ -273,7 +273,7 @@ h1.home{
 }
 
 #emotions-table tr {
-    height: auto; 
+    height: auto;
 }
 
 #emotions-table thead tr {
@@ -286,9 +286,29 @@ h1.home{
 }
 
 #emotions-table td:not(:first-child) {
-    width: calc((100% - 100px) / 8); 
+    width: calc((100% - 100px) / 8);
 }
 
 #emotions-table td:not(:first-child) {
     border: 1px solid grey;
+}
+
+.journal-card {
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background-color: --darkmode-card;
+}
+
+.journal-card h5 {
+    margin-top: 0;
+    color: --darkmode-lighttext;
+}
+
+.journal-card p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: --darkmode-lighttext;
 }
