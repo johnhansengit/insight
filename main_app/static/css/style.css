@@ -360,3 +360,41 @@ h1.home {
     border-radius: 0 0 .4em .4em;
     padding: .2em 1em .3em 1em;
 }
+
+.journal-entries-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.journal-entry-list-card {
+    background-color: var(--darkmode-card);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    color: var(--darkmode-darktext);
+}
+
+.journal-entry-list-date {
+    text-align: center;
+    border-radius: 15px 15px 0 0;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin: -20px -20px 10px -20px;
+    color: var(--darkmode-darktext);
+    border-bottom: 2px solid #000;
+}
+
+.journal-entry-list-text {
+    text-align: center;
+    display: block;
+}
+
+.truncate-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
