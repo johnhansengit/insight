@@ -116,14 +116,15 @@ class DailyEntryCreate(TitleMixin, CreateView):
 
 
 class DailyEntryRead(TitleMixin, DetailView):
+    title = 'Log'
     model = DailyEntry
     template_name = 'daily_entries/detail.html'
     success_url = reverse_lazy('daily_entry_detail')
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user_settings'] = UserSettings.objects.filter(user_id=self.request.user.id).first()
         return context
-    title = 'Log'
 
 
 class DailyEntryUpdate(TitleMixin, UpdateView):
