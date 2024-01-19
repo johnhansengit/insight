@@ -58,6 +58,8 @@ Coming soon!
 
 #### **_CREDITS_**
 - Fonts: [Google Fonts](fonts.google.com)
+- Calendar: [Pikaday](https://github.com/Pikaday)
+- Icons: [Bootstrap](https://icons.getbootstrap.com/)
 - Code Snippets:
   - Advanced User Sign Up View: [Reverse Python](https://dev.to/thedevtimeline/create-advanced-user-sign-up-view-in-django-step-by-step-k9m)
   - Form submit using `<a>` tag: [krystan honour - Stack Overflow](https://stackoverflow.com/questions/10039968/submit-form-using-a-tag)

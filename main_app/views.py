@@ -18,7 +18,7 @@ def sandbox(request):
 
 
 def timeline(request):
-    daily_entries = DailyEntry.objects.filter(user=request.user.profile).prefetch_related('emotion')
+    daily_entries = DailyEntry.objects.filter(user_id=request.user.id).prefetch_related('emotion')
 
     if not daily_entries.exists():
         return render(request, "timeline.html", {})
