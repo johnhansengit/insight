@@ -24,4 +24,5 @@ urlpatterns = [
 
   #Timeline URLs
   path('timeline/', views.timeline, name='timeline'),
+  path('timeline/lifestyle_view', views.process_lifestyle_selector, name='process_lifestyle_selector'),
 ]

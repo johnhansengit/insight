@@ -6,6 +6,5 @@ register = template.Library()
 def get_emotions(emotions_by_date, date):
     for entry in emotions_by_date:
         if entry['date'] == date:
-            print(entry['emotions'])
             return entry['emotions']
     return []

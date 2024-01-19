@@ -7,7 +7,15 @@
 
     <section id="timeline">
         <div id="lifestyle-selector">
-
+            <form id="lifestyle-selector-form" method="post" action="{% url 'process_lifestyle_selector' %}">
+                {% csrf_token %}
+                <select id="dropdown-menu" name="lifestyle-selector" onchange="changeLifestyle();">
+                    <option value="" disabled selected>Select</option>
+                    {% for lifestyle in tracked_lifestyles%}
+                        <option value="{{ lifestyle }}">{{ lifestyle }}</option>
+                    {% endfor %}
+                </select>
+            </form>
         </div>
         <div id="emotions-timeline">
             <table id="emotions-table">
@@ -44,10 +52,11 @@
 
 {% endif %}
 
-<section class="cta">
-    <div class="card"></div>
-    <div class="card"></div>
-    <div class="card"></div>
-</section>
+<script>
+    function changeLifestyle() {
+        document.getElementById("lifestyle-selector-form").submit();
+        document.getElementById("dropdown-menu").firstElementChild.disabled = true;
+    }
+</script>
 
 {% endblock %}
