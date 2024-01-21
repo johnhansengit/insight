@@ -2,6 +2,8 @@ from datetime import date, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import get_object_or_404
@@ -11,6 +13,7 @@ from django.urls import reverse_lazy
 
 
 # Create your views here.
+@login_required
 def home(request):
     return render(request, "home.html", {'title': 'Welcome'})
 
@@ -18,7 +21,7 @@ def home(request):
 def sandbox(request):
     return render(request, "sandbox.html")
 
-
+@login_required
 def timeline(request):
     # Get emotion categories for table header
     emotion_categories = Emotion.objects.filter(
@@ -55,7 +58,7 @@ def timeline(request):
                     break
     
     # Get selected lifestyle from form
-    selected_lifestyle = request.POST.get('lifestyle-selector', None)
+    selected_lifestyle = request.POST.get('lifestyle-selector', '')
     
     # Get user data for tables
     daily_entries = DailyEntry.objects.filter(user=request.user.id)
@@ -87,7 +90,6 @@ def timeline(request):
 
         emotions_by_date.append({'date': entry_date, 'emotions': list(emotion_set)})
 
-    print(lifestyle_by_date)    
     return render(request, "timeline.html", {
         'date_list': date_list,
         'emotion_categories': emotion_categories,
@@ -129,15 +131,14 @@ class TitleMixin:
     title = None
 
 # User Settings Views
-class UserSettingsUpdate(UpdateView):
+class UserSettingsUpdate(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.title is not None:
             context['title'] = self.title
         return context
 
-# User Settings Views   
-class UserSettingsRead(TitleMixin, DetailView):
+class UserSettingsRead(LoginRequiredMixin, TitleMixin, DetailView):
     model = UserSettings
     title = 'Settings'
     template_name = 'main_app/user-settings.html'
@@ -147,8 +148,7 @@ class UserSettingsRead(TitleMixin, DetailView):
         profile = get_object_or_404(Profile, user=self.request.user)
         return get_object_or_404(UserSettings, user=profile)
     
-    
-class UserSettingsUpdate(TitleMixin, UpdateView):
+class UserSettingsUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
     model = UserSettings
     title = 'Settings'
     form_class = UserSettingsForm
@@ -161,17 +161,17 @@ class UserSettingsUpdate(TitleMixin, UpdateView):
         return get_object_or_404(UserSettings, user=profile)
 
 # Daily Entry Views
-class DailyEntryList(TitleMixin, ListView):
+class DailyEntryList(LoginRequiredMixin, TitleMixin, ListView):
     model = DailyEntry
     title = 'Log'
 
 
-class DailyEntryCreate(TitleMixin, CreateView):
+class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
     model = DailyEntry
     title = 'Log'
 
 
-class DailyEntryRead(TitleMixin, DetailView):
+class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
     title = 'Log'
     model = DailyEntry
     template_name = 'daily_entries/detail.html'
@@ -183,12 +183,12 @@ class DailyEntryRead(TitleMixin, DetailView):
         return context
 
 
-class DailyEntryUpdate(TitleMixin, UpdateView):
+class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
     model = DailyEntry
     title = 'Log'
 
 
-class DailyEntryDelete(DeleteView):
+class DailyEntryDelete(LoginRequiredMixin, DeleteView):
     model = DailyEntry
     success_url = '/daily-entries'
 

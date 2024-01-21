@@ -1,12 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Log in page</h1>
+<h1 class="home">Welcome to Insight</h1>
+<div id="welcome-text">
+    <h3>Emotional literacy, analysis and wellbeing</h3>
+    <p>Gain deeper emotional insights by articulating and tracking your feelings against lifestyle factors, empowering you to build emotional awareness and take charge of your mental wellness.</p>
+</div>
 
-<form action="{% url 'login' %}" method="POST">
+<form id="login-form" action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Log in" />
+    <button id="login-btn" type="submit" value="Log in">Log in</button>
 </form>
+
+<div id="signup-cta">
+    <p>Don't have an account yet?</p> 
+    <a href="{% url 'signup' %}"><button id="signup-button">Sign up</button></a>
+</div>
+
 
 {% endblock %}
