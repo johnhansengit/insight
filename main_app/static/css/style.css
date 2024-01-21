@@ -15,6 +15,12 @@
     --lightmode-button: ;
     --darkmode-button-active: #3B3B3B;
     --lightmode-button-active: ;
+    --accent-yellow: #fbde77;
+    --accent-pink: #f9b7c7;
+    --accent-blue: #c8eaf6;
+    --accent-green: #e1fad9;
+    --accent-purple: #f1d9fa;
+    --accent-orange: #fab49d;
     --logo-font: 'Dosis', sans-serif;
     --header-font: 'Dosis', sans-serif;
     --base-font: 'Montserrat', sans-serif;
@@ -159,10 +165,10 @@ h1.home {
 }
 
 .card.home {
-    background-color: var(--darkmode-card);
     color: var(--darkmode-darktext);
     text-align: center;
     text-decoration: none;
+    padding: 5px 0px;
 }
 
 .card.home i {
@@ -172,12 +178,17 @@ h1.home {
     margin-bottom: 0;
 }
 
-.card.home p {
-    position: relative;
-    margin: .3em;
+.card.home span {
+    font-weight: 500;
 }
 
-.card.home:hover {
+.card.home p {
+    position: relative;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+/* .card.home:hover {
     border: .2em solid var(--darkmode-button-active);
 }
 
@@ -199,7 +210,7 @@ h1.home {
 
 #home-settings:hover::before {
     content: "Adjust user settings";
-}
+} */
 
 #hamburger-menu {
     font-size: 36px;
@@ -227,7 +238,6 @@ h1.home {
     flex-direction: column;
     margin: 5px;
     border-radius: 5px;
-    background-color: #D9D9D9;
     text-decoration: none;
     color: var(--darkmode-darktext);
     font-size: 14px;
@@ -293,6 +303,26 @@ h1.home {
 #emotions-table td:not(:first-child) {
     border: 1px solid grey;
 }
+
+/* #lifestyle-table {
+    width: 100%;
+    height: 100%;
+    table-layout: fixed;
+    font-size: 14px;
+    text-align: center;
+}
+
+#lifestyle-table tr {
+    height: auto; 
+}
+
+#lifestyle-table thead tr {
+    height: 20px;
+}
+
+#lifestyle-table td {
+    border: 1px solid grey;
+} */
 
 .cta {
     display: flex;
@@ -360,6 +390,95 @@ h1.home {
     border-radius: 0 0 .4em .4em;
     padding: .2em 1em .3em 1em;
 }
+
+.home-logout-nav {
+    background-color: var(--accent-blue);
+}
+
+.log-nav {
+    background-color: var(--accent-yellow);
+}
+
+.go-to-date-nav {
+    background-color: var(--accent-orange);
+}
+
+.timeline-nav {
+    background-color: var(--accent-pink);
+}
+.journals-nav {
+    background-color: var(--accent-green);
+}
+
+.settings-nav {
+    background-color: var(--accent-purple);
+}
+
+#welcome-text {
+    margin: -35px 20px 0px;
+}
+
+#welcome-text h3 {
+    text-align: center;
+}
+
+#welcome-text p {
+    font-size: 14px;
+    text-align: justify;
+}
+
+#login-form {
+    margin-left: 50%;
+    text-wrap: nowrap;
+    transform: translate(-66%, 0);
+}
+
+#signup-form {
+    margin: 0 20px;
+}
+
+#signup-form li {
+    text-wrap: wrap;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+#login-btn {
+    background-color: var(--accent-yellow);
+    padding: 10px 20px;
+}
+
+#signup-cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
+
+#signup-cta p {
+    font-size: 14px;
+}
+
+#signup-button {
+    background-color: var(--accent-blue);
+    padding: 10px 20px;
+}
+
+#signup-header {
+    margin: 0;
+}
+
+#id_username_helptext,
+#id_password2_helptext {
+    text-wrap: wrap;
+    font-size: 12px;
+}
+
+#id_username_helptext::before,
+#id_password2_helptext::before {
+    content: "\A\A";
+    white-space: pre;
 
 .journal-entries-list-container {
     display: flex;
