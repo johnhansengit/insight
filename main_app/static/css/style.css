@@ -49,7 +49,7 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: var(--darkmode-header);
-    z-index: 100;
+    z-index: 1000;
 }
 
 .header-left {
@@ -103,15 +103,18 @@ button:active {
     background-color: ;
 }
 
-canvas {
+#wedgeCanvas {
     position: absolute;
-    left: -275px;
+    left: -550px;
     top: 50%;
-    margin-top: -275px;
+    margin-top: -250px;
     border-radius: 50%;
+    z-index: 100;
+    box-shadow: 2px 2px 20px 2px #000;
+    /* transform: left 0.5s ease-in-out; */
 }
 
-canvas:hover {
+#wedgeCanvas:hover {
     cursor: pointer;
 }
 
@@ -253,34 +256,18 @@ h1.home {
 #timeline {
     width: 100%;
     padding: 10px;
-    display: grid;
-    grid-template-columns: 75% 25%;
-    grid-template-rows: auto auto;
-    grid-template-areas:
-        ". lifestyle-selector"
-        "emotions-timeline lifestyle-timeline";
-    row-gap: 10px;
-    column-gap: 10px;
-}
-
-#lifestyle-selector {
-    grid-area: lifestyle-selector;
-}
-
-#emotions-timeline {
-    grid-area: emotions-timeline;
-}
-
-#lifestyle-timeline {
-    grid-area: lifestyle-timeline;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 10px;
 }
 
 #emotions-table {
     width: 100%;
     height: 100%;
-    table-layout: fixed;
-    font-size: 14px;
+    font-size: 12px;
     text-align: right;
+    table-layout: fixed;
 }
 
 #emotions-table tr {
@@ -291,38 +278,36 @@ h1.home {
     height: 20px;
 }
 
+#emotions-table thead td:not(:last-child) {
+    writing-mode: vertical-lr;
+}
+
 #emotions-table td:first-child {
-    width: 100px;
+    width: 90px;
     padding-right: 5px;
 }
 
 #emotions-table td:not(:first-child) {
-    width: calc((100% - 100px) / 8);
+    width: auto;
+}
+
+#emotions-table td:last-child {
+    text-align: center;
+    width: 90px;
 }
 
 #emotions-table td:not(:first-child) {
     border: 1px solid grey;
 }
 
-/* #lifestyle-table {
-    width: 100%;
-    height: 100%;
-    table-layout: fixed;
-    font-size: 14px;
-    text-align: center;
+#emotions-table td:nth-child(10) {
+    border: none;
 }
 
-#lifestyle-table tr {
-    height: auto; 
+#emotions-table thead td:last-child {
+    background-color: var(--darkmode-card);
+    color: var(--darkmode-darktext);
 }
-
-#lifestyle-table thead tr {
-    height: 20px;
-}
-
-#lifestyle-table td {
-    border: 1px solid grey;
-} */
 
 .cta {
     display: flex;
@@ -479,6 +464,7 @@ h1.home {
 #id_password2_helptext::before {
     content: "\A\A";
     white-space: pre;
+}
 
 .journal-entries-list-container {
     display: flex;

@@ -1,4 +1,4 @@
-<canvas id="wedgeCanvas" width="550" height="550"></canvas>
+<canvas id="wedgeCanvas" width="530" height="530"></canvas>
 
 <script>
 const canvas = document.getElementById("wedgeCanvas");
@@ -94,9 +94,9 @@ function drawWedges(circle, index, circles) {
     ctx.fill();
 
     // Stroke the wedge border
-    ctx.strokeStyle = "black"; // You can change this to any color you want
-    ctx.lineWidth = 1; // You can change the border thickness here
-    ctx.stroke(); // This adds the border to the wedge
+    // ctx.strokeStyle = "grey"; // You can change this to any color you want
+    // ctx.lineWidth = 1; // You can change the border thickness here
+    // ctx.stroke(); // This adds the border to the wedge
 
     // Text setup
     const textAngle = startAngle + wedgeAngle / 2;
@@ -109,8 +109,9 @@ function drawWedges(circle, index, circles) {
     ctx.textBaseline = "middle";
     const fillTextX = textRadius;
 
-    ctx.font = "11px";
-    ctx.fillStyle = "#000";
+    ctx.font = "14px";
+    ctx.fontFamily = "'Montserrat', sans-serif;"
+    ctx.fillStyle = "#111";
     ctx.fillText(wedge.name, fillTextX, 0);
 
     ctx.restore();
@@ -218,7 +219,11 @@ function handleEnd(event) {
     const mousePos = getPointerPos(canvas, event.changedTouches ? event.changedTouches[0] : event);
     const clickedWedge = findClickedWedge(mousePos.x, mousePos.y, currentRotation);
     if (clickedWedge) {
-      console.log(clickedWedge.name);
+      if (clickedWedge.name == "Comfortable" || clickedWedge.name == "Uncomfortable") {
+        return
+      } else {
+        console.log(clickedWedge.name);
+      }
     }
   }
   isDragging = false;

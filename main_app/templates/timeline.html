@@ -10,7 +10,7 @@
             <form id="lifestyle-selector-form" method="post" action="{% url 'process_lifestyle_selector' %}">
                 {% csrf_token %}
                 <select id="dropdown-menu" name="lifestyle-selector" onchange="changeLifestyle();">
-                    <option value="" disabled selected>Select</option>
+                    <option value="" disabled selected>Lifestyle Factor</option>
                     {% for lifestyle in tracked_lifestyles%}
                         <option value="{{ lifestyle }}">{{ lifestyle }}</option>
                     {% endfor %}
@@ -23,8 +23,10 @@
                     <tr>
                         <td></td>
                         {% for emotion in emotion_categories %}
-                            <td style="background-color: {{ emotion.timeline_color }};"></td>
+                            <td style="background-color: {{ emotion.timeline_color }};">{{ emotion.name }}</td>
                         {% endfor %}
+                        <td class="spacer-cell"></td>   
+                        <td>{{ selected_lifestyle }}</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,22 +39,8 @@
                                 {% else %}
                                     <td></td>
                                 {% endif %}
-                            {% endfor %}    
-                        </tr>
-                    {% endfor %}    
-                </tbody>
-            </table>
-        </div>
-        <div id="lifestyle-timeline">
-            <table id="lifestyle-table">
-                <thead>
-                    <tr>
-                        <td>{{ selected_lifestyle }}</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for date in date_list %}
-                        <tr>
+                            {% endfor %}
+                            <td class="spacer-cell"></td>    
                             {% with lifestyle_value=lifestyle_by_date|get_lifestyle:date %}
                                 {% if lifestyle_value %}
                                     <td>{{ lifestyle_value }}</td>
@@ -61,12 +49,20 @@
                                 {% endif %}
                             {% endwith %}
                         </tr>
-                    {% endfor %}
-                </tbody>                
+                    {% endfor %}    
+                </tbody>
             </table>
         </div>
     </section>
 
+{% else %}
+No data to display. Why not try adding your first daily log?
+
+<a href="" class="card home log-nav" id="home-daily">
+    <span>Log</span>
+    <i class="bi-card-checklist"></i>
+    <p>Log a daily entry</p>
+</a>
 {% endif %}
 
 <script>

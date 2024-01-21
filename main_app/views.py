@@ -207,7 +207,7 @@ class DailyEntryDelete(LoginRequiredMixin, DeleteView):
 class JournalEntryList(LoginRequiredMixin, TitleMixin, ListView):
     model = DailyEntry
     template_name = 'main_app/journal-entries-list.html' 
-    title = 'Journal Entries'
+    title = 'Journals'
     context_object_name = 'entries'  # Name of the context variable in the template
 
     def get_queryset(self):
