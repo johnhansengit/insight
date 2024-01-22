@@ -126,7 +126,15 @@
     }
 </script>
 {% else %}
-    <p>No entry found for {{ entry_date|date:"M jS, Y" }}.</p>
-    <a href="{% url 'daily-entry-create' %}?date={{ entry_date|date:'Y-m-d' }}">Create a new entry for this date</a>
+
+    <div id="no-entry-cta">
+        <p>No entry found for {{ entry_date|date:"M jS, Y" }}.</p>
+
+        <a href="{% url 'daily-entry-create' %}?date={{ entry_date|date:'Y-m-d' }}" class="card home log-nav" id="home-daily">
+            <span>Log</span>
+            <i class="bi-card-checklist"></i>
+            <p>Log a daily entry</p>
+        </a>
+    </div>
 {% endif %}
 {% endblock %}

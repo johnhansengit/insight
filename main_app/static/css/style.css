@@ -107,6 +107,10 @@ button:active {
     background-color: ;
 }
 
+a {
+    text-decoration: none;
+}
+
 #wedgeCanvas {
     position: absolute;
     left: -550px;
@@ -656,9 +660,15 @@ button {
 }
 
 #login-form {
-    margin-left: 50%;
-    text-wrap: nowrap;
-    transform: translate(-66%, 0);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-form p {
+    margin: 5px;
 }
 
 #signup-form {
@@ -671,9 +681,14 @@ button {
     margin-bottom: 5px;
 }
 
+#login-btn,
+#signup-button {
+    padding: 10px 20px;
+    width: 250px;
+}
+
 #login-btn {
     background-color: var(--accent-yellow);
-    padding: 10px 20px;
 }
 
 #signup-cta {
@@ -686,15 +701,17 @@ button {
 
 #signup-cta p {
     font-size: 14px;
+    margin: 10px;
 }
 
 #signup-button {
+    display: block;
+    margin: 0 auto;
     background-color: var(--accent-blue);
-    padding: 10px 20px;
 }
 
 #signup-header {
-    margin: 0;
+    margin: 0 0 10px;
 }
 
 #id_username_helptext,
@@ -819,4 +836,13 @@ button {
 
 #intro-text p {
     font-size: 12px;
+}
+
+#no-entry-cta {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 75vh;
+    justify-content: center;
+    align-items: center;
 }
