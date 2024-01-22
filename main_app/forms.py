@@ -293,4 +293,11 @@ class DailyEntryForm(forms.ModelForm):
             "has_menstruated": forms.CheckboxInput(
                 attrs={"class": "checkbox-input", "id": "has-menstruated-checkbox"}
             ),
+            "journal_entry": forms.Textarea(
+                attrs={
+                    "class": "text-area-input",
+                    "id": "journal-entry-text",
+                    "placeholder": "What's on your mind?",
+                }
+            ),
         }
