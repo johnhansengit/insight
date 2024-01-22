@@ -235,8 +235,6 @@ function handleEnd(event) {
           displayEmotion.innerHTML += `<button class="emotion-display" style="background-color: ${clickedWedge.color}">${clickedWedge.name} <i class="bi bi-x-circle-fill remove-icon"></i></button>`;
           selectedEmotionsIDs.push(clickedWedge.id);
           emotionNameIDMap[clickedWedge.name] = clickedWedge.id;
-          console.log(selectedEmotionsIDs);
-          console.log(emotionNameIDMap);
         }
       }
     }

@@ -16,7 +16,9 @@ from django.urls import reverse_lazy, reverse
 # Create your views here.
 @login_required
 def home(request):
-    return render(request, "home.html", {'title': 'Welcome'})
+    return render(request, "home.html", {
+        'title': 'Welcome'
+        })
 
 
 def sandbox(request):
@@ -99,7 +101,8 @@ def timeline(request):
         'tracked_lifestyles': tracked_lifestyles,
         'selected_lifestyle': selected_lifestyle,
         'lifestyle_by_date': lifestyle_by_date,
-        'title': 'Timeline'
+        'title': 'Timeline',
+        'title_color': 'var(--accent-pink)'
     })
 
 
@@ -130,6 +133,7 @@ def signup(request):
 # Mixins
 class TitleMixin:
     title = None
+    title_color = None
     
     def get_context_data(self, **kwargs):
         # First, get the existing context from the superclass
@@ -137,6 +141,7 @@ class TitleMixin:
         
         # Add the title to the context
         context['title'] = self.title
+        context['title_color'] = self.title_color
         
         # Return the updated context
         return context
@@ -152,6 +157,7 @@ class UserSettingsUpdate(LoginRequiredMixin, UpdateView):
 class UserSettingsRead(LoginRequiredMixin, TitleMixin, DetailView):
     model = UserSettings
     title = 'Settings'
+    title_color = 'var(--accent-purple)'
     template_name = 'main_app/user-settings.html'
 
     def get_object(self):
@@ -162,6 +168,7 @@ class UserSettingsRead(LoginRequiredMixin, TitleMixin, DetailView):
 class UserSettingsUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
     model = UserSettings
     title = 'Settings'
+    title_color = 'var(--accent-purple)'
     form_class = UserSettingsForm
     template_name = 'main_app/user-settings-form.html'
     success_url = '/'
@@ -175,10 +182,12 @@ class UserSettingsUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
 class DailyEntryList(LoginRequiredMixin, TitleMixin, ListView):
     model = DailyEntry
     title = 'Log'
+    title_color = 'var(--accent-yellow)'
 
 
 class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
     title = 'Log'
+    title_color = 'var(--accent-yellow)'
     model = DailyEntry
     template_name = 'daily_entries/update.html'
     form_class = DailyEntryForm
@@ -200,6 +209,7 @@ class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
 
 class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
     title = 'Log'
+    title_color = 'var(--accent-yellow)'
     model = DailyEntry
     template_name = 'daily_entries/detail.html'
     success_url = reverse_lazy('daily_entry_detail')
@@ -222,6 +232,7 @@ class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
 class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
     model = DailyEntry
     title = 'Log'
+    title_color = 'var(--accent-yellow)'
     form_class = DailyEntryForm
     template_name = 'daily_entries/update.html'
     
@@ -255,6 +266,7 @@ class JournalEntryList(LoginRequiredMixin, TitleMixin, ListView):
     model = DailyEntry
     template_name = 'main_app/journal-entries-list.html' 
     title = 'Journals'
+    title_color = 'var(--accent-green)'
     context_object_name = 'entries'  # Name of the context variable in the template
 
     def get_queryset(self):
