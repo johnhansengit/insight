@@ -10,7 +10,7 @@ from django.views.generic import ListView, DetailView, View
 from django.shortcuts import get_object_or_404
 from .forms import SignUpForm, UserSettingsForm, DailyEntryForm
 from .models import UserSettings, DailyEntry, Emotion, Profile
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 
 # Create your views here.
@@ -178,8 +178,24 @@ class DailyEntryList(LoginRequiredMixin, TitleMixin, ListView):
 
 
 class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
-    model = DailyEntry
     title = 'Log'
+    model = DailyEntry
+    template_name = 'daily_entries/update.html'
+    form_class = DailyEntryForm
+    
+    def get_success_url(self):
+        entry_date = self.object.date
+        return reverse('daily-entry-read', kwargs={'date': entry_date.strftime('%Y-%m-%d')})
+    
+    def get_context_data(self, **kwargs):
+        context = super(DailyEntryCreate, self).get_context_data(**kwargs)
+        context['form_type'] = 'create'  
+        return context
+    
+    def form_valid(self, form):
+        profile = get_object_or_404(Profile, user=self.request.user)
+        form.instance.user = profile
+        return super(DailyEntryCreate, self).form_valid(form)
 
 
 class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
@@ -188,23 +204,40 @@ class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
     template_name = 'daily_entries/detail.html'
     success_url = reverse_lazy('daily_entry_detail')
     
+    def get_object(self, queryset=None):
+        entry_date = date.fromisoformat(self.kwargs.get('date'))
+        try:
+            profile = Profile.objects.get(user=self.request.user)
+            return DailyEntry.objects.get(date=entry_date, user=profile)
+        except DailyEntry.DoesNotExist:
+            return None
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['user_settings'] = UserSettings.objects.filter(user_id=self.request.user.id).first()
+        context['entry_date'] = date.fromisoformat(self.kwargs.get('date'))
         return context
 
 
 class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
     model = DailyEntry
     title = 'Log'
-    # model = DailyEntry
-    # form_class = DailyEntryForm
-    # template_name = 'daily_entries/update.html'
-    # success_url = reverse_lazy('success_page')
-    model = DailyEntry
     form_class = DailyEntryForm
     template_name = 'daily_entries/update.html'
-    success_url = reverse_lazy('success_page')  # Adjust as needed
+    
+    def get_success_url(self):
+        entry_date = self.object.date
+        return reverse('daily-entry-read', kwargs={'date': entry_date.strftime('%Y-%m-%d')})
+
+    def get_object(self, queryset=None):
+        entry_date = date.fromisoformat(self.kwargs.get('date'))
+        profile = Profile.objects.get(user=self.request.user)
+        return get_object_or_404(DailyEntry, date=entry_date, user=profile)
+
+    def get_context_data(self, **kwargs):
+        context = super(DailyEntryUpdate, self).get_context_data(**kwargs)
+        context['form_type'] = 'update'
+        return context
 
     def get_form_kwargs(self):
         kwargs = super(DailyEntryUpdate, self).get_form_kwargs()
