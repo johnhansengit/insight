@@ -204,8 +204,17 @@ class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
         entry_date = self.object.date
         return reverse('daily-entry-read', kwargs={'date': entry_date.strftime('%Y-%m-%d')})
     
+    def get_form_kwargs(self):
+        kwargs = super(DailyEntryCreate, self).get_form_kwargs()
+        profile = Profile.objects.get(user=self.request.user)
+        user_settings = UserSettings.objects.filter(user=profile).first()
+        kwargs['user_settings'] = user_settings
+        return kwargs
+    
     def get_context_data(self, **kwargs):
         context = super(DailyEntryCreate, self).get_context_data(**kwargs)
+        profile = Profile.objects.get(user=self.request.user)
+        context['user_settings'] = UserSettings.objects.filter(user=profile).first()
         context['form_type'] = 'create'  
         return context
     
@@ -256,13 +265,16 @@ class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(DailyEntryUpdate, self).get_context_data(**kwargs)
+        profile = Profile.objects.get(user=self.request.user)
+        context['user_settings'] = UserSettings.objects.filter(user=profile).first()
         context['form_type'] = 'update'
         return context
 
     def get_form_kwargs(self):
         kwargs = super(DailyEntryUpdate, self).get_form_kwargs()
-        user_settings = UserSettings.objects.filter(user=self.request.user.id).first()
-        kwargs.update({'user_settings': user_settings})
+        profile = Profile.objects.get(user=self.request.user)
+        user_settings = UserSettings.objects.filter(user=profile).first()
+        kwargs['user_settings'] = user_settings
         return kwargs
 
 
