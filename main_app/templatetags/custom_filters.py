@@ -18,13 +18,15 @@ def get_lifestyle(lifestyle_by_date, date):
             # Check for True or False values
             if value is True:
                 return 'yes'
-            if value is False:
+            elif value is False:
                 return 'no'
+            else:
+                return value
 
             # Check for integer values
-            ratings = {1: 'poor', 2: 'meh', 3: 'fine', 4: 'good', 5: 'excellent'}
-            if value in ratings:
-                return ratings[value]
+            # ratings = {1: 'lowest', 2: 'low', 3: 'medium', 4: 'high', 5: 'highest'}
+            # if value in ratings:
+            #     return ratings[value]
 
     return []
 
