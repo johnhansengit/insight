@@ -32,7 +32,7 @@ def timeline(request):
     emotion_categories = Emotion.objects.filter(
         parent__isnull=False, 
         parent__parent__isnull=True
-    )
+    ).order_by('order')
     
     # Get user settings for dropdown
     user_settings = UserSettings.objects.filter(user=profile).first()
