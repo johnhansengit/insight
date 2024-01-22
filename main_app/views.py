@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -192,6 +192,14 @@ class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
     template_name = 'daily_entries/update.html'
     form_class = DailyEntryForm
     
+    def get_initial(self):
+        initial = super(DailyEntryCreate, self).get_initial()
+        date_str = self.request.GET.get('date', None)
+        if date_str:
+            initial['date'] = datetime.strptime(date_str, '%Y-%m-%d')
+            
+        return initial
+    
     def get_success_url(self):
         entry_date = self.object.date
         return reverse('daily-entry-read', kwargs={'date': entry_date.strftime('%Y-%m-%d')})
@@ -224,7 +232,8 @@ class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_settings'] = UserSettings.objects.filter(user_id=self.request.user.id).first()
+        profile = Profile.objects.get(user=self.request.user)
+        context['user_settings'] = UserSettings.objects.filter(user=profile).first()
         context['entry_date'] = date.fromisoformat(self.kwargs.get('date'))
         return context
 
@@ -259,7 +268,13 @@ class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
 
 class DailyEntryDelete(LoginRequiredMixin, DeleteView):
     model = DailyEntry
-    success_url = '/daily-entries'
+    template_name = 'daily_entries/delete-confirmation.html'
+    success_url = '/'
+    
+    def get_object(self, queryset=None):
+        entry_date = date.fromisoformat(self.kwargs.get('date'))
+        profile = Profile.objects.get(user=self.request.user)
+        return get_object_or_404(DailyEntry, date=entry_date, user=profile)
 
 # Journal Views
 class JournalEntryList(LoginRequiredMixin, TitleMixin, ListView):
