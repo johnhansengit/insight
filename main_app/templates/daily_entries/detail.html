@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
-
+{% if object %}
 <div id="log-header">
     <div class="log-head" id="day-of-week">{{ dailyentry.date|date:"D" }}</div>
     <div class="log-head" id="date">
@@ -12,9 +12,13 @@
         {% comment %} TODO: integrate calendar date picker {% endcomment %}
     </div>
 </div>
-
+<h1>DETAIL</h1>
 <div id="log-main">
     <div id="log-cards">
+        <p>
+            {{user_settings}}
+            {{dailyentry.sleep_quality_rating}}
+        </p>
         {% if user_settings.track_sleep and dailyentry.sleep_quality_rating != null %}
             <div class="logger card" id="sleep-quality">Sleep quality:
                 <input type="range" min="1" max="5" value="{% if dailyentry.sleep_quality_rating != null %}{{ dailyentry.sleep_quality_rating }}{% else %}1{% endif %}" disabled>
@@ -105,8 +109,8 @@
 </div>
 
 <div id="log-footer">
-    <a class="log-foot link" id="edit" href="{% url 'daily-entry-update' dailyentry.id %}">EDIT</a>
-    <a class="log-foot link" id="delete" href="{% url 'daily-entry-delete' dailyentry.id %}">DELETE</a>
+    <a class="log-foot link" id="edit" href="{% url 'daily-entry-update' dailyentry.date %}">EDIT</a>
+    <a class="log-foot link" id="delete" href="{% url 'daily-entry-delete' dailyentry.date %}">DELETE</a>
 </div>
 
 <script>
@@ -125,5 +129,8 @@
         }
     }
 </script>
-
+{% else %}
+    <p>No entry found for {{ entry_date|date:"M jS, Y" }}.</p>
+    <a href="{% url 'daily-entry-create' %}?date={{ entry_date }}">Create a new entry for this date</a>
+{% endif %}
 {% endblock %}

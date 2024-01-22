@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path, include, re_path
 from . import views
 
 urlpatterns = [
@@ -15,9 +15,9 @@ urlpatterns = [
   # Daily Entry URLs
   path('daily-entries/', views.DailyEntryList.as_view(), name='daily-entry-list'),
   path('daily-entries/create/', views.DailyEntryCreate.as_view(), name='daily-entry-create'),
-  path('daily-entries/<int:pk>/', views.DailyEntryRead.as_view(), name='daily-entry-read'),
-  path('daily-entries/<int:pk>/update', views.DailyEntryUpdate.as_view(), name='daily-entry-update'),
-  path('daily-entries/<int:pk>/delete', views.DailyEntryDelete.as_view(), name='daily-entry-delete'),
+  re_path(r'daily-entries/(?P<date>\d{4}-\d{2}-\d{2})/update/', views.DailyEntryUpdate.as_view(), name='daily-entry-update'),
+  re_path(r'daily-entries/(?P<date>\d{4}-\d{2}-\d{2})/delete/', views.DailyEntryDelete.as_view(), name='daily-entry-delete'),
+  re_path(r'daily-entries/(?P<date>\d{4}-\d{2}-\d{2})/', views.DailyEntryRead.as_view(), name='daily-entry-read'),
   
   # Journal Entry URLs
   path('journal-entries/', views.JournalEntryList.as_view(), name='journal-entries-list'),

@@ -27,7 +27,7 @@
       <nav class="header-right" id="hamburger-menu">☰</div>
         <div id="nav-grid">
           <a class="home-logout-nav" href="/">Home</a>
-          <a class="log-nav" href=""><i class="bi bi-card-checklist nav-icon"></i>Log</a>
+          <a class="log-nav" href="/daily-entries/create"><i class="bi bi-card-checklist nav-icon"></i>Log</a>
           <a class="go-to-date-nav" href="#" id="goToDateLink"><i class="bi bi-calendar2-date nav-icon"></i>Go to Date</a>
           <a class="timeline-nav" href="/timeline"><i class="bi bi-calendar2-range nav-icon"></i>Timeline</a>
           <a class="journals-nav" href="/journal-entries"><i class="bi bi-journal-bookmark nav-icon"></i>Journals</a>
@@ -54,6 +54,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     const hamburgerMenu = document.getElementById("hamburger-menu");
     const navGrid = document.getElementById("nav-grid");
+    const logTodayLink = document.getElementById('log-nav');
     const goToDateLink = document.getElementById('goToDateLink');
     const calendarPlaceholder = document.getElementById('calendar');
   
@@ -95,7 +96,7 @@
             picker = new Pikaday({ 
                 field: calendarPlaceholder,
                 onSelect: function(date) {
-                    window.location.href = '/logger/' + date.toISOString().split('T')[0];
+                    window.location.href = '/daily-entries/' + date.toISOString().split('T')[0];
                 }
             });
         }

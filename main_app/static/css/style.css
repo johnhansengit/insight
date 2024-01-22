@@ -70,6 +70,7 @@ header {
 main {
     width: 100%;
     padding-top: 70px;
+    padding-bottom: 30px;
     display: flex;
     flex-direction: column;
 }
