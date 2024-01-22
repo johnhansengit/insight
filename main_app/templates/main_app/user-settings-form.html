@@ -2,9 +2,12 @@
 
 {% block content %}
   <h2>Update User Settings</h2>
-  <form method="post">
+  <div>
+    <h3 id="user-settings-track-text">Track:</h3>
+  </div>
+  <form method="post" id="user-settings-form">
     {% csrf_token %}
-    {{ form.as_p }}
+    {{ form }}
     <button type="submit">Save</button>
   </form>
 {% endblock %}
