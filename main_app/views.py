@@ -26,6 +26,8 @@ def sandbox(request):
 
 @login_required
 def timeline(request):
+    profile = Profile.objects.get(user=request.user)
+
     # Get emotion categories for table header
     emotion_categories = Emotion.objects.filter(
         parent__isnull=False, 
@@ -33,7 +35,7 @@ def timeline(request):
     )
     
     # Get user settings for dropdown
-    user_settings = UserSettings.objects.filter(user=request.user.id).first()
+    user_settings = UserSettings.objects.filter(user=profile).first()
     
     settings_mapping = {
     'Counseling': ['track_counseling', 'has_had_counseling'],
@@ -64,10 +66,7 @@ def timeline(request):
     selected_lifestyle = request.POST.get('lifestyle-selector', '')
     
     # Get user data for tables
-    profile = Profile.objects.get(user=request.user)
     daily_entries = DailyEntry.objects.filter(user=profile)
-
-    print(daily_entries)
     
     render_timeline = daily_entries.exists()
 
@@ -323,21 +322,3 @@ class EmotionsDataView(View):
             'children': [self.get_emotion_data(child) for child in Emotion.objects.filter(parent=emotion.id)]
         }
         return data
-
-
-def daily_entry_form(request):
-    print("views.py")
-    user_settings = UserSettings.objects.filter(user=request.user.id).first()
-    print("vies.py user settings:")
-    print(user_settings)
-    if request.method == 'POST':
-        form = DailyEntryForm(request.POST, user_settings=user_settings)
-        if form.is_valid():
-            # Save the form data to the database
-            form.save(commit=False).user = request.user
-            form.save()
-            return redirect('success_page')  # Redirect to a success page or another view
-    else:
-        form = DailyEntryForm(user_settings=user_settings)
-
-    return render(request, 'daily_entries/update.html', {'form': form})
