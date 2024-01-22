@@ -14,7 +14,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=100)
     
     def __str__(self):
-        return f"{self.first_name} {self.last_name} | ID: {self.user.id}"
+        return f"{self.first_name} {self.last_name} | Profile ID: {self.id} | User ID: {self.user.id}"
 
 
 @receiver(post_save, sender=User)
