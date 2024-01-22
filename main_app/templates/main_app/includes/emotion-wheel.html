@@ -16,6 +16,7 @@ fetch('/api/emotions/')
     data.forEach(topLevelEmotion => {
       // Add the top-level emotion to the inner wedge
       innerWedges.push({
+        id: topLevelEmotion.id,
         name: topLevelEmotion.name,
         color: topLevelEmotion.color,
         timeline_color: topLevelEmotion.timeline_color
@@ -24,6 +25,7 @@ fetch('/api/emotions/')
       // Process children (middle-level emotions)
       topLevelEmotion.children.forEach(childEmotion => {
         middleWedges.push({
+          id: childEmotion.id,
           name: childEmotion.name,
           color: childEmotion.color,
           timeline_color: childEmotion.timeline_color
@@ -32,6 +34,7 @@ fetch('/api/emotions/')
         // Process grandchildren (outer-level emotions)
         childEmotion.children.forEach(grandChildEmotion => {
           outerWedges.push({
+            id: grandChildEmotion.id,
             name: grandChildEmotion.name,
             color: grandChildEmotion.color,
             timeline_color: grandChildEmotion.timeline_color
@@ -173,6 +176,7 @@ function findClickedWedge(x, y, currentRotation) {
          (normStart > normEnd && (normMouseAngle >= normStart || normMouseAngle <= normEnd)))
       ) {
         return {
+          id: wedge.id,
           name: wedge.name,
           color: wedge.color,
           timeline_color: wedge.timeline_color
@@ -192,7 +196,8 @@ let startAngle = 0;
 let currentRotation = 0;
 const dragThreshold = 5; // pixels
 let dragStartPos = null;
-
+let selectedEmotionsIDs = [];
+let emotionNameIDMap = {};
 
 function handleStart(event) {
   event.preventDefault();
@@ -222,7 +227,17 @@ function handleEnd(event) {
       if (clickedWedge.name == "Comfortable" || clickedWedge.name == "Uncomfortable") {
         return
       } else {
-        console.log(clickedWedge.name);
+        let displayEmotion = document.getElementById('display-single-emotion');
+        let existingEmotions = displayEmotion.getElementsByClassName('emotion-display');
+        let alreadyExists = Array.from(existingEmotions).some(button => button.textContent.includes(clickedWedge.name));
+
+        if (!alreadyExists) {
+          displayEmotion.innerHTML += `<button class="emotion-display" style="background-color: ${clickedWedge.color}">${clickedWedge.name} <i class="bi bi-x-circle-fill remove-icon"></i></button>`;
+          selectedEmotionsIDs.push(clickedWedge.id);
+          emotionNameIDMap[clickedWedge.name] = clickedWedge.id;
+          console.log(selectedEmotionsIDs);
+          console.log(emotionNameIDMap);
+        }
       }
     }
   }

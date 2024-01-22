@@ -241,6 +241,7 @@ class EmotionsDataView(View):
 
     def get_emotion_data(self, emotion):
         data = {
+            'id': emotion.id,
             'name': emotion.name,
             'color': emotion.color,
             'timeline_color': emotion.timeline_color,

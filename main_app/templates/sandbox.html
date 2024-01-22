@@ -3,29 +3,41 @@
 
 {% include "main_app/includes/emotion-wheel.html" %}
 
-<button id="toggle-wheel" onclick="toggleCanvas()">Select Emotion</button>
+
+<section id="emotion-selection">
+    <div id="select-emotion-container">
+        <button id="toggle-wheel" onclick="toggleCanvas()">Select Emotions</button>
+    </div>
+    <div class="emotion-display-container">
+        <div id="display-single-emotion"></div>
+    </div>
+</section>
+
+
+
 
 <script>
+    
     function easeInOut(t) {
             return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
         }
 
     function animateMove(element, start, end, duration) {
-        var range = end - start;
-        var startTime = performance.now();
+        let range = end - start;
+        let startTime = performance.now();
 
         function move(currentTime) {
-            var elapsedTime = currentTime - startTime;
-            var fraction = elapsedTime / duration;
-            var easeFraction = easeInOut(fraction);
+            let elapsedTime = currentTime - startTime;
+            let fraction = elapsedTime / duration;
+            let easeFraction = easeInOut(fraction);
 
-            var nextPosition = start + range * easeFraction;
+            let nextPosition = start + range * easeFraction;
 
             if (elapsedTime < duration) {
                 element.style.left = nextPosition + 'px';
                 requestAnimationFrame(move);
             } else {
-                element.style.left = end + 'px'; // Ensure it ends at the correct position
+                element.style.left = end + 'px';
             }
         }
 
@@ -33,14 +45,38 @@
     }
 
     function toggleCanvas() {
-        var canvas = document.getElementById('wedgeCanvas');
-        var currentLeft = parseInt(window.getComputedStyle(canvas).left, 10);
+        const canvas = document.getElementById('wedgeCanvas');
+        const toggleBtn = document.getElementById('toggle-wheel');
+        let currentLeft = parseInt(window.getComputedStyle(canvas).left, 10);
         if (currentLeft === -550) {
             animateMove(canvas, -550, -265, 750); // 750ms to move from -530px to -265px
+            toggleBtn.innerText = 'Hide Wheel';
         } else {
             animateMove(canvas, -265, -550, 500); 
+            toggleBtn.innerText = 'Select Emotions';
         }
     }
+
+    function handleRemoveIcon(event) {
+        if (event.target.classList.contains('remove-icon')) {
+            event.preventDefault();
+            let emotionDisplay = event.target.closest('.emotion-display');
+            let emotionName = emotionDisplay.textContent.trim();
+            let idToRemove = emotionNameIDMap[emotionName];
+
+            emotionDisplay.remove();
+            selectedEmotionsIDs = selectedEmotionsIDs.filter(id => id !== idToRemove);
+            console.log(selectedEmotionsIDs)
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const emotionContainer = document.getElementById('display-single-emotion');
+        emotionContainer.addEventListener('click', handleRemoveIcon);
+        emotionContainer.addEventListener('touchstart', handleRemoveIcon);
+    });
+    
+      
 </script>
 
 {% endblock %}

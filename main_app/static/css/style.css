@@ -627,3 +627,58 @@ h1.home {
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+#emotion-selection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 10px;
+    gap: 20px;
+}
+
+#toggle-wheel {
+    background-color: var(--accent-yellow);
+    padding: 10px 20px;
+    border-radius: 10px;
+    width: 140px;
+}
+
+#toggle-wheel:hover {
+    cursor: pointer;
+}
+
+.emotion-display-container {
+    overflow-x: auto; 
+    max-width: 100%;
+    height: fit-content;
+}
+
+#display-single-emotion {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.emotion-display {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+}
+
+.emotion-display:hover {
+    cursor: pointer;
+}
+
+.bi-x-circle-fill {
+    color: var(--darkmode-header);
+}
