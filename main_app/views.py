@@ -8,7 +8,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import ListView, DetailView, View
 from django.shortcuts import get_object_or_404
-from .forms import SignUpForm, UserSettingsForm
+from .forms import SignUpForm, UserSettingsForm, DailyEntryForm
 from .models import UserSettings, DailyEntry, Emotion, Profile
 from django.urls import reverse_lazy
 
@@ -197,6 +197,20 @@ class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
 class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
     model = DailyEntry
     title = 'Log'
+    # model = DailyEntry
+    # form_class = DailyEntryForm
+    # template_name = 'daily_entries/update.html'
+    # success_url = reverse_lazy('success_page')
+    model = DailyEntry
+    form_class = DailyEntryForm
+    template_name = 'daily_entries/update.html'
+    success_url = reverse_lazy('success_page')  # Adjust as needed
+
+    def get_form_kwargs(self):
+        kwargs = super(DailyEntryUpdate, self).get_form_kwargs()
+        user_settings = UserSettings.objects.filter(user=self.request.user.id).first()
+        kwargs.update({'user_settings': user_settings})
+        return kwargs
 
 
 class DailyEntryDelete(LoginRequiredMixin, DeleteView):
@@ -233,3 +247,21 @@ class EmotionsDataView(View):
             'children': [self.get_emotion_data(child) for child in Emotion.objects.filter(parent=emotion.id)]
         }
         return data
+
+
+def daily_entry_form(request):
+    print("views.py")
+    user_settings = UserSettings.objects.filter(user=request.user.id).first()
+    print("vies.py user settings:")
+    print(user_settings)
+    if request.method == 'POST':
+        form = DailyEntryForm(request.POST, user_settings=user_settings)
+        if form.is_valid():
+            # Save the form data to the database
+            form.save(commit=False).user = request.user
+            form.save()
+            return redirect('success_page')  # Redirect to a success page or another view
+    else:
+        form = DailyEntryForm(user_settings=user_settings)
+
+    return render(request, 'daily_entries/update.html', {'form': form})
