@@ -64,7 +64,10 @@ def timeline(request):
     selected_lifestyle = request.POST.get('lifestyle-selector', '')
     
     # Get user data for tables
-    daily_entries = DailyEntry.objects.filter(user=request.user.id)
+    profile = Profile.objects.get(user=request.user)
+    daily_entries = DailyEntry.objects.filter(user=profile)
+
+    print(daily_entries)
     
     render_timeline = daily_entries.exists()
 
