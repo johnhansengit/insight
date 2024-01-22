@@ -270,6 +270,12 @@ h1.home {
     gap: 10px;
 }
 
+/* #emotions-timeline {
+    display: block;
+    height: 50vh;
+    overflow-y: auto;
+} */
+
 #emotions-table {
     width: 100%;
     height: 100%;
@@ -845,4 +851,5 @@ button {
     height: 75vh;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }

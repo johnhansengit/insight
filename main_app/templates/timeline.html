@@ -64,13 +64,15 @@
     </section>
 
 {% else %}
-No data to display. Why not try adding your first daily log?
+<div id="no-entry-cta">
+    <p>No data to display. Why not try adding your first daily log?</p>
 
-<a href="" class="card home log-nav" id="home-daily">
-    <span>Log</span>
-    <i class="bi-card-checklist"></i>
-    <p>Log a daily entry</p>
-</a>
+    <a href="/daily-entries/create/" class="card home log-nav" id="home-daily">
+        <span>Log</span>
+        <i class="bi-card-checklist"></i>
+        <p>Log a daily entry</p>
+    </a>
+</div>
 {% endif %}
 
 <script>

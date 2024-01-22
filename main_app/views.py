@@ -28,12 +28,26 @@ def sandbox(request):
 def timeline(request):
     profile = Profile.objects.get(user=request.user)
 
+    # Get user data for tables
+    daily_entries = DailyEntry.objects.filter(user=profile)
+    render_timeline = daily_entries.exists()
+
+    # If no daily entries, skip the rest and return minimal context
+    if not render_timeline:
+        return render(request, "timeline.html", {
+            'render_timeline': render_timeline,
+            'title': 'Timeline',
+            'title_color': 'var(--accent-pink)'
+        })
+
+    # Rest of the code runs only if there are daily entries
+
     # Get emotion categories for table header
     emotion_categories = Emotion.objects.filter(
         parent__isnull=False, 
         parent__parent__isnull=True
     )
-    
+
     # Get user settings for dropdown
     user_settings = UserSettings.objects.filter(user=profile).first()
     
@@ -65,14 +79,9 @@ def timeline(request):
     # Get selected lifestyle from form
     selected_lifestyle = request.POST.get('lifestyle-selector', '')
     
-    # Get user data for tables
-    daily_entries = DailyEntry.objects.filter(user=profile)
-    
-    render_timeline = daily_entries.exists()
-
     oldest_entry = daily_entries.order_by('date').first()
     today = date.today()
-    delta = today - oldest_entry.date  # Make sure to use the date field
+    delta = today - oldest_entry.date
     date_list = [today - timedelta(days=i) for i in range(delta.days + 1)]
 
     emotions_by_date = []
