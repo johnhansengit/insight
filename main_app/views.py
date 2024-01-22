@@ -221,9 +221,22 @@ class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
         return context
     
     def form_valid(self, form):
+        # Save the DailyEntry instance without committing to the database
+        daily_entry = form.save(commit=False)
         profile = get_object_or_404(Profile, user=self.request.user)
-        form.instance.user = profile
+        daily_entry.user = profile
+        daily_entry.save()  # Save the DailyEntry instance
+
+        # Process and save emotions
+        emotion_ids = form.cleaned_data.get('emotion_ids', '').split(',')
+        for emotion_id in emotion_ids:
+            if emotion_id.isdigit():
+                emotion = get_object_or_404(Emotion, pk=emotion_id)
+                daily_entry.emotion.add(emotion)
+
         return super(DailyEntryCreate, self).form_valid(form)
+
+
 
 
 class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
@@ -278,6 +291,21 @@ class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
         user_settings = UserSettings.objects.filter(user=profile).first()
         kwargs['user_settings'] = user_settings
         return kwargs
+    
+    def form_valid(self, form):
+        # Save the DailyEntry instance without committing to the database
+        daily_entry = form.save(commit=False)
+        daily_entry.save()  # Save the DailyEntry instance
+
+        # Clear existing emotions and add new ones
+        daily_entry.emotion.clear()
+        emotion_ids = form.cleaned_data.get('emotion_ids', '').split(',')
+        for emotion_id in emotion_ids:
+            if emotion_id.isdigit():
+                emotion = get_object_or_404(Emotion, pk=emotion_id)
+                daily_entry.emotion.add(emotion)
+
+        return super(DailyEntryUpdate, self).form_valid(form)
 
 
 class DailyEntryDelete(LoginRequiredMixin, DeleteView):
