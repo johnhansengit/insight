@@ -393,15 +393,6 @@ h1.home {
     width: 45vw;
 }
 
-/* #update-log-form div input {
-    border: none;
-    border-radius: 5px;
-    background-color: var(--darkmode-button);
-    color: var(--darkmode-lighttext);
-    padding: .5em;
-    transition: all 0.25s ease;
-} */
-
 .slider-input {
     width: 100%;
 }
@@ -469,8 +460,97 @@ h1.home {
     background: var(--darkmode-header);
     cursor: pointer;
 }
+#user-settings-track-text {
+    text-align: center;
+    font-size: 2em;
+}
+
+#user-settings-form {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+#user-settings-form div {
+    margin: .5em;
+    padding: .5em 1em .5em 1em;
+    background-color: var(--darkmode-card);
+    color: var(--darkmode-darktext);
+    border-radius: 3vw;
+    height: 20vw;
+    width: 90vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#user-settings-form div label {
+    margin-right: 5px;
+    font-size: 1.5em;
+}
 
 .checkbox-input {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 3em;
+    width: 6em;
+    display: inline-block;
+    position: relative;
+    border-radius: 3em;
+    background-color: var(--darkmode-darktext);
+    vertical-align: middle;
+    cursor: pointer;
+    border: 0.3em solid #c1a9da;
+    outline: none;
+    transition: background-color 0.4s;
+}
+
+.checkbox-input:checked {
+    background-color: var(--accent-purple);
+    border-color: #c1a9da;
+}
+
+.checkbox-input:checked::after {
+    content: "";
+    position: absolute;
+    width: 2.25em; /* Slightly smaller than the height to make a circle */
+    height: 2.25em;
+    background-color: var(--darkmode-darktext); /* White circle */
+    border-radius: 50%;
+    top: .1em; /* Positioning the circle inside the toggle */
+    left: 3.1em; /* Position to the right for checked state */
+    transition: left 0.4s; /* Smooth transition for the toggle */
+}
+.checkbox-input::after {
+    content: "";
+    position: absolute;
+    width: 2.25em;
+    height: 2.25em;
+    background-color: var(--darkmode-lighttext);
+    border-radius: 50%;
+    top: .1em;
+    left: .1em;
+    transition: left 0.4s;
+}
+button {
+    background-color: var(--accent-purple);
+    color: var(--darkmode-darktext);
+    padding: .75em 1em;
+    border: none;
+    border-radius: 3vw;
+    font-size: 1.25em;
+    cursor: pointer; 
+    margin-top: 1em;
+    margin-bottom: 2em;
+    display: inline-block;
+    width: 90vw;
+    box-sizing: border-box;
+    transition: background-color 0.4s;
+}
+
+/* .checkbox-input {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -497,8 +577,41 @@ h1.home {
     height: 10px;
     border: solid var(--darkmode-lighttext);
     border-width: 0 3px 3px 0;
-    /* transform: rotate(45deg); */
+    transform: rotate(45deg);
+} */
+
+
+/* ------------------------------------------------------------------------------------ */
+/* .checkbox-input {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #30cfd0;
+    border-radius: 5px;
+    background-color: transparent;
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+    cursor: pointer;
 }
+
+.checkbox-input:before {
+    content: "";
+    background-color: #30cfd0;
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+.checkbox-input:checked:before {
+    transform: translate(-50%, -50%) scale(1);
+} */
 
 .home-logout-nav {
     background-color: var(--accent-blue);

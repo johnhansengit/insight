@@ -24,11 +24,77 @@ class UserSettingsForm(forms.ModelForm):
     class Meta:
         model = UserSettings
         fields = [
-            'track_counseling', 'track_spirituality', 'track_sleep', 'track_stress', 
-            'track_physical_health', 'track_meds', 'track_sunshine', 'track_eating_healthily', 
-            'track_connecting_socially', 'track_exercise', 'track_substances', 
-            'track_hydrated', 'track_menstruation'
+            'track_counseling', 
+            'track_exercise', 
+            'track_eating_healthily', 
+            'track_hydrated', 
+            'track_meds', 
+            'track_menstruation', 
+            'track_physical_health', 
+            'track_sleep', 
+            'track_connecting_socially', 
+            'track_spirituality', 
+            'track_stress', 
+            'track_substances', 
+            'track_sunshine',
         ]
+        labels = {
+            'track_counseling': 'Counseling', 
+            'track_exercise': 'Exercise', 
+            'track_eating_healthily': 'Healthy Eating', 
+            'track_hydrated': 'Hydration', 
+            'track_meds': 'Medication', 
+            'track_menstruation': 'Menstruation', 
+            'track_physical_health': 'Physical Health', 
+            'track_sleep': 'Sleep', 
+            'track_connecting_socially': 'Social Connection', 
+            'track_spirituality': 'Spirituality', 
+            'track_stress': 'Stress', 
+            'track_substances': 'Substance Use', 
+            'track_sunshine': 'Sunshine', 
+        }
+        widgets = {
+            "track_counseling": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-counseling-checkbox"}
+            ),
+            "track_exercise": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-exercise-checkbox"}
+            ),
+            "track_eating_healthily": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-eating-healthily-checkbox"}
+            ),
+            "track_hydrated": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-hydrated-checkbox"}
+            ),
+            "track_meds": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-meds-checkbox"}
+            ),
+            "track_menstruation": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-menstruation-checkbox"}
+            ),
+            "track_physical_health": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-physical-health-checkbox"}
+            ),
+            "track_sleep": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-sleep-checkbox"}
+            ),
+            "track_connecting_socially": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-connecting-socially-checkbox"}
+            ),
+            "track_spirituality": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-spirituality-checkbox"}
+            ),
+            "track_stress": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-stress-checkbox"}
+            ),
+            "track_substances": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-substances-checkbox"}
+            ),
+            "track_sunshine": forms.CheckboxInput(
+                attrs={"class": "checkbox-input", "id": "track-sunshine-checkbox"}
+            ),
+        }
+
 
 class DailyEntryForm(forms.ModelForm):
     def __init__(self, *args, user_settings=None, **kwargs):
