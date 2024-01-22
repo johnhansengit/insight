@@ -15,10 +15,6 @@
 <h1>DETAIL</h1>
 <div id="log-main">
     <div id="log-cards">
-        <p>
-            {{user_settings}}
-            {{dailyentry.sleep_quality_rating}}
-        </p>
         {% if user_settings.track_sleep and dailyentry.sleep_quality_rating != null %}
             <div class="logger card" id="sleep-quality">Sleep quality:
                 <input type="range" min="1" max="5" value="{% if dailyentry.sleep_quality_rating != null %}{{ dailyentry.sleep_quality_rating }}{% else %}1{% endif %}" disabled>
@@ -130,7 +126,15 @@
     }
 </script>
 {% else %}
-    <p>No entry found for {{ entry_date|date:"M jS, Y" }}.</p>
-    <a href="{% url 'daily-entry-create' %}?date={{ entry_date }}">Create a new entry for this date</a>
+
+    <div id="no-entry-cta">
+        <p>No entry found for {{ entry_date|date:"M jS, Y" }}.</p>
+
+        <a href="{% url 'daily-entry-create' %}?date={{ entry_date|date:'Y-m-d' }}" class="card home log-nav" id="home-daily">
+            <span>Log</span>
+            <i class="bi-card-checklist"></i>
+            <p>Log a daily entry</p>
+        </a>
+    </div>
 {% endif %}
 {% endblock %}

@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -16,7 +16,9 @@ from django.urls import reverse_lazy, reverse
 # Create your views here.
 @login_required
 def home(request):
-    return render(request, "home.html", {'title': 'Welcome'})
+    return render(request, "home.html", {
+        'title': 'Welcome'
+        })
 
 
 def sandbox(request):
@@ -24,14 +26,30 @@ def sandbox(request):
 
 @login_required
 def timeline(request):
+    profile = Profile.objects.get(user=request.user)
+
+    # Get user data for tables
+    daily_entries = DailyEntry.objects.filter(user=profile)
+    render_timeline = daily_entries.exists()
+
+    # If no daily entries, skip the rest and return minimal context
+    if not render_timeline:
+        return render(request, "timeline.html", {
+            'render_timeline': render_timeline,
+            'title': 'Timeline',
+            'title_color': 'var(--accent-pink)'
+        })
+
+    # Rest of the code runs only if there are daily entries
+
     # Get emotion categories for table header
     emotion_categories = Emotion.objects.filter(
         parent__isnull=False, 
         parent__parent__isnull=True
-    )
+    ).order_by('order')
     
     # Get user settings for dropdown
-    user_settings = UserSettings.objects.filter(user=request.user.id).first()
+    user_settings = UserSettings.objects.filter(user=profile).first()
     
     settings_mapping = {
     'Counseling': ['track_counseling', 'has_had_counseling'],
@@ -61,14 +79,9 @@ def timeline(request):
     # Get selected lifestyle from form
     selected_lifestyle = request.POST.get('lifestyle-selector', '')
     
-    # Get user data for tables
-    daily_entries = DailyEntry.objects.filter(user=request.user.id)
-    
-    render_timeline = daily_entries.exists()
-
     oldest_entry = daily_entries.order_by('date').first()
     today = date.today()
-    delta = today - oldest_entry.date  # Make sure to use the date field
+    delta = today - oldest_entry.date
     date_list = [today - timedelta(days=i) for i in range(delta.days + 1)]
 
     emotions_by_date = []
@@ -99,7 +112,8 @@ def timeline(request):
         'tracked_lifestyles': tracked_lifestyles,
         'selected_lifestyle': selected_lifestyle,
         'lifestyle_by_date': lifestyle_by_date,
-        'title': 'Timeline'
+        'title': 'Timeline',
+        'title_color': 'var(--accent-pink)'
     })
 
 
@@ -130,6 +144,7 @@ def signup(request):
 # Mixins
 class TitleMixin:
     title = None
+    title_color = None
     
     def get_context_data(self, **kwargs):
         # First, get the existing context from the superclass
@@ -137,6 +152,7 @@ class TitleMixin:
         
         # Add the title to the context
         context['title'] = self.title
+        context['title_color'] = self.title_color
         
         # Return the updated context
         return context
@@ -152,6 +168,7 @@ class UserSettingsUpdate(LoginRequiredMixin, UpdateView):
 class UserSettingsRead(LoginRequiredMixin, TitleMixin, DetailView):
     model = UserSettings
     title = 'Settings'
+    title_color = 'var(--accent-purple)'
     template_name = 'main_app/user-settings.html'
 
     def get_object(self):
@@ -162,6 +179,7 @@ class UserSettingsRead(LoginRequiredMixin, TitleMixin, DetailView):
 class UserSettingsUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
     model = UserSettings
     title = 'Settings'
+    title_color = 'var(--accent-purple)'
     form_class = UserSettingsForm
     template_name = 'main_app/user-settings-form.html'
     success_url = '/'
@@ -175,20 +193,39 @@ class UserSettingsUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
 class DailyEntryList(LoginRequiredMixin, TitleMixin, ListView):
     model = DailyEntry
     title = 'Log'
+    title_color = 'var(--accent-yellow)'
 
 
 class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
     title = 'Log'
+    title_color = 'var(--accent-yellow)'
     model = DailyEntry
     template_name = 'daily_entries/update.html'
     form_class = DailyEntryForm
+    
+    def get_initial(self):
+        initial = super(DailyEntryCreate, self).get_initial()
+        date_str = self.request.GET.get('date', None)
+        if date_str:
+            initial['date'] = datetime.strptime(date_str, '%Y-%m-%d')
+            
+        return initial
     
     def get_success_url(self):
         entry_date = self.object.date
         return reverse('daily-entry-read', kwargs={'date': entry_date.strftime('%Y-%m-%d')})
     
+    def get_form_kwargs(self):
+        kwargs = super(DailyEntryCreate, self).get_form_kwargs()
+        profile = Profile.objects.get(user=self.request.user)
+        user_settings = UserSettings.objects.filter(user=profile).first()
+        kwargs['user_settings'] = user_settings
+        return kwargs
+    
     def get_context_data(self, **kwargs):
         context = super(DailyEntryCreate, self).get_context_data(**kwargs)
+        profile = Profile.objects.get(user=self.request.user)
+        context['user_settings'] = UserSettings.objects.filter(user=profile).first()
         context['form_type'] = 'create'  
         return context
     
@@ -200,6 +237,7 @@ class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
 
 class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
     title = 'Log'
+    title_color = 'var(--accent-yellow)'
     model = DailyEntry
     template_name = 'daily_entries/detail.html'
     success_url = reverse_lazy('daily_entry_detail')
@@ -214,7 +252,8 @@ class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['user_settings'] = UserSettings.objects.filter(user_id=self.request.user.id).first()
+        profile = Profile.objects.get(user=self.request.user)
+        context['user_settings'] = UserSettings.objects.filter(user=profile).first()
         context['entry_date'] = date.fromisoformat(self.kwargs.get('date'))
         return context
 
@@ -222,6 +261,7 @@ class DailyEntryRead(LoginRequiredMixin, TitleMixin, DetailView):
 class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
     model = DailyEntry
     title = 'Log'
+    title_color = 'var(--accent-yellow)'
     form_class = DailyEntryForm
     template_name = 'daily_entries/update.html'
     
@@ -236,25 +276,35 @@ class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(DailyEntryUpdate, self).get_context_data(**kwargs)
+        profile = Profile.objects.get(user=self.request.user)
+        context['user_settings'] = UserSettings.objects.filter(user=profile).first()
         context['form_type'] = 'update'
         return context
 
     def get_form_kwargs(self):
         kwargs = super(DailyEntryUpdate, self).get_form_kwargs()
-        user_settings = UserSettings.objects.filter(user=self.request.user.id).first()
-        kwargs.update({'user_settings': user_settings})
+        profile = Profile.objects.get(user=self.request.user)
+        user_settings = UserSettings.objects.filter(user=profile).first()
+        kwargs['user_settings'] = user_settings
         return kwargs
 
 
 class DailyEntryDelete(LoginRequiredMixin, DeleteView):
     model = DailyEntry
-    success_url = '/daily-entries'
+    template_name = 'daily_entries/delete-confirmation.html'
+    success_url = '/'
+    
+    def get_object(self, queryset=None):
+        entry_date = date.fromisoformat(self.kwargs.get('date'))
+        profile = Profile.objects.get(user=self.request.user)
+        return get_object_or_404(DailyEntry, date=entry_date, user=profile)
 
 # Journal Views
 class JournalEntryList(LoginRequiredMixin, TitleMixin, ListView):
     model = DailyEntry
     template_name = 'main_app/journal-entries-list.html' 
     title = 'Journals'
+    title_color = 'var(--accent-green)'
     context_object_name = 'entries'  # Name of the context variable in the template
 
     def get_queryset(self):
@@ -281,21 +331,3 @@ class EmotionsDataView(View):
             'children': [self.get_emotion_data(child) for child in Emotion.objects.filter(parent=emotion.id)]
         }
         return data
-
-
-def daily_entry_form(request):
-    print("views.py")
-    user_settings = UserSettings.objects.filter(user=request.user.id).first()
-    print("vies.py user settings:")
-    print(user_settings)
-    if request.method == 'POST':
-        form = DailyEntryForm(request.POST, user_settings=user_settings)
-        if form.is_valid():
-            # Save the form data to the database
-            form.save(commit=False).user = request.user
-            form.save()
-            return redirect('success_page')  # Redirect to a success page or another view
-    else:
-        form = DailyEntryForm(user_settings=user_settings)
-
-    return render(request, 'daily_entries/update.html', {'form': form})

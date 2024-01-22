@@ -5,6 +5,14 @@
 
 {% if render_timeline %}
 
+    <section id="intro-text">
+        <h2>Welcome to your Timeline</h2>
+        <p>Your Timeline is a view of all the emotions you've logged by category. Look for patterns between your emotions and your logged lifestyle factor by chosing a lifestyle factor from the dropdown for comparison.
+        <br>
+        <br>
+        You can navigate to the Log for any date by clicking on the date on the left of the table.</p>
+    </section>
+
     <section id="timeline">
         <div id="lifestyle-selector">
             <form id="lifestyle-selector-form" method="post" action="{% url 'process_lifestyle_selector' %}">
@@ -32,7 +40,7 @@
                 <tbody>
                     {% for date in date_list %}
                         <tr>
-                            <td>{{ date }}</td>
+                            <td><a class="timeline-date-link" href="/daily-entries/{{ date|date:"Y-m-d" }}/">{{ date }}</a></td>
                             {% for emotion in emotion_categories %}
                                 {% if emotion.name in emotions_by_date|get_emotions:date %}
                                     <td style="background-color: {{ emotion.timeline_color }};"></td>
@@ -56,13 +64,15 @@
     </section>
 
 {% else %}
-No data to display. Why not try adding your first daily log?
+<div id="no-entry-cta">
+    <p>No data to display. Why not try adding your first daily log?</p>
 
-<a href="" class="card home log-nav" id="home-daily">
-    <span>Log</span>
-    <i class="bi-card-checklist"></i>
-    <p>Log a daily entry</p>
-</a>
+    <a href="/daily-entries/create/" class="card home log-nav" id="home-daily">
+        <span>Log</span>
+        <i class="bi-card-checklist"></i>
+        <p>Log a daily entry</p>
+    </a>
+</div>
 {% endif %}
 
 <script>

@@ -12,9 +12,7 @@
         <button type="submit" class="log-foot">CREATE</button>
     {% else %}
         <button type="submit" class="log-foot">UPDATE</button>
-        <a class="log-foot link" id="delete" href="{% url 'daily-entry-delete' dailyentry.date %}">DELETE</a>
     {% endif %}
     </div>
 </form>
-
 {% endblock %}

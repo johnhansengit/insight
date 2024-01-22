@@ -22,7 +22,7 @@
     --accent-purple: #f1d9fa;
     --accent-orange: #fab49d;
     --logo-font: 'Dosis', sans-serif;
-    --header-font: 'Dosis', sans-serif;
+    --header-font: 'Urbanist', sans-serif;
     --base-font: 'Montserrat', sans-serif;
 }
 
@@ -49,6 +49,7 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: var(--darkmode-header);
+    color: var(--darkmode-lighttext);
     z-index: 1000;
 }
 
@@ -83,6 +84,7 @@ footer {
     text-align: center;
     font-size: 12px;
     z-index: 10;
+    background-color: var(--darkmode-header);
 }
 
 h1,
@@ -91,6 +93,7 @@ h3,
 h4,
 h5 {
     font-family: var(--header-font);
+    font-weight: 600;
 }
 
 button {
@@ -102,6 +105,10 @@ button {
 
 button:active {
     background-color: ;
+}
+
+a {
+    text-decoration: none;
 }
 
 #wedgeCanvas {
@@ -123,7 +130,7 @@ button:active {
     font-family: var(--logo-font);
     font-weight: 200;
     font-size: 28px;
-    color: var(--darkmode-lighttext);
+    color: inherit;
     text-decoration: none;
 }
 
@@ -218,7 +225,7 @@ h1.home {
 
 #hamburger-menu {
     font-size: 36px;
-    color: var(--darkmode-lighttext);
+    /* color: var(--darkmode-darktext); */
     cursor: pointer;
 }
 
@@ -263,6 +270,12 @@ h1.home {
     gap: 10px;
 }
 
+/* #emotions-timeline {
+    display: block;
+    height: 50vh;
+    overflow-y: auto;
+} */
+
 #emotions-table {
     width: 100%;
     height: 100%;
@@ -281,6 +294,7 @@ h1.home {
 
 #emotions-table thead td:not(:last-child) {
     writing-mode: vertical-lr;
+    padding: 5px;
 }
 
 #emotions-table td:first-child {
@@ -464,6 +478,7 @@ h1.home {
 #user-settings-track-text {
     text-align: center;
     font-size: 2em;
+    margin: 0;
 }
 
 #user-settings-form {
@@ -651,9 +666,15 @@ h1.home {
 }
 
 #login-form {
-    margin-left: 50%;
-    text-wrap: nowrap;
-    transform: translate(-66%, 0);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-form p {
+    margin: 5px;
 }
 
 #signup-form {
@@ -666,9 +687,14 @@ h1.home {
     margin-bottom: 5px;
 }
 
+#login-btn,
+#signup-button {
+    padding: 10px 20px;
+    width: 250px;
+}
+
 #login-btn {
     background-color: var(--accent-yellow);
-    padding: 10px 20px;
 }
 
 #signup-cta {
@@ -681,15 +707,17 @@ h1.home {
 
 #signup-cta p {
     font-size: 14px;
+    margin: 10px;
 }
 
 #signup-button {
+    display: block;
+    margin: 0 auto;
     background-color: var(--accent-blue);
-    padding: 10px 20px;
 }
 
 #signup-header {
-    margin: 0;
+    margin: 0 0 10px;
 }
 
 #id_username_helptext,
@@ -795,4 +823,33 @@ h1.home {
 
 .bi-x-circle-fill {
     color: var(--darkmode-header);
+}
+
+.timeline-date-link {
+    text-decoration: none;
+    color: var(--darkmode-lighttext);
+}
+
+#intro-text {
+    padding: 0 20px;
+    text-align: justify;
+}
+
+#intro-text h2 {
+    margin: 0;
+    text-align: center;
+}
+
+#intro-text p {
+    font-size: 12px;
+}
+
+#no-entry-cta {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 75vh;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
 }
