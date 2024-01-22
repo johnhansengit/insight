@@ -3,4 +3,44 @@
 
 {% include "main_app/includes/emotion-wheel.html" %}
 
+<button id="toggle-wheel" onclick="toggleCanvas()">Select Emotion</button>
+
+<script>
+    function easeInOut(t) {
+            return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        }
+
+    function animateMove(element, start, end, duration) {
+        var range = end - start;
+        var startTime = performance.now();
+
+        function move(currentTime) {
+            var elapsedTime = currentTime - startTime;
+            var fraction = elapsedTime / duration;
+            var easeFraction = easeInOut(fraction);
+
+            var nextPosition = start + range * easeFraction;
+
+            if (elapsedTime < duration) {
+                element.style.left = nextPosition + 'px';
+                requestAnimationFrame(move);
+            } else {
+                element.style.left = end + 'px'; // Ensure it ends at the correct position
+            }
+        }
+
+        requestAnimationFrame(move);
+    }
+
+    function toggleCanvas() {
+        var canvas = document.getElementById('wedgeCanvas');
+        var currentLeft = parseInt(window.getComputedStyle(canvas).left, 10);
+        if (currentLeft === -550) {
+            animateMove(canvas, -550, -265, 750); // 750ms to move from -530px to -265px
+        } else {
+            animateMove(canvas, -265, -550, 500); 
+        }
+    }
+</script>
+
 {% endblock %}

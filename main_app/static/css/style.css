@@ -15,6 +15,12 @@
     --lightmode-button: ;
     --darkmode-button-active: #3B3B3B;
     --lightmode-button-active: ;
+    --accent-yellow: #fbde77;
+    --accent-pink: #f9b7c7;
+    --accent-blue: #c8eaf6;
+    --accent-green: #e1fad9;
+    --accent-purple: #f1d9fa;
+    --accent-orange: #fab49d;
     --logo-font: 'Dosis', sans-serif;
     --header-font: 'Dosis', sans-serif;
     --base-font: 'Montserrat', sans-serif;
@@ -43,7 +49,7 @@ header {
     justify-content: space-between;
     align-items: center;
     background-color: var(--darkmode-header);
-    z-index: 100;
+    z-index: 1000;
 }
 
 .header-left {
@@ -97,15 +103,18 @@ button:active {
     background-color: ;
 }
 
-canvas {
+#wedgeCanvas {
     position: absolute;
-    left: -275px;
+    left: -550px;
     top: 50%;
-    margin-top: -275px;
+    margin-top: -250px;
     border-radius: 50%;
+    z-index: 100;
+    box-shadow: 2px 2px 20px 2px #000;
+    /* transform: left 0.5s ease-in-out; */
 }
 
-canvas:hover {
+#wedgeCanvas:hover {
     cursor: pointer;
 }
 
@@ -146,7 +155,7 @@ canvas:hover {
     background-color: ;
 }
 
-h1.home{
+h1.home {
     text-align: center;
 }
 
@@ -159,10 +168,10 @@ h1.home{
 }
 
 .card.home {
-    background-color: var(--darkmode-card);
     color: var(--darkmode-darktext);
     text-align: center;
     text-decoration: none;
+    padding: 5px 0px;
 }
 
 .card.home i {
@@ -172,12 +181,17 @@ h1.home{
     margin-bottom: 0;
 }
 
-.card.home p {
-    position: relative;
-    margin: .3em;
+.card.home span {
+    font-weight: 500;
 }
 
-.card.home:hover {
+.card.home p {
+    position: relative;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+/* .card.home:hover {
     border: .2em solid var(--darkmode-button-active);
 }
 
@@ -190,7 +204,7 @@ h1.home{
 }
 
 #home-journal:hover::before {
-    content: "Start a journal entry";
+    content: "View your journal entries";
 }
 
 #home-timeline:hover::before {
@@ -199,7 +213,7 @@ h1.home{
 
 #home-settings:hover::before {
     content: "Adjust user settings";
-}
+} */
 
 #hamburger-menu {
     font-size: 36px;
@@ -215,7 +229,7 @@ h1.home{
     opacity: 0;
     flex-wrap: wrap;
     gap: 5px;
-    background-color: rgba(64,64,64,0.8);
+    background-color: rgba(64, 64, 64, 0.8);
     border-radius: 10px;
     margin: 10px 5px;
     padding: 5px;
@@ -227,7 +241,6 @@ h1.home{
     flex-direction: column;
     margin: 5px;
     border-radius: 5px;
-    background-color: #D9D9D9;
     text-decoration: none;
     color: var(--darkmode-darktext);
     font-size: 14px;
@@ -242,56 +255,58 @@ h1.home{
 
 #timeline {
     width: 100%;
-    padding: 10px; 
-    display: grid;
-    grid-template-columns: 75% 25%;
-    grid-template-rows: auto auto;
-    grid-template-areas: 
-        ". lifestyle-selector"
-        "emotions-timeline lifestyle-timeline";
-    row-gap: 10px;
-    column-gap: 10px;
-}
-
-#lifestyle-selector {
-    grid-area: lifestyle-selector;
-}
-
-#emotions-timeline {
-    grid-area: emotions-timeline;
-}
-
-#lifestyle-timeline {
-    grid-area: lifestyle-timeline;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 10px;
 }
 
 #emotions-table {
     width: 100%;
     height: 100%;
-    table-layout: fixed;
-    font-size: 14px;
+    font-size: 12px;
     text-align: right;
+    table-layout: fixed;
 }
 
 #emotions-table tr {
-    height: auto; 
+    height: auto;
 }
 
 #emotions-table thead tr {
     height: 20px;
 }
 
+#emotions-table thead td:not(:last-child) {
+    writing-mode: vertical-lr;
+}
+
 #emotions-table td:first-child {
-    width: 100px;
+    width: 90px;
     padding-right: 5px;
 }
 
 #emotions-table td:not(:first-child) {
-    width: calc((100% - 100px) / 8); 
+    width: auto;
+}
+
+#emotions-table td:last-child {
+    text-align: center;
+    width: 90px;
 }
 
 #emotions-table td:not(:first-child) {
     border: 1px solid grey;
+}
+
+#emotions-table td:nth-child(10) {
+    border: none;
+}
+
+#emotions-table thead td:last-child {
+    background-color: var(--darkmode-card);
+    color: var(--darkmode-darktext);
 }
 
 .cta {
@@ -483,4 +498,132 @@ h1.home{
     border: solid var(--darkmode-lighttext);
     border-width: 0 3px 3px 0;
     /* transform: rotate(45deg); */
+}
+
+.home-logout-nav {
+    background-color: var(--accent-blue);
+}
+
+.log-nav {
+    background-color: var(--accent-yellow);
+}
+
+.go-to-date-nav {
+    background-color: var(--accent-orange);
+}
+
+.timeline-nav {
+    background-color: var(--accent-pink);
+}
+.journals-nav {
+    background-color: var(--accent-green);
+}
+
+.settings-nav {
+    background-color: var(--accent-purple);
+}
+
+#welcome-text {
+    margin: -35px 20px 0px;
+}
+
+#welcome-text h3 {
+    text-align: center;
+}
+
+#welcome-text p {
+    font-size: 14px;
+    text-align: justify;
+}
+
+#login-form {
+    margin-left: 50%;
+    text-wrap: nowrap;
+    transform: translate(-66%, 0);
+}
+
+#signup-form {
+    margin: 0 20px;
+}
+
+#signup-form li {
+    text-wrap: wrap;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+#login-btn {
+    background-color: var(--accent-yellow);
+    padding: 10px 20px;
+}
+
+#signup-cta {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 25px;
+}
+
+#signup-cta p {
+    font-size: 14px;
+}
+
+#signup-button {
+    background-color: var(--accent-blue);
+    padding: 10px 20px;
+}
+
+#signup-header {
+    margin: 0;
+}
+
+#id_username_helptext,
+#id_password2_helptext {
+    text-wrap: wrap;
+    font-size: 12px;
+}
+
+#id_username_helptext::before,
+#id_password2_helptext::before {
+    content: "\A\A";
+    white-space: pre;
+}
+
+.journal-entries-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.journal-entry-list-card {
+    background-color: var(--darkmode-card);
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    color: var(--darkmode-darktext);
+}
+
+.journal-entry-list-date {
+    text-align: center;
+    border-radius: 15px 15px 0 0;
+    padding: 10px 20px;
+    font-weight: bold;
+    margin: -20px -20px 10px -20px;
+    color: var(--darkmode-darktext);
+    border-bottom: 2px solid #000;
+}
+
+.journal-entry-list-text {
+    text-align: center;
+    display: block;
+}
+
+.truncate-text {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

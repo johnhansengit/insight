@@ -14,5 +14,17 @@ def get_lifestyle(lifestyle_by_date, date):
     for entry in lifestyle_by_date:
         if entry['date'] == date:
             value = entry['value']
-            return value
+
+            # Check for True or False values
+            if value is True:
+                return 'yes'
+            if value is False:
+                return 'no'
+
+            # Check for integer values
+            ratings = {1: 'poor', 2: 'meh', 3: 'fine', 4: 'good', 5: 'excellent'}
+            if value in ratings:
+                return ratings[value]
+
     return []
+

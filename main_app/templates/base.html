@@ -26,13 +26,13 @@
       <div class="view-title header-center">{{ title }}</div>
       <nav class="header-right" id="hamburger-menu">☰</div>
         <div id="nav-grid">
-          <a href="/">Home</a>
-          <a href=""><i class="bi bi-card-checklist nav-icon"></i>Log</a>
-          <a href="#" id="goToDateLink"><i class="bi bi-calendar2-date nav-icon"></i>Go to Date</a>
-          <a href="/timeline"><i class="bi bi-calendar2-range nav-icon"></i>Timeline</a>
-          <a href=""><i class="bi bi-journal-bookmark nav-icon"></i> Journals</a>
-          <a href="/user-settings"><i class="bi bi-gear nav-icon"></i> Settings</a>
-          <a href="javascript:{}" onclick="document.getElementById('logout-form').submit();">Logout</a>
+          <a class="home-logout-nav" href="/">Home</a>
+          <a class="log-nav" href=""><i class="bi bi-card-checklist nav-icon"></i>Log</a>
+          <a class="go-to-date-nav" href="#" id="goToDateLink"><i class="bi bi-calendar2-date nav-icon"></i>Go to Date</a>
+          <a class="timeline-nav" href="/timeline"><i class="bi bi-calendar2-range nav-icon"></i>Timeline</a>
+          <a class="journals-nav" href="/journal-entries"><i class="bi bi-journal-bookmark nav-icon"></i>Journals</a>
+          <a class="settings-nav" href="/user-settings"><i class="bi bi-gear nav-icon"></i>Settings</a>
+          <a class="home-logout-nav" href="javascript:{}" onclick="document.getElementById('logout-form').submit();">Logout</a>
         </div>
         <div id="calendar" style="position: absolute; display: none;"></div>
       </nav>
@@ -47,12 +47,6 @@
   <footer>
     <div>Insight &copy; {% now "Y" %}</div>
     <form method="post" action="{% url 'logout' %}" id="logout-form">{% csrf_token %}</form>
-    {% comment %} TODO: Move links to somewhere sensible {% endcomment %}
-    {% if user.is_authenticated %}  
-  {% else %}
-    <li><a href="{% url 'login' %}">Log In</a></li>
-    <li><a href="{% url 'signup' %}">Sign Up</a></li>
-  {% endif %}
   </footer>
 </body>
 
