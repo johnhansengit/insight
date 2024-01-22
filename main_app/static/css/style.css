@@ -321,7 +321,7 @@ h1.home {
     margin: 0;
 }
 
-#log-footer {
+.log-footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -384,7 +384,7 @@ h1.home {
     justify-content: space-around;
 }
 
-#update-log-form div {
+#update-log-form div:not(:last-child) {
     margin: .5em;
     padding: .5em 1em .5em 1em;
     background-color: var(--darkmode-card);
@@ -535,7 +535,7 @@ h1.home {
     left: .1em;
     transition: left 0.4s;
 }
-button {
+#user-settings-form button {
     background-color: var(--accent-purple);
     color: var(--darkmode-darktext);
     padding: .75em 1em;
