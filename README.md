@@ -39,7 +39,7 @@ Insight is tailored for individuals who struggle to identify or articulate their
 
 ##### **_Deployed Site_**
 
-Now [live on Heroku!]()
+Now [live on Heroku!](https://ajh-insight-9479c099e268.herokuapp.com/)
 
 ##### **_Screenshots_**
 
@@ -61,6 +61,7 @@ Coming soon!
 
 In the future, we hope to integrate even more functionality and refinement:
 
+- Responsive design
 - Badges to reward app use (e.g. logging three days in a row) as well as lifestyle improvements (e.g. exercising 3+ times in a week)
 - Upgrade to 'higher level' emotion wheels with greater specificity
 - Add emotions that aren't in the wheel
