@@ -331,3 +331,53 @@ class EmotionsDataView(View):
             'children': [self.get_emotion_data(child) for child in Emotion.objects.filter(parent=emotion.id)]
         }
         return data
+    
+# Emotions Views
+def emotion_lifestyle_timeline(request):
+    profile = Profile.objects.get(user=request.user)
+    daily_entries = DailyEntry.objects.filter(user=profile)
+    user_settings = UserSettings.objects.filter(user=profile).first()
+
+    if not user_settings:
+            return JsonResponse({'error': 'User settings not found'}, status=404)
+
+    timeline_data = []
+
+    for entry in daily_entries:
+        entry_data = {
+            'date': entry.date,
+            'emotions': list(entry.emotion.values('name', 'color', 'timeline_color')),
+            'lifestyle': {}
+        }
+
+        # Check each setting and add to entry_data if it's being tracked
+        if user_settings.track_sleep:
+            entry_data['lifestyle']['sleep_quality_rating'] = entry.sleep_quality_rating
+        if user_settings.track_stress:
+            entry_data['lifestyle']['stress_rating'] = entry.stress_rating
+        if user_settings.track_physical_health:
+            entry_data['lifestyle']['physical_health_rating'] = entry.physical_health_rating
+        if user_settings.track_meds:
+            entry_data['lifestyle']['has_taken_meds'] = entry.has_taken_meds
+        if user_settings.track_sunshine:
+            entry_data['lifestyle']['has_gotten_sunshine'] = entry.has_gotten_sunshine
+        if user_settings.track_eating_healthily:
+            entry_data['lifestyle']['has_eaten_healthily'] = entry.has_eaten_healthily
+        if user_settings.track_connecting_socially:
+            entry_data['lifestyle']['has_connected_socially'] = entry.has_connected_socially
+        if user_settings.track_exercise:
+            entry_data['lifestyle']['has_exercised'] = entry.has_exercised
+        if user_settings.track_substances:
+            entry_data['lifestyle']['has_used_substances'] = entry.has_used_substances
+        if user_settings.track_hydrated:
+            entry_data['lifestyle']['has_properly_hydrated'] = entry.has_properly_hydrated
+        if user_settings.track_menstruation:
+            entry_data['lifestyle']['has_menstruated'] = entry.has_menstruated
+        if user_settings.track_counseling:
+            entry_data['lifestyle']['has_had_counseling'] = entry.has_had_counseling
+        if user_settings.track_spirituality:
+            entry_data['lifestyle']['has_engaged_spiritually'] = entry.has_engaged_spiritually
+
+        timeline_data.append(entry_data)
+
+    return JsonResponse(timeline_data, safe=False)
