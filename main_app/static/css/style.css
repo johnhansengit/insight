@@ -335,7 +335,7 @@ h1.home {
     margin: 0;
 }
 
-#log-footer {
+.log-footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -396,9 +396,10 @@ h1.home {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-bottom: 2em;
 }
 
-#update-log-form div {
+#update-log-form div:not(:last-child) {
     margin: .5em;
     padding: .5em 1em .5em 1em;
     background-color: var(--darkmode-card);
@@ -416,8 +417,16 @@ h1.home {
     margin-right: 5px;
 }
 
+#update-log-form div label {
+    text-align: center;
+    font-size: 1.5em;
+}
+
 #update-log-form div:nth-last-child(3) {
-    order: -1;
+    display: none;
+}
+
+#update-log-form div:nth-last-child(4) {
     margin: 1em;
     margin-bottom: 2em;
     padding: .5em 1em .5em 1em;
@@ -428,6 +437,38 @@ h1.home {
     height: 45vw;
 }
 
+.update-log-add-emotion {
+    background-color: var(--accent-yellow);
+    color: var(--darkmode-darktext);
+    padding: .75em 1em;
+    border: none;
+    border-radius: 3vw;
+    font-size: 1.25em;
+    cursor: pointer; 
+    margin: 1em auto;
+    display: inline-block;
+    width: 90vw;
+    box-sizing: border-box;
+    transition: background-color 0.4s;
+}
+
+#update-log-form div:nth-last-child(4) textarea {
+    background-color: var(--darkmode-darktext);
+    color: var(--darkmode-lighttext);
+    border-radius: 0 0 .4em .4em;
+    padding: .2em 1em .3em 1em;
+    width: 82vw;
+    height: 35vw;
+    align-self: center;
+    /* margin: 0 1em; */
+}
+
+#update-log-date {
+    text-align: center;
+    font-size: 2em;
+    margin: 0;
+}
+
 #id_journal_entry {
     background-color: var(--darkmode-darktext);
     color: var(--darkmode-lighttext);
@@ -436,7 +477,7 @@ h1.home {
 }
 
 #update-log-form div:nth-last-child(2) {
-    order: -2;
+    display: none;
 }
 
 #update-log-form div:last-child {
@@ -550,7 +591,7 @@ h1.home {
     left: .1em;
     transition: left 0.4s;
 }
-button {
+#user-settings-form button {
     background-color: var(--accent-purple);
     color: var(--darkmode-darktext);
     padding: .75em 1em;
