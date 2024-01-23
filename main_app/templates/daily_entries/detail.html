@@ -11,7 +11,11 @@
 </div>
 
 <div id="log-main">
-    <div id="detail-log-emotions"></div>
+    <div id="detail-log-emotions">
+        {% if dailyentry.emotion %}
+            {{ dailyentry.emotion }}
+        {% endif %}
+    </div>
 
     <div id="log-cards">
         {% if user_settings.track_sleep and dailyentry.sleep_quality_rating != null %}
