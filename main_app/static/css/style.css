@@ -103,10 +103,6 @@ button {
     transition: all 0.25s ease;
 }
 
-button:active {
-    background-color: ;
-}
-
 a {
     text-decoration: none;
 }
@@ -153,14 +149,6 @@ a {
 .card:hover {
     cursor: pointer;
     background-color: var(--darkmode-button-active);
-}
-
-.toggle-on {
-    background-color: ;
-}
-
-.toggle-off {
-    background-color: ;
 }
 
 h1.home {
@@ -335,7 +323,7 @@ h1.home {
     margin: 0;
 }
 
-#log-footer {
+.log-footer {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -391,14 +379,15 @@ h1.home {
     padding: .2em 1em .3em 1em;
 }
 
-#update-log-form {
+#update-log-form, #log-cards {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-bottom: 2em;
 }
 
-#update-log-form div {
+#update-log-form div:not(:last-child), .logger {
     margin: .5em;
     padding: .5em 1em .5em 1em;
     background-color: var(--darkmode-card);
@@ -416,8 +405,16 @@ h1.home {
     margin-right: 5px;
 }
 
+#update-log-form div label, .logger label {
+    text-align: center;
+    font-size: 1.5em;
+}
+
 #update-log-form div:nth-last-child(3) {
-    order: -1;
+    display: none;
+}
+
+#update-log-form div:nth-last-child(4) {
     margin: 1em;
     margin-bottom: 2em;
     padding: .5em 1em .5em 1em;
@@ -428,6 +425,48 @@ h1.home {
     height: 45vw;
 }
 
+.update-log-add-emotion {
+    background-color: var(--accent-yellow);
+    color: var(--darkmode-darktext);
+    padding: .75em 1em;
+    border: none;
+    border-radius: 3vw;
+    font-size: 1.25em;
+    cursor: pointer; 
+    margin: 1em auto;
+    display: inline-block;
+    width: 90vw;
+    box-sizing: border-box;
+    transition: background-color 0.4s;
+}
+
+#update-log-form div:nth-last-child(4) textarea {
+    background-color: var(--darkmode-darktext);
+    color: var(--darkmode-lighttext);
+    border-radius: 0 0 .4em .4em;
+    padding: .2em 1em .3em 1em;
+    width: 82vw;
+    height: 35vw;
+    align-self: center;
+    /* margin: 0 1em; */
+}
+
+#log-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: linear-gradient(var(--darkmode-background), var(--darkmode-header));
+    margin-bottom: .5em;
+    padding: 1em;
+    border-bottom: .1em solid black;
+}
+
+#update-log-date, #date.log-head {
+    text-align: center;
+    font-size: 2em;
+    margin: 0;
+}
+
 #id_journal_entry {
     background-color: var(--darkmode-darktext);
     color: var(--darkmode-lighttext);
@@ -436,7 +475,7 @@ h1.home {
 }
 
 #update-log-form div:nth-last-child(2) {
-    order: -2;
+    display: none;
 }
 
 #update-log-form div:last-child {
@@ -447,7 +486,7 @@ h1.home {
     width: 100%;
     height: 8px;
     border-radius: 5px;
-    background: var(--darkmode-background);
+    background: var(--accent-yellow);
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
@@ -523,6 +562,16 @@ h1.home {
     transition: background-color 0.4s;
 }
 
+.logger .checkbox-input, #update-log-form div .checkbox-input {
+    background-color: var(--darkmode-darktext);
+    border: 0.3em solid #cbae47;
+}
+
+.logger .checkbox-input:checked, #update-log-form div .checkbox-input:checked {
+    background-color: var(--accent-yellow);
+    border-color: #cbae47;
+}
+
 .checkbox-input:checked {
     background-color: var(--accent-purple);
     border-color: #c1a9da;
@@ -550,7 +599,7 @@ h1.home {
     left: .1em;
     transition: left 0.4s;
 }
-button {
+#user-settings-form button {
     background-color: var(--accent-purple);
     color: var(--darkmode-darktext);
     padding: .75em 1em;
@@ -732,6 +781,30 @@ button {
     white-space: pre;
 }
 
+.errorlist {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    color: var(--darkmode-darktext);
+}
+
+.errorlist li {
+    background-color: #ffdddd;
+    border-left: 4px solid #f44336;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.errorlist li ul {
+    margin-top: 10px;
+}
+
+.errorlist li ul li {
+    background-color: #ffecec;
+    border-left: 4px solid #ffadad;
+}
+
 .journal-entries-list-container {
     display: flex;
     flex-direction: column;
@@ -780,11 +853,18 @@ button {
     gap: 20px;
 }
 
+#select-emotion-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
 #toggle-wheel {
     background-color: var(--accent-yellow);
     padding: 10px 20px;
     border-radius: 10px;
-    width: 140px;
+    width: 200px;
 }
 
 #toggle-wheel:hover {
@@ -869,4 +949,21 @@ button {
 
 .hidden {
     display: none
+    width: 70vw;
+}
+
+#pro-tip {
+    padding: 20px;
+}
+
+#pro-tip h3 {
+    font-size: 18px;
+    text-align: center;
+    margin: 0;
+}
+
+#pro-tip p {
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
 }

@@ -141,6 +141,8 @@ def signup(request):
             user.save()
             login(request, user)
             return redirect("home")
+        else:
+            return render(request, "registration/signup.html", {"form": form})
     form = SignUpForm()
     context = {"form": form}
     return render(request, "registration/signup.html", context)
@@ -237,6 +239,18 @@ class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
     def form_valid(self, form):
         profile = get_object_or_404(Profile, user=self.request.user)
         form.instance.user = profile
+        self.object = form.save(commit=False)
+
+        emotion_ids = self.request.POST.get('emotion', '')
+        if emotion_ids:
+            emotion_ids = [int(e_id) for e_id in emotion_ids.split(',') if e_id.isdigit()]
+            self.object.save()
+            for e_id in emotion_ids:
+                emotion = get_object_or_404(Emotion, id=e_id)
+                self.object.emotion.add(emotion)
+        else:
+            self.object.save()
+
         return super(DailyEntryCreate, self).form_valid(form)
 
 
@@ -284,6 +298,8 @@ class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
         profile = Profile.objects.get(user=self.request.user)
         context['user_settings'] = UserSettings.objects.filter(user=profile).first()
         context['form_type'] = 'update'
+        entry_date = date.fromisoformat(self.kwargs.get('date'))
+        context['date'] = entry_date
         return context
 
     def get_form_kwargs(self):
