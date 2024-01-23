@@ -599,7 +599,9 @@ h1.home {
     left: .1em;
     transition: left 0.4s;
 }
-#user-settings-form button {
+
+#user-settings-form button,
+#gpt-analysis-button {
     background-color: var(--accent-purple);
     color: var(--darkmode-darktext);
     padding: .75em 1em;
