@@ -279,6 +279,8 @@ class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
         profile = Profile.objects.get(user=self.request.user)
         context['user_settings'] = UserSettings.objects.filter(user=profile).first()
         context['form_type'] = 'update'
+        entry_date = date.fromisoformat(self.kwargs.get('date'))
+        context['date'] = entry_date
         return context
 
     def get_form_kwargs(self):

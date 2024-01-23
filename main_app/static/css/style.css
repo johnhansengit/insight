@@ -103,10 +103,6 @@ button {
     transition: all 0.25s ease;
 }
 
-button:active {
-    background-color: ;
-}
-
 a {
     text-decoration: none;
 }
@@ -153,14 +149,6 @@ a {
 .card:hover {
     cursor: pointer;
     background-color: var(--darkmode-button-active);
-}
-
-.toggle-on {
-    background-color: ;
-}
-
-.toggle-off {
-    background-color: ;
 }
 
 h1.home {
@@ -821,11 +809,18 @@ h1.home {
     gap: 20px;
 }
 
+#select-emotion-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
 #toggle-wheel {
     background-color: var(--accent-yellow);
     padding: 10px 20px;
     border-radius: 10px;
-    width: 140px;
+    width: 200px;
 }
 
 #toggle-wheel:hover {
@@ -905,4 +900,20 @@ h1.home {
 
 #logo-img {
     width: 70vw;
+}
+
+#pro-tip {
+    padding: 20px;
+}
+
+#pro-tip h3 {
+    font-size: 18px;
+    text-align: center;
+    margin: 0;
+}
+
+#pro-tip p {
+    font-size: 14px;
+    text-align: center;
+    margin: 0;
 }

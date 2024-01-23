@@ -1,18 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Daily Entry {% if form_type == 'create' %}Create{% else %}Update{% endif %}</h2>
-<h3 id="update-log-date" readonly>{{ date }}</h3>
+{% include "main_app/includes/emotion-wheel.html" %}
 
-<button type="button" class="update-log-add-emotion" onclick="">Add Emotion</button>
+<div id="intro-text">
+    <h2>{% if form_type == 'create' %}Create{% else %}Update{% endif %} Daily Log</h2>
+    <h3 id="update-log-date" readonly>{{ date }}</h3>
+</div>
+
+<section id="emotion-selection">
+    <div id="select-emotion-container">
+        <button class="update-log-add-emotion" id="toggle-wheel" onclick="toggleCanvas()">Select Emotions</button>
+    </div>
+    <div class="emotion-display-container">
+        <div id="display-single-emotion"></div>
+    </div>
+</section>
+
+<div id="pro-tip">
+    <h3>Pro tip!</h3>
+    <p>Select which lifestyle factors you track in your User Settings.</p>
+</div>
 
 <form method="post" id="update-log-form">
-    <div id="update-log-emotions"></div>
-
     {% csrf_token %}
     {{ form }}
+    <input type="hidden" name="emotion" id="emotion-input">
     
-    <div class="log-footer">
+<div class="log-footer">
     {% if form_type == 'create' %}
         <button type="submit" class="log-foot">CREATE</button>
     {% else %}
@@ -20,4 +35,72 @@
     {% endif %}
     </div>
 </form>
+
+
+<script>
+    
+    function easeInOut(t) {
+            return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        }
+
+    function animateMove(element, start, end, duration) {
+        let range = end - start;
+        let startTime = performance.now();
+
+        function move(currentTime) {
+            let elapsedTime = currentTime - startTime;
+            let fraction = elapsedTime / duration;
+            let easeFraction = easeInOut(fraction);
+
+            let nextPosition = start + range * easeFraction;
+
+            if (elapsedTime < duration) {
+                element.style.left = nextPosition + 'px';
+                requestAnimationFrame(move);
+            } else {
+                element.style.left = end + 'px';
+            }
+        }
+
+        requestAnimationFrame(move);
+    }
+
+    function toggleCanvas() {
+        const canvas = document.getElementById('wedgeCanvas');
+        const toggleBtn = document.getElementById('toggle-wheel');
+        let currentLeft = parseInt(window.getComputedStyle(canvas).left, 10);
+        if (currentLeft === -550) {
+            animateMove(canvas, -550, -265, 750); // 750ms to move from -530px to -265px
+            toggleBtn.innerText = 'Hide Wheel';
+        } else {
+            animateMove(canvas, -265, -550, 500); 
+            toggleBtn.innerText = 'Select Emotions';
+        }
+    }
+
+    function handleRemoveIcon(event) {
+        if (event.target.classList.contains('remove-icon')) {
+            event.preventDefault();
+            let emotionDisplay = event.target.closest('.emotion-display');
+            let emotionName = emotionDisplay.textContent.trim();
+            let idToRemove = emotionNameIDMap[emotionName];
+
+            emotionDisplay.remove();
+            selectedEmotionsIDs = selectedEmotionsIDs.filter(id => id !== idToRemove);
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        const emotionContainer = document.getElementById('display-single-emotion');
+        emotionContainer.addEventListener('click', handleRemoveIcon);
+        emotionContainer.addEventListener('touchstart', handleRemoveIcon);
+    });
+
+    document.getElementById('update-log-form').addEventListener('submit', function(event) {
+        document.getElementById('emotion-input').value = selectedEmotionsIDs;
+    });    
+    
+      
+</script>
+
 {% endblock %}
