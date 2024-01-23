@@ -943,6 +943,12 @@ h1.home {
 }
 
 #logo-img {
+    width: 250px;
+    height: 250px;
+}
+
+.hidden {
+    display: none
     width: 70vw;
 }
 

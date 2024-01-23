@@ -22,8 +22,10 @@ urlpatterns = [
   # Journal Entry URLs
   path('journal-entries/', views.JournalEntryList.as_view(), name='journal-entries-list'),
   
-  # Emotion URLs
+  # API URLs
   path('api/emotions/', views.EmotionsDataView.as_view(), name='emotions-data'),
+  path('api/timeline/', views.emotion_lifestyle_timeline, name='emotion_lifestyle_timeline'),
+  path('api/gpt-analysis/', views.gpt_analysis_view, name='gpt_analysis'),
 
   #Timeline URLs
   path('timeline/', views.timeline, name='timeline'),
