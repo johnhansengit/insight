@@ -152,7 +152,7 @@ class DailyEntryForm(forms.ModelForm):
                 attrs={
                     "type": "range",
                     "min": 1,
-                    "max": 10,
+                    "max": 5,
                     "step": 1,
                     "class": "slider-input",
                     "id": "stress-rating-slider",
@@ -162,7 +162,7 @@ class DailyEntryForm(forms.ModelForm):
                 attrs={
                     "type": "range",
                     "min": 1,
-                    "max": 10,
+                    "max": 5,
                     "step": 1,
                     "class": "slider-input",
                     "id": "physical-health-slider",
