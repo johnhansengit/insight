@@ -8,14 +8,14 @@
     <h3 id="update-log-date" readonly>{{ date }}</h3>
 </div>
 
-<div id="log-header">
+{% comment %} <div id="log-header">
     <div class="log-head" id="day-of-week">{{ dailyentry.date|date:"D" }}</div>
     <div class="log-head" id="date">
         {{ dailyentry.date|date:"M" }}
         {{ dailyentry.date|date:"j" }},
         {{ dailyentry.date|date:"Y" }}
     </div>
-</div>
+</div> {% endcomment %}
 
 <section id="emotion-selection">
     <div id="select-emotion-container">
@@ -106,7 +106,7 @@
     });
 
     document.getElementById('update-log-form').addEventListener('submit', function(event) {
-        document.getElementById('emotion-input').value = selectedEmotionsIDs;
+        document.getElementById('emotion-input').value = selectedEmotionsIDs.join(',');
     });    
     
       

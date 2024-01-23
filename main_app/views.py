@@ -232,6 +232,18 @@ class DailyEntryCreate(LoginRequiredMixin, TitleMixin, CreateView):
     def form_valid(self, form):
         profile = get_object_or_404(Profile, user=self.request.user)
         form.instance.user = profile
+        self.object = form.save(commit=False)
+
+        emotion_ids = self.request.POST.get('emotion', '')
+        if emotion_ids:
+            emotion_ids = [int(e_id) for e_id in emotion_ids.split(',') if e_id.isdigit()]
+            self.object.save()
+            for e_id in emotion_ids:
+                emotion = get_object_or_404(Emotion, id=e_id)
+                self.object.emotion.add(emotion)
+        else:
+            self.object.save()
+
         return super(DailyEntryCreate, self).form_valid(form)
 
 
