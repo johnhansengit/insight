@@ -2,8 +2,13 @@
 {% block content %}
 
 <h2>Daily Entry {% if form_type == 'create' %}Create{% else %}Update{% endif %}</h2>
+<h3 id="update-log-date" readonly>{{ date }}</h3>
+
+<button type="button" class="update-log-add-emotion" onclick="">Add Emotion</button>
 
 <form method="post" id="update-log-form">
+    <div id="update-log-emotions"></div>
+
     {% csrf_token %}
     {{ form }}
     
