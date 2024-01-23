@@ -14,7 +14,7 @@ def send_gpt_json(prompt):
         messages=[
             {"role": "user", 
             #  "content": "Analyze the following JSON for patterns in lifestyle that impact emotions and provide insights for a user to learn from. Address your response to the user, and assume they have no knowledge of the website's internals. Only respond with text formatted within HTML so that we can display your analysis on our webpage. " + prompt_str},
-             "content": "Using the lifestyle and emotional data provided in the following JSON, please identify patterns and correlations between lifestyle factors and reported emotions. Highlight any trends or significant findings that could help the user understand the impact of their daily habits on their emotional health. Offer practical advice or tips for improving well-being based on these insights. Format your response in HTML to include headings, paragraphs, and bullet points for easy reading and comprehension on a webpage and directly address the user (you). " + prompt_str,
+             "content": "Using the lifestyle and emotional data provided in the following JSON, please identify patterns and correlations between lifestyle factors and reported emotions. Highlight any trends or significant findings that could help the user understand the impact of their daily habits on their emotional health. Offer practical advice or tips for improving well-being based on these insights. Format your response in HTML (no CSS or styling) to include headings, paragraphs, and bullet points for easy reading and comprehension on a webpage. Directly address the user (you). " + prompt_str,
             }
         ]
     )

@@ -1018,4 +1018,5 @@ h1.home {
 
 #analysisResult {
     margin: 0 20px;
+    color: var(--darkmode-lighttext);
 }
