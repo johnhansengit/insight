@@ -1,9 +1,15 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<h2>Daily Entry {% if form_type == 'create' %}Create{% else %}Update{% endif %}</h2>
-<h3 id="update-log-date" readonly>{{ date }}</h3>
-
+{% comment %} <h2>Daily Entry {% if form_type == 'create' %}Create{% else %}Update{% endif %}</h2> {% endcomment %}
+<div id="log-header">
+    <div class="log-head" id="day-of-week">{{ dailyentry.date|date:"D" }}</div>
+    <div class="log-head" id="date">
+        {{ dailyentry.date|date:"M" }}
+        {{ dailyentry.date|date:"j" }},
+        {{ dailyentry.date|date:"Y" }}
+    </div>
+</div>
 <button type="button" class="update-log-add-emotion" onclick="">Add Emotion</button>
 
 <form method="post" id="update-log-form">
