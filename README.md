@@ -62,6 +62,7 @@ Coming soon!
 In the future, we hope to integrate even more functionality and refinement:
 
 - Responsive design
+- Analyze with GPT over a specified date range
 - Badges to reward app use (e.g. logging three days in a row) as well as lifestyle improvements (e.g. exercising 3+ times in a week)
 - Upgrade to 'higher level' emotion wheels with greater specificity
 - Add emotions that aren't in the wheel

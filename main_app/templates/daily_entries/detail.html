@@ -11,10 +11,24 @@
 </div>
 
 <div id="log-main">
-    <div id="detail-log-emotions">
-        {% if dailyentry.emotion %}
-            {{ dailyentry.emotion }}
+
+    <div id="emotion-display-area">
+        <label>Emotions:</label>
+        {% if object.emotion.all %}
+            <div class="emotion-display-container">
+                <div id="display-single-emotion">
+                    {% for emotion in object.emotion.all %}
+                        <button class="emotion-display" style="background-color: {{ emotion.color }}">{{ emotion.name }}</button>
+                    {% endfor %}
+                </div>
+            </div>
+        {% else %}
+            <p style="text-align: center;">No emotions logged for this date.</p>
         {% endif %}
+    </div>
+
+    <div class="emotion-display-container">
+        
     </div>
 
     <div id="log-cards">

@@ -3,26 +3,30 @@
 
 {% include "main_app/includes/emotion-wheel.html" %}
 
-<div id="intro-text">
+{% comment %} <div id="intro-text">
     <h2>{% if form_type == 'create' %}Create{% else %}Update{% endif %} Daily Log</h2>
     <h3 id="update-log-date" readonly>{{ date }}</h3>
-</div>
+</div> {% endcomment %}
 
-{% comment %} <div id="log-header">
+<div id="log-header">
     <div class="log-head" id="day-of-week">{{ dailyentry.date|date:"D" }}</div>
     <div class="log-head" id="date">
         {{ dailyentry.date|date:"M" }}
         {{ dailyentry.date|date:"j" }},
         {{ dailyentry.date|date:"Y" }}
     </div>
-</div> {% endcomment %}
+</div>
 
 <section id="emotion-selection">
     <div id="select-emotion-container">
         <button class="update-log-add-emotion" id="toggle-wheel" onclick="toggleCanvas()">Select Emotions</button>
     </div>
     <div class="emotion-display-container">
-        <div id="display-single-emotion"></div>
+        <div id="display-single-emotion">
+            {% for emotion in object.emotion.all %}
+                <button class="emotion-display" style="background-color: {{ emotion.color }}">{{ emotion.name }}<i class="bi bi-x-circle-fill remove-icon"></i></button>
+            {% endfor %}
+        </div>
     </div>
 </section>
 

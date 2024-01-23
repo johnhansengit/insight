@@ -308,6 +308,24 @@ class DailyEntryUpdate(LoginRequiredMixin, TitleMixin, UpdateView):
         user_settings = UserSettings.objects.filter(user=profile).first()
         kwargs['user_settings'] = user_settings
         return kwargs
+    
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+
+        # Handle emotions
+        emotion_ids = self.request.POST.get('emotion', '')
+        if emotion_ids:
+            # Clear existing emotions before adding new ones
+            self.object.emotion.clear()
+
+            emotion_ids = [int(e_id) for e_id in emotion_ids.split(',') if e_id.isdigit()]
+            for e_id in emotion_ids:
+                emotion = get_object_or_404(Emotion, id=e_id)
+                self.object.emotion.add(emotion)
+
+        self.object.save()
+
+        return super(DailyEntryUpdate, self).form_valid(form)
 
 
 class DailyEntryDelete(LoginRequiredMixin, DeleteView):

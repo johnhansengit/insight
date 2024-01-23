@@ -1003,3 +1003,15 @@ h1.home {
 .hide {
     display: none;
 }
+
+#emotion-display-area {
+    margin: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#emotion-display-area label {
+    font-size: 24px;
+    text-align: center;
+}
