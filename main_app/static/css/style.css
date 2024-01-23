@@ -258,11 +258,11 @@ h1.home {
     gap: 10px;
 }
 
-/* #emotions-timeline {
+#emotions-timeline {
     display: block;
-    height: 50vh;
+    height: 40vh;
     overflow-y: auto;
-} */
+}
 
 #emotions-table {
     width: 100%;
@@ -948,7 +948,7 @@ h1.home {
 }
 
 .hidden {
-    display: none
+    display: none;
     width: 70vw;
 }
 
