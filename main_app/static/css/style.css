@@ -781,6 +781,30 @@ h1.home {
     white-space: pre;
 }
 
+.errorlist {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    color: var(--darkmode-darktext);
+}
+
+.errorlist li {
+    background-color: #ffdddd;
+    border-left: 4px solid #f44336;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.errorlist li ul {
+    margin-top: 10px;
+}
+
+.errorlist li ul li {
+    background-color: #ffecec;
+    border-left: 4px solid #ffadad;
+}
+
 .journal-entries-list-container {
     display: flex;
     flex-direction: column;
