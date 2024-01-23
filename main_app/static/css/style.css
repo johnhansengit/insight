@@ -758,7 +758,7 @@ button {
 }
 
 .journal-entry-list-text {
-    text-align: center;
+    text-align: left;
     display: block;
 }
 
@@ -852,4 +852,17 @@ button {
     justify-content: center;
     align-items: center;
     padding: 20px;
+}
+
+#logo-img-container {
+    display: flex;
+    margin: -25px 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+#logo-img {
+    width: 250px;
+    height: 250px;
 }

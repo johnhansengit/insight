@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
 
+{% load static %}
+
+<div id="logo-img-container">
+    <img id="logo-img" src="{% static 'img/logo.png' %}" alt="">
+</div>
+
 <h1 class="home">Welcome to Insight</h1>
 <div id="welcome-text">
     <h3>Emotional literacy, analysis and wellbeing</h3>
