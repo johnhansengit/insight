@@ -21,9 +21,17 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # Create your views here.
 @login_required
 def home(request):
-    return render(request, "home.html", {
-        'title': 'Welcome'
-        })
+    today = date.today()
+    profile = Profile.objects.get(user=request.user)
+    existing_entry = DailyEntry.objects.filter(user=profile, date=today).first()
+
+    context = {
+        'title': 'Welcome',
+        'existing_entry': existing_entry,
+        'today': today.strftime("%Y-%m-%d")
+    }
+    
+    return render(request, "home.html", context)
 
 
 def sandbox(request):
