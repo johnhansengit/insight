@@ -8,7 +8,11 @@
 </div>
 
 <div id="home-cards">
+    {% if existing_entry %}
+    <a href="/daily-entries/{{today}}/update" class="card home log-nav" id="home-daily">
+    {% else %}
     <a href="/daily-entries/create" class="card home log-nav" id="home-daily">
+    {% endif %}
         <span>Log</span>
         <i class="bi-card-checklist"></i>
         <p>Log a daily entry</p>
