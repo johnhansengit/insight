@@ -121,7 +121,7 @@ class DailyEntryForm(forms.ModelForm):
     
     class Meta:
         model = DailyEntry
-        exclude = ["user"]
+        exclude = ["user", "emotion"]
         labels = {
             "has_had_counseling": "Counseling",
             "has_engaged_spiritually": "Spiritual",
