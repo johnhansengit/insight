@@ -379,7 +379,7 @@ h1.home {
     padding: .2em 1em .3em 1em;
 }
 
-#update-log-form {
+#update-log-form, #log-cards {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -387,7 +387,7 @@ h1.home {
     margin-bottom: 2em;
 }
 
-#update-log-form div:not(:last-child) {
+#update-log-form div:not(:last-child), .logger {
     margin: .5em;
     padding: .5em 1em .5em 1em;
     background-color: var(--darkmode-card);
@@ -405,7 +405,7 @@ h1.home {
     margin-right: 5px;
 }
 
-#update-log-form div label {
+#update-log-form div label, .logger label {
     text-align: center;
     font-size: 1.5em;
 }
@@ -451,7 +451,17 @@ h1.home {
     /* margin: 0 1em; */
 }
 
-#update-log-date {
+#log-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background: linear-gradient(var(--darkmode-background), var(--darkmode-header));
+    margin-bottom: .5em;
+    padding: 1em;
+    border-bottom: .1em solid black;
+}
+
+#update-log-date, #date.log-head {
     text-align: center;
     font-size: 2em;
     margin: 0;
@@ -476,7 +486,7 @@ h1.home {
     width: 100%;
     height: 8px;
     border-radius: 5px;
-    background: var(--darkmode-background);
+    background: var(--accent-yellow);
     outline: none;
     opacity: 0.7;
     -webkit-transition: .2s;
@@ -550,6 +560,16 @@ h1.home {
     border: 0.3em solid #c1a9da;
     outline: none;
     transition: background-color 0.4s;
+}
+
+.logger .checkbox-input, #update-log-form div .checkbox-input {
+    background-color: var(--darkmode-darktext);
+    border: 0.3em solid #cbae47;
+}
+
+.logger .checkbox-input:checked, #update-log-form div .checkbox-input:checked {
+    background-color: var(--accent-yellow);
+    border-color: #cbae47;
 }
 
 .checkbox-input:checked {
