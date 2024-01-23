@@ -73,6 +73,7 @@ In the future, we hope to integrate even more functionality and refinement:
 <hr>
 
 #### **_CREDITS_**
+- Logo: [DALL-E 3](https://openai.com/dall-e-3)
 - Fonts: [Google Fonts](fonts.google.com)
 - Calendar: [Pikaday](https://github.com/Pikaday)
 - Icons: [Bootstrap](https://icons.getbootstrap.com/)
