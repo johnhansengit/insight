@@ -136,6 +136,8 @@ def signup(request):
             user.save()
             login(request, user)
             return redirect("home")
+        else:
+            return render(request, "registration/signup.html", {"form": form})
     form = SignUpForm()
     context = {"form": form}
     return render(request, "registration/signup.html", context)
