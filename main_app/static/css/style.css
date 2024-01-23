@@ -1015,3 +1015,7 @@ h1.home {
     font-size: 24px;
     text-align: center;
 }
+
+#analysisResult {
+    margin: 0 20px;
+}
