@@ -114,8 +114,10 @@
             if (response.ok) {
                 return response.json();
             } else {
-                // Handle the case where the response is not valid JSON
-                throw new Error('API Rate Limit Exceeded. Please try again later.');
+                // Parse JSON to get error message
+                return response.json().then(err => {
+                    throw new Error(err.error || response.statusText);
+                });
             }
         })
         .then(data => {
