@@ -11,6 +11,11 @@ from django.shortcuts import get_object_or_404
 from .forms import SignUpForm, UserSettingsForm, DailyEntryForm
 from .models import UserSettings, DailyEntry, Emotion, Profile
 from django.urls import reverse_lazy, reverse
+from .utils import send_gpt_json
+import json
+import logging
+# Configure logging at the beginning of your Django view file
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 # Create your views here.
@@ -381,3 +386,19 @@ def emotion_lifestyle_timeline(request):
         timeline_data.append(entry_data)
 
     return JsonResponse(timeline_data, safe=False)
+
+def gpt_analysis_view(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body.decode('utf-8'))
+            response_text = send_gpt_json(data['timelineData'])  # Make sure this key matches your JS
+            return JsonResponse({'response': response_text})
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except KeyError as e:
+            return JsonResponse({'error': 'Missing timelineData key'}, status=400)
+        except Exception as e:
+            logging.exception("An error occurred: ")
+            return JsonResponse({'error': 'Internal Server Error'}, status=500)
+    else:
+        return JsonResponse({'error': 'Invalid request'}, status=400)

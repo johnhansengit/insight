@@ -82,4 +82,77 @@
     }
 </script>
 
+<!-- GPT Analysis Button -->
+<div id="gpt-analysis-button-container">
+    <button id="gpt-analysis-button" onclick="sendDataToGPT()">Analyze with GPT</button>
+</div>
+
+<!-- Display the GPT Analysis Result -->
+<div id="analysisResult" class="hidden">
+    <p id="analysisResultText"></p>
+</div>
+
+<script>
+    function sendDataToGPT() {
+        const button = document.getElementById("gpt-analysis-button");
+        button.classList.add("hidden");
+        // Fetch timeline data from your Django backend
+        fetch('/api/timeline/')
+        .then(response => response.json())
+        .then(timelineData => {
+            // Now send this data to the GPT analysis endpoint
+            return fetch('/api/gpt-analysis/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken') // Assuming you're using CSRF tokens
+                },
+                body: JSON.stringify({timelineData: timelineData})
+            });
+        })
+        .then(response => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                // Handle the case where the response is not valid JSON
+                throw new Error('API Rate Limit Exceeded. Please try again later.');
+            }
+        })
+        .then(data => {
+            // Display the GPT-3 analysis
+            displayGPTAnalysis(data.response);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Display an error message to the user
+            alert('An error occurred: ' + error.message);
+        });
+    }
+
+    function displayGPTAnalysis(analysis) {
+        const analysisResult = document.getElementById("analysisResult");
+        analysisResult.innerHTML = analysis;
+        analysisResult.classList.remove("hidden");
+    }
+    
+
+    // Helper function to get CSRF token (from GPT)
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+</script>
+
+
+
 {% endblock %}
