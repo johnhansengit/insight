@@ -968,10 +968,6 @@ h1.home {
     width: 70vw;
 }
 
-.hide {
-    display: none;
-}
-
 #pro-tip {
     padding: 20px;
 }
@@ -986,4 +982,19 @@ h1.home {
     font-size: 14px;
     text-align: center;
     margin: 0;
+}
+
+#gpt-analysis-button-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+#gpt-analysis-button {
+    background-color: var(--accent-pink);
+}
+
+.hide {
+    display: none;
 }

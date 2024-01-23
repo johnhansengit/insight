@@ -100,6 +100,7 @@
         fetch('/api/timeline/')
         .then(response => response.json())
         .then(timelineData => {
+            console.log(timelineData)
             // Now send this data to the GPT analysis endpoint
             return fetch('/api/gpt-analysis/', {
                 method: 'POST',
