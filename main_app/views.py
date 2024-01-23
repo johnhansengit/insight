@@ -433,9 +433,6 @@ def gpt_analysis_view(request):
     if request.method == 'POST':
         try:
             data = json.loads(request.body.decode('utf-8'))
-            print('------')
-            print(data)
-            print('------')
             response_text = send_gpt_json(data['timelineData'])  # Make sure this key matches your JS
             return JsonResponse({'response': response_text})
         except json.JSONDecodeError as e:
