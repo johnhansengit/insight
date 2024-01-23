@@ -613,8 +613,7 @@ h1.home {
     transition: left 0.4s;
 }
 
-#user-settings-form button,
-#gpt-analysis-button {
+#user-settings-form button {
     background-color: var(--accent-purple);
     color: var(--darkmode-darktext);
     padding: .75em 1em;
@@ -993,6 +992,17 @@ h1.home {
 
 #gpt-analysis-button {
     background-color: var(--accent-pink);
+    color: var(--darkmode-darktext);
+    padding: .75em 1em;
+    border: none;
+    border-radius: 3vw;
+    font-size: 1.25em;
+    cursor: pointer;
+    margin-top: 1em;
+    margin-bottom: 2em;
+    width: 90vw;
+    box-sizing: border-box;
+    transition: background-color 0.4s;
 }
 
 .hide {
