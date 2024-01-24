@@ -437,6 +437,19 @@ h1.home {
     border-bottom: .1em solid black;
 }
 
+#create-log-head {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+#create-log-head > h2 {
+    text-align: center;
+    margin: 0;
+}
+
 #update-log-date,
 #date.log-head {
     text-align: center;
