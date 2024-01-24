@@ -151,6 +151,11 @@ a {
     background-color: var(--darkmode-button-active);
 }
 
+.logger.card:hover {
+    cursor: default;
+    background-color: var(--darkmode-card);
+}
+
 h1.home {
     text-align: center;
 }
