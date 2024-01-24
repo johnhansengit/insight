@@ -4,9 +4,22 @@
 {% include "main_app/includes/emotion-wheel.html" %}
 
 <div id="log-header">
-    <div id="create-log-head">
-        <h2>Create Daily Log</h2>
-    </div>
+    {% if form_type == 'create' %}
+        <div id="create-log-head">
+            <h2>Create Daily Log</h2>
+        </div>
+    {% else %}
+        <div class="log-head" id="day-of-week">{{ dailyentry.date|date:"D" }}</div>
+        <div class="log-head" id="date">
+            {{ dailyentry.date|date:"M" }}
+            {{ dailyentry.date|date:"j" }},
+            {{ dailyentry.date|date:"Y" }}
+        </div>
+    {% endif %} 
+</div>
+
+<div id="log-header">
+    
 </div>
 
 <section id="emotion-selection">
