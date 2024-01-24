@@ -151,6 +151,11 @@ a {
     background-color: var(--darkmode-button-active);
 }
 
+.logger.card:hover {
+    cursor: default;
+    background-color: var(--darkmode-card);
+}
+
 h1.home {
     text-align: center;
 }
@@ -678,6 +683,7 @@ h1.home {
 
 #login-btn {
     background-color: var(--accent-yellow);
+    margin-top: 10px;
 }
 
 #signup-cta {
@@ -943,4 +949,32 @@ h1.home {
 #analysisResult {
     margin: 0 20px;
     color: var(--darkmode-lighttext);
+}
+
+#delete-container {
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+#delete-container h2 {
+    text-align: center;
+}
+
+#confirm-delete-btn,
+#cancel-delete-btn {
+    padding: 10px 20px;
+    width: 150px;
+}
+
+#confirm-delete-btn {
+    background-color: var(--accent-pink);
+}
+
+#cancel-delete-btn {
+    background-color: var(--accent-blue);
 }
